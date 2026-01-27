@@ -1,49 +1,29 @@
 using UnityEngine;
-
-using System.Collections;    
+using System.Collections;
 
 public class AutoSaveManager : MonoBehaviour
 
 {
-
     public static AutoSaveManager Instance;
 
     public float saveInterval = 60f;
 
-    private SaveData _saveData;
+    private DataController _dataController;
 
     private void Start()
-
     {
-
         StartCoroutine(AutoSaveRoutine());
-
     }
-
-        
 
     IEnumerator AutoSaveRoutine()
-
     {
-
         while (true)
-
         {
-
             yield return new WaitForSeconds(saveInterval);
-
-
-
-            if (_saveData != null)
-
+            if (_dataController != null)
             {
-
-                _saveData.SavePlayerData();
-
+                _dataController.Save();
             }
-
         }
-
     }
-
 }
