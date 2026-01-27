@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponName: Sphere
   weaponDamage: 10
-  weaponAttackSpeed: 1
+  weaponAttackSpeed: 100
   projectileCount: 10
   weaponRange: 10
   objectPrefab: {fileID: 816045098527865839}
