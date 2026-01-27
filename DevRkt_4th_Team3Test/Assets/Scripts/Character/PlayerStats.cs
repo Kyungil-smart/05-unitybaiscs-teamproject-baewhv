@@ -13,7 +13,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int _attackDamage = 1;
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private int _maxHealth = 1000;
     
     // _moveSpeed를 프로퍼티로 외부에서 참조할 수 있게
     public float MoveSpeed
@@ -23,7 +22,7 @@ public class PlayerStats : MonoBehaviour
             return _moveSpeed;
         }
     }
-
+    // 최대hp 프로퍼티
     public int MaxHP
     {
         get
@@ -32,13 +31,24 @@ public class PlayerStats : MonoBehaviour
         }
     }
     
-    
+    // 작동 확인용 (추후 삭제)
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            IncreaseStats();
+            Debug.Log($"Level: {_level}, Attack: {_attackDamage}, Defense: {_defense}, MoveSpeed: {_moveSpeed}");
+        }
+    }
+
+    // 레벨업에 따른 스탯 증가
     public void IncreaseStats()
     {
         _level++;
         _attackDamage += 1;
         _defense += 1;
-        _moveSpeed += 0.1f;
+        _moveSpeed += 0.3f;
+        _maxHP += 100;
     }
 
 
