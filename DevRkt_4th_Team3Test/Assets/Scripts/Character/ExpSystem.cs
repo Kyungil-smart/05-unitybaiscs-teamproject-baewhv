@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어 레벨업 시스템
+/// 레벨이 오를 수록 필요한 경험치 증가
+/// </summary>
 public class ExpSystem : MonoBehaviour
 {
-    /// <summary>
-    /// 플레이어 레벨업 시스템
-    /// 레벨이 오를 수록 필요한 경험치 증가
-    /// </summary>
-    
     private int _level = 1;              
     private int _currentExp = 0;         
     [SerializeField]private int _expToNextLevel = 100;  
@@ -25,7 +24,7 @@ public class ExpSystem : MonoBehaviour
     }
 
     // 레벨업
-    void LevelUp()
+    public void LevelUp()
     {
         _level++;
         _currentExp -= _expToNextLevel; 
