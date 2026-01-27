@@ -1,18 +1,30 @@
 using System.Collections;
+using System.Collections;
+
 using System.Collections.Generic;
+
 using UnityEngine;
 
+
+
 public class SaveData : MonoBehaviour
+
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public static SaveData Instance;
+
+    
+
+    public KeyCode JumpKey { get; set; }
+
+
+
+    public void SavePlayerData()
+
     {
+
         
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
