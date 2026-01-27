@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// 플레이어 레벨업 시스템
@@ -8,11 +9,29 @@ using UnityEngine;
 /// </summary>
 public class ExpSystem : MonoBehaviour
 {
-    private int _level = 1;              
+    [SerializeField] int _level = 1;              
     private int _currentExp = 0;         
     [SerializeField]private int _expToNextLevel = 100;  
+    [SerializeField] private TextMeshProUGUI _levelUpText;
+    
+    private PlayerStats _playerStats;
 
-    // 경험치 획득 
+    void Start()
+    {
+        _playerStats = GetComponent<PlayerStats>();
+    }
+
+    // 경험치 들어오는지 확인(테스트용 테스트 후 삭제)
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GainExp(200);
+        }
+    }
+
+    
+    // 경험치 획득 _ 몬스터가 가진 경험치를 받아와야함
     public void GainExp(int exp)
     {
         _currentExp += exp;
@@ -27,12 +46,25 @@ public class ExpSystem : MonoBehaviour
     public void LevelUp()
     {
         _level++;
-        _currentExp -= _expToNextLevel; 
-        // 경험치 int로 관리하기 위해 RoundToInt 사용, 1.2씩 필요 경험치 증가
-        _expToNextLevel = Mathf.RoundToInt(_expToNextLevel * 1.2f); 
+        _currentExp -= _expToNextLevel;
+        _expToNextLevel = Mathf.RoundToInt(_expToNextLevel * 1.2f);
+        _playerStats.IncreaseStats();
+        LevelUpText();
+        Debug.Log($"Level {_level} reached! Next EXP: {_expToNextLevel}");
 
-        Debug.Log("레벨업! 현재 레벨: " + _level);
-        
     }
+
+    public void LevelUpText()
+    {
+        _levelUpText.text = "Level Up!";
+        _levelUpText.gameObject.SetActive(true);
+        Invoke("HideLevelUpText", 2f);
+    }
+    private void HideLevelUpText()
+    {
+        _levelUpText.gameObject.SetActive(false);
+    }
+
+
 
 }
