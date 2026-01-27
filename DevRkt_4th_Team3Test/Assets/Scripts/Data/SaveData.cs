@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 
 [System.Serializable]    
-public class GameData
+public class SaveData
     {
-        public List<string> inventory = new List<string>();
+        public List<InventoryData> inventory = new List<InventoryData>();
         
         //TODO: 플레이어 데이터
     }

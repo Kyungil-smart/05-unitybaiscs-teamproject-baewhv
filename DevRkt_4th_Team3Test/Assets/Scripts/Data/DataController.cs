@@ -11,8 +11,10 @@ public class DataController : MonoBehaviour
 
 {
     public static DataController Instance;
-    public GameData currentData = new GameData();
+    public SaveData currentData = new SaveData();
 
+    void Awake() => Instance = this;
+    
     /// <summary>
     /// 데이터 저장 (자동 저장 시스템에 연결)
     /// </summary>
@@ -31,11 +33,11 @@ public class DataController : MonoBehaviour
         if (PlayerPrefs.HasKey("SaveSlot_1"))
         {
             string json = PlayerPrefs.GetString("SaveSlot_1");
-            currentData = JsonUtility.FromJson<GameData>(json);
+            currentData = JsonUtility.FromJson<SaveData>(json);
             
-            for (int i = 0; i < currentData.inventory.Count; i++)
+            foreach (var inv in currentData.inventory)
             {
-                Debug.Log($"아이템 {i}번: {currentData.inventory[i]} 로드됨");
+                Debug.Log($"무기 개수: {inv.weapons.Count}, 패시브 개수: {inv.passives.Count}");
             }
         } 
     }
