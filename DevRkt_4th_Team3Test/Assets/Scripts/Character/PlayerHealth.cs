@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 캐릭터 hp게이지 슬라이더로 구성, hp 양에따라 색상 다르게
+/// 키 누르면 작동확인 할 수 있게
+/// </summary>
 public class PlayerHealth : MonoBehaviour
 {
-    /// <summary>
-    /// 캐릭터 hp게이지 슬라이더로 구성, hp 양에따라 색상 다르게
-    /// 키 누르면 작동확인 할 수 있게
-    /// </summary>
-    [SerializeField] private int _maxHP = 1000;
-    [SerializeField] private int _currentHP;
+    private int _currentHP;
+    
+    // 플레이어 스탯 참조
+    private PlayerStats _playerStats;
 
     // HP 전체 게이지
     [SerializeField] private Slider _hpSlider; 
@@ -19,10 +21,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void Start()
     {
-        _currentHP = _maxHP;
+        _playerStats = GetComponent<PlayerStats>();
+        _currentHP = _playerStats.MaxHP;
 
         // Slider 초기화
-        _hpSlider.maxValue = _maxHP;
+        _hpSlider.maxValue = _playerStats.MaxHP;
         _hpSlider.value = _currentHP;
 
         UpdateHPGuage();
@@ -45,14 +48,14 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentHP -= damage;
-        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
+        _currentHP = Mathf.Clamp(_currentHP, 0, _playerStats.MaxHP);
         UpdateHPGuage();
     }
 
     public void Heal(int amount)
     {
         _currentHP += amount;
-        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
+        _currentHP = Mathf.Clamp(_currentHP, 0, _playerStats.MaxHP);
         UpdateHPGuage();
     }
 
@@ -61,12 +64,12 @@ public class PlayerHealth : MonoBehaviour
         // 슬라이더 값을 현재 hp로 설정
         _hpSlider.value = _currentHP;
 
-        float ratio = (float)_currentHP / _maxHP;
+        float ratio = (float)_currentHP / _playerStats.MaxHP;
 
         // 게이지에 따른 색상 변경
-        if (ratio > 0.5f)
+        if (ratio > 0.7f)
             _fillImage.color = Color.green;
-        else if (ratio > 0.2f)
+        else if (ratio > 0.5f)
             _fillImage.color = Color.yellow;
         else
             _fillImage.color = Color.red;

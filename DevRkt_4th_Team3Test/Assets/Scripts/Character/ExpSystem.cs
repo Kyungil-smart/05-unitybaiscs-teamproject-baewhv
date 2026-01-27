@@ -8,9 +8,16 @@ using UnityEngine;
 /// </summary>
 public class ExpSystem : MonoBehaviour
 {
-    private int _level = 1;              
+    [SerializeField] int _level = 1;              
     private int _currentExp = 0;         
     [SerializeField]private int _expToNextLevel = 100;  
+    
+    private PlayerStats _playerStats;
+
+    void Start()
+    {
+        _playerStats = GetComponent<PlayerStats>();
+    }
 
     // 경험치 획득 
     public void GainExp(int exp)
@@ -30,9 +37,7 @@ public class ExpSystem : MonoBehaviour
         _currentExp -= _expToNextLevel; 
         // 경험치 int로 관리하기 위해 RoundToInt 사용, 1.2씩 필요 경험치 증가
         _expToNextLevel = Mathf.RoundToInt(_expToNextLevel * 1.2f); 
-
-        Debug.Log("레벨업! 현재 레벨: " + _level);
-        
+        _playerStats.IncreaseStats();
     }
 
 }
