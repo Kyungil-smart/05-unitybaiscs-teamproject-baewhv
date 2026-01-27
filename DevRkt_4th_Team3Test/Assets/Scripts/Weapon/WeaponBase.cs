@@ -16,6 +16,30 @@ public class WeaponBase : MonoBehaviour
     [Header("프리팹")]
     public GameObject objectPrefab;
 
+    
+    /// <summary>
+    /// 카드에서 상승시킬 능력치 이름, 상승치를 넘겨주면 무기 강화시켜줌
+    /// </summary>
+    /// <param name="variableName"></param>
+    /// <param name="value"></param>
+    public void UpgradeWeapon(string variableName,float value)
+    {
+        switch (variableName)
+        {
+            case "weaponDamage" :
+                weaponDamage *= value;
+                break;
+            case "weaponAttackSpeed" :
+                weaponAttackSpeed *= value;
+                break;
+            case "projectileCount" :
+                projectileCount += (int)value;
+                break;
+            case "weaponRange" :
+                weaponRange *= value;
+                break;
+        }
+    }
     public void ChangeWeaponDamage(float damage)
     {
         weaponDamage = damage;

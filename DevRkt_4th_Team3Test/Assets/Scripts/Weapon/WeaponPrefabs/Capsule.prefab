@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponName: Capsule
   weaponDamage: 5
-  weaponAttackSpeed: 0.5
+  weaponAttackSpeed: 25
   projectileCount: 3
   weaponRange: 5
   objectPrefab: {fileID: 4354685554173003992}
