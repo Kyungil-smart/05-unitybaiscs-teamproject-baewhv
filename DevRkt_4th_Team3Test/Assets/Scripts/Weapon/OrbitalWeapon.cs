@@ -37,7 +37,7 @@ public class OrbitalWeapon : WeaponBase, IWeapon
     /// 무기로 몬스터 공격.
     /// </summary>
     /// <param name="monster"></param>
-    public void WeaponAttack(WeaponMonster monster)
+    public void WeaponAttack(Monster monster)
     {
         // monster선언되면 이부분 변경. HP대신 HP에 대응되는 변수로
         // monster.HP -= weaponDamage;

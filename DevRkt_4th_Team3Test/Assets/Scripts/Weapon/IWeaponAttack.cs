@@ -4,6 +4,6 @@ using UnityEngine;
 using Game;
 public interface IWeapon
 {
-    public void WeaponAttack(WeaponMonster monster);
+    public void WeaponAttack(Monster monster);
     
 }
