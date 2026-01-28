@@ -28,19 +28,19 @@ public class WeaponBase : MonoBehaviour
         {
             case "weaponDamage" :
                 weaponDamage *= value;
-                Debug.Log($"무기 데미지 : {weaponDamage}");
+                Debug.Log($"{_weaponName} 데미지 : {weaponDamage}");
                 break;
             case "weaponAttackSpeed" :
                 weaponAttackSpeed *= value;
-                Debug.Log($"무기 공속 : {weaponAttackSpeed}");
+                Debug.Log($"{_weaponName} 공속 : {weaponAttackSpeed}");
                 break;
             case "projectileCount" :
                 projectileCount += (int)value;
-                Debug.Log($"투사체 개수 : {projectileCount}");
+                Debug.Log($"{_weaponName} 투사체 개수 : {projectileCount}");
                 break;
             case "weaponRange" :
                 weaponRange *= value;
-                Debug.Log($"공격 범위 : {weaponRange}");
+                Debug.Log($"{_weaponName} 공격 범위 : {weaponRange}");
                 break;
         }
     }

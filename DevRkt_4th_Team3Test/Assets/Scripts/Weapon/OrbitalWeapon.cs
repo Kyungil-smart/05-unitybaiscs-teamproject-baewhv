@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class OrbitalWeapon : WeaponBase, IWeapon
 {
-    [SerializeField] private GameObject _player;
     private void Start()
     {
         
