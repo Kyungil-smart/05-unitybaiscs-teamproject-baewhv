@@ -39,9 +39,10 @@ public class GameManager : MonoBehaviour
     {
         GenerateManager<FieldManager>();
         //GenerateManager<OrbitalWeaponManager>();
-        Instantiate(Player,_spawnPoint, new Quaternion());
+        
+        GameObject player = Instantiate(Player,_spawnPoint, new Quaternion());
         Instantiate(Camera);
-        Camera.player = Player.transform;
+        Camera.player = player.transform;
     }
 
     void GenerateManager<T>() where T : Component
