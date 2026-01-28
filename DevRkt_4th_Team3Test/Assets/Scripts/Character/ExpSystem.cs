@@ -54,7 +54,7 @@ public class ExpSystem : MonoBehaviour
         _playerStats.IncreaseStats();
         LevelUpText();
         // 테스트 후 삭제
-        Debug.Log($"Level {_level} Next EXP: {_expToNextLevel}");
+        Debug.Log($"Level {Level} Next EXP: {ExpToNextLevel}");
         
         // 레벨업 이벤트 발생 알림
         // expSystem.OnLevelUp += *****; 으로 이벤트 구독하기

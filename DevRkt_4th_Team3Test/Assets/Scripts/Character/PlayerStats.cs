@@ -57,6 +57,11 @@ public class PlayerStats : MonoBehaviour
         {
             TakeDamage(50);
         }
+        // 테스트용: 힐
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Heal(50);
+        }
         // 테스트용: 레벨업
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -83,10 +88,19 @@ public class PlayerStats : MonoBehaviour
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
 
         OnHPChanged?.Invoke(); 
+        
         if (_currentHP <= 0)
         {
             Death();
         }
+    }
+    // 캐릭터 힐 받기
+    public void Heal(int amount)
+    {
+        _currentHP += amount;
+        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
+        
+        OnHPChanged?.Invoke();
     }
 
     // 캐릭터 죽음 처리
