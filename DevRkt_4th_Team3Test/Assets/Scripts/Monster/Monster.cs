@@ -22,6 +22,7 @@ namespace Game
 
         [Header("Movement")]
         [SerializeField] protected float _moveSpeed = 3.0f;
+
         [Header("Spawn")]
         [SerializeField] protected float _spawnInterval = 2.0f;
         [SerializeField] protected int _maxPopulation = 30;
