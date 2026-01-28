@@ -9,10 +9,10 @@ public class MonsterState : MonoBehaviour
     [SerializeField] private Slider _hpSlider;
     
     [Header("Attack Settings")]
-    [SerializeField] private int _damage = 1;
-    [SerializeField] private float _attackCooldown = 0.5f;
+    [SerializeField] private int _damage = 10;
+    [SerializeField] private float _attackCooltime = 0.5f;
     [SerializeField] private PlayerStats _playerStats;
-    
+    private float _lastAttackTime;
 
     protected virtual void Awake()
     {
@@ -24,6 +24,15 @@ public class MonsterState : MonoBehaviour
         }
 
         MonsterManager.Register();
+    }
+    
+    private void OnTriggerStay(Collider other)
+    {
+        // 플레이어에 부딪히면 공격
+        if (other.CompareTag("Player"))
+        {
+            Attack(other.gameObject);
+        }
     }
 
     /// <summary>
@@ -41,10 +50,19 @@ public class MonsterState : MonoBehaviour
         if (_currentHp <= 0) Die();
     }
 
-    public void Attack()
+    public void Attack(GameObject target)
     {
-        //TODO: 캐릭터에게 데미지 입히기
-        _playerStats.TakeDamage(_damage);
+        //쿨타임
+        if (Time.time - _lastAttackTime < _attackCooltime) return;
+        PlayerStats stats = target.GetComponent<PlayerStats>();
+        if (stats != null)
+        {
+            stats.TakeDamage(_damage);
+            _lastAttackTime = Time.time;
+        }else
+        {
+            Debug.LogWarning("ERROR: 플레이어에게 PlayerStats 컴포넌트가 없습니다!");
+        }
     }
 
     private void Die()
