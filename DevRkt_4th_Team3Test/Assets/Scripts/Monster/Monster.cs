@@ -2,99 +2,111 @@ using UnityEngine;
 
 namespace Game
 {
+    public static class MonsterPopulationManager
+    {
+        private static int _count = 0;
+        public static int Count => _count;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        public static void ResetCount() => _count = 0;
+
+        public static void Register() => _count++;
+        public static void Unregister() => _count = Mathf.Max(0, _count - 1);
+        public static bool CanSpawn(int maxPopulation) => _count < maxPopulation;
+    }
+
+    [RequireComponent(typeof(Rigidbody))]
     public class Monster : MonoBehaviour
     {
-        // --- 멤버 변수 ---
+        protected const string PLAYER_TAG = "Player";
 
-        [Header("Movement Settings")]
-        [SerializeField] private float _moveSpeed = 3.0f;
+        [Header("Movement")]
+        [SerializeField] protected float _moveSpeed = 3.0f;
 
-        [Header("Spawn Settings")]
-        [SerializeField] private float _spawnInterval = 5.0f;
-        [SerializeField] private int _maxPopulation = 30; // 최대 개체수 제한
+        [Header("Spawn")]
+        [SerializeField] protected float _spawnInterval = 2.0f;
+        [SerializeField] protected int _maxPopulation = 30;
+        [SerializeField] protected float _spawnRadius = 2.0f;
 
-        // 전체 몬스터 개체수 공유 (Static)
-        private static int _currentMonsterCount = 0;
+        protected float _spawnTimer;
+        protected Transform _target;
+        protected SpriteRenderer _spriteRenderer;
+        protected Rigidbody _rigidbody;
+        protected bool _hasTarget;
 
-        private float _spawnTimer;
-        private Transform _target;
-        private SpriteRenderer _spriteRenderer;
-
-        // --- 유니티 이벤트 ---
-
-        private void Awake()
+        protected virtual void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _spawnTimer = _spawnInterval;
-            
-            // 생성 시 카운트 증가
-            _currentMonsterCount++;
+            _rigidbody = GetComponent<Rigidbody>();
+            InitializeSpawnTimer();
+            MonsterPopulationManager.Register();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            FindTarget();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            if (!_hasTarget || _target == null)
+            {
+                _rigidbody.velocity = Vector3.zero;
+                return;
+            }
+            MoveTowardsTarget();
+        }
+
+        protected virtual void Update()
+        {
+            if (_target != null) UpdateSpriteFlip();
+            UpdateSpawnTimer();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            MonsterPopulationManager.Unregister();
+        }
+
+        protected virtual void OnBecameInvisible() => SetSpriteVisibility(false);
+        protected virtual void OnBecameVisible() => SetSpriteVisibility(true);
+
+        private void InitializeSpawnTimer() => _spawnTimer = _spawnInterval;
+
+        protected virtual void FindTarget()
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag(PLAYER_TAG);
             if (playerObj != null)
             {
                 _target = playerObj.transform;
+                _hasTarget = true;
             }
         }
 
-        private void Update()
+        // Velocity 기반 이동 (물리 충돌 처리)
+         protected virtual void MoveTowardsTarget()
         {
-            FollowTarget();
-            CheckFlip();
-            HandleSelfSpawn();
+            Vector3 direction = (_target.position - transform.position).normalized;
+            _rigidbody.AddForce(direction * _moveSpeed * 10f); 
         }
+        
 
-        private void OnDestroy()
+        protected virtual void UpdateSpriteFlip()
         {
-            // 파괴 시 카운트 감소
-            _currentMonsterCount--;
-            if (_currentMonsterCount < 0) _currentMonsterCount = 0;
-        }
-
-        // 화면 밖 렌더링 비활성화 (최적화)
-        private void OnBecameInvisible()
-        {
-            if (_spriteRenderer != null) _spriteRenderer.enabled = false;
-        }
-
-        // 화면 진입 시 렌더링 활성화
-        private void OnBecameVisible()
-        {
-            if (_spriteRenderer != null) _spriteRenderer.enabled = true;
-        }
-
-        // --- 내부 함수 ---
-
-        private void FollowTarget()
-        {
-            if (_target == null) return;
-
-            // Y축 고정, X/Z축 추적
-            Vector3 targetPos = new Vector3(_target.position.x, transform.position.y, _target.position.z);
-
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPos,
-                _moveSpeed * Time.deltaTime
-            );
-        }
-
-        private void CheckFlip()
-        {
-            if (_target == null || _spriteRenderer == null) return;
+            if (_spriteRenderer == null) return;
             _spriteRenderer.flipX = _target.position.x < transform.position.x;
         }
 
-        private void HandleSelfSpawn()
+        private void SetSpriteVisibility(bool visible)
         {
-            if (_spawnInterval <= 0f) return;
-            if (_currentMonsterCount >= _maxPopulation) return; // 제한 초과 시 중단
+            if (_spriteRenderer != null) _spriteRenderer.enabled = visible;
+        }
+
+        protected virtual void UpdateSpawnTimer()
+        {
+            if (!CanSpawn()) return;
 
             _spawnTimer -= Time.deltaTime;
-
             if (_spawnTimer <= 0f)
             {
                 SpawnClone();
@@ -102,18 +114,28 @@ namespace Game
             }
         }
 
-        private void SpawnClone()
+        protected virtual bool CanSpawn()
         {
-            if (_currentMonsterCount >= _maxPopulation) return;
+            return _spawnInterval > 0f && MonsterPopulationManager.CanSpawn(_maxPopulation);
+        }
 
-            // X/Z 평면 랜덤 위치 계산
-            Vector2 randomCircle = Random.insideUnitCircle * 1.5f;
-            Vector3 randomOffset = new Vector3(randomCircle.x, 0f, randomCircle.y);
-            Vector3 spawnPosition = transform.position + randomOffset;
+        protected virtual void SpawnClone()
+        {
+            if (!MonsterPopulationManager.CanSpawn(_maxPopulation)) return;
 
-            // 자가 복제
-            GameObject clone = Instantiate(gameObject, spawnPosition,transform.rotation);
-            clone.name = gameObject.name.Replace("(Clone)", "");
+            Vector3 spawnPos = CalculateSpawnPosition();
+            GameObject clone = Instantiate(gameObject, spawnPos, transform.rotation);
+            
+            // (Clone) 접미사 제거
+            int cloneIndex = clone.name.IndexOf("(");
+            if (cloneIndex > 0)
+                clone.name = clone.name.Substring(0, cloneIndex);
+        }
+
+        protected virtual Vector3 CalculateSpawnPosition()
+        {
+            Vector2 randomOffset = Random.insideUnitCircle * _spawnRadius;
+            return transform.position + new Vector3(randomOffset.x, 0f, randomOffset.y);
         }
     }
 }
