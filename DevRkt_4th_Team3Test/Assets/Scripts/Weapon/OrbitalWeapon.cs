@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using Game;
+
 public class OrbitalWeapon : WeaponBase, IWeapon
 {
     private void Start()
