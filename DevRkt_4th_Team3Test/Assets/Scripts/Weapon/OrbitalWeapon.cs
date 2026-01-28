@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class OrbitalWeapon : WeaponBase, IWeaponAttack
+public class OrbitalWeapon : WeaponBase, IWeapon
 {
     [SerializeField] private GameObject _player;
     private void Start()
@@ -43,4 +43,5 @@ public class OrbitalWeapon : WeaponBase, IWeaponAttack
         monster.HP -= weaponDamage;
         Debug.Log($"HP : {monster.HP}");
     }
+    
 }

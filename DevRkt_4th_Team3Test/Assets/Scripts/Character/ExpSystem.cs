@@ -10,9 +10,9 @@ using TMPro;
 /// </summary>
 public class ExpSystem : MonoBehaviour
 {
-    [SerializeField] int _level = 1;              
-    private int _currentExp = 0;         
-    [SerializeField]private int _expToNextLevel = 100;  
+    [SerializeField] public int Level = 1;              
+    public int CurrentExp = 0;         
+    [SerializeField]public int ExpToNextLevel = 100;  
     [SerializeField] private TextMeshProUGUI _levelUpText;
     
     private PlayerStats _playerStats;
@@ -37,9 +37,9 @@ public class ExpSystem : MonoBehaviour
     // 경험치 획득 _ 몬스터가 가진 경험치를 받아와야함
     public void GainExp(int exp)
     {
-        _currentExp += exp;
+        CurrentExp += exp;
 
-        if (_currentExp >= _expToNextLevel)
+        if (CurrentExp >= ExpToNextLevel)
         {
             LevelUp();
         }
@@ -48,9 +48,9 @@ public class ExpSystem : MonoBehaviour
     // 레벨업
     public void LevelUp()
     {
-        _level++;
-        _currentExp -= _expToNextLevel;
-        _expToNextLevel = Mathf.RoundToInt(_expToNextLevel * 1.2f);
+        Level++;
+        CurrentExp -= ExpToNextLevel;
+        ExpToNextLevel = Mathf.RoundToInt(ExpToNextLevel * 1.2f);
         _playerStats.IncreaseStats();
         LevelUpText();
         // 테스트 후 삭제

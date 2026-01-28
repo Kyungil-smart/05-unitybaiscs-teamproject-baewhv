@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class StartUIManager : MonoBehaviour
 {
+    private DataController _dataController;
+    
     void Start()
     {
         
@@ -22,7 +24,7 @@ public class StartUIManager : MonoBehaviour
 
     public void ReloadGame()
     {
-        
+        _dataController.Load();
     }
 
     

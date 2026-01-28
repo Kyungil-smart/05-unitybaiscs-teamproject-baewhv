@@ -6,8 +6,8 @@ using UnityEngine.Serialization;
 public class WeaponBase : MonoBehaviour
 {
     [Header("기본 정보")]
-    [SerializeField] private string _weaponName; // 무기 이름
-    
+    public string _weaponName; // 무기 이름
+    private bool _isActive = false; // 액티브상태인지 아닌지. 무기가 처음 뽑힐때 isActive = true;
     [Header("전투 스탯")]
     public float weaponDamage; // 기본 공격력
     public float weaponAttackSpeed;  // 공격속도 (궤도무기의 경우 공전속도)
@@ -16,23 +16,33 @@ public class WeaponBase : MonoBehaviour
     [Header("프리팹")]
     public GameObject objectPrefab;
 
-    public void ChangeWeaponDamage(float damage)
+    
+    /// <summary>
+    /// 카드에서 상승시킬 능력치 이름, 상승치를 넘겨주면 무기 강화시켜줌
+    /// </summary>
+    /// <param name="variableName"></param>
+    /// <param name="value"></param>
+    public void UpgradeWeapon(string variableName,float value)
     {
-        weaponDamage = damage;
+        switch (variableName)
+        {
+            case "weaponDamage" :
+                weaponDamage *= value;
+                Debug.Log($"무기 데미지 : {weaponDamage}");
+                break;
+            case "weaponAttackSpeed" :
+                weaponAttackSpeed *= value;
+                Debug.Log($"무기 공속 : {weaponAttackSpeed}");
+                break;
+            case "projectileCount" :
+                projectileCount += (int)value;
+                Debug.Log($"투사체 개수 : {projectileCount}");
+                break;
+            case "weaponRange" :
+                weaponRange *= value;
+                Debug.Log($"공격 범위 : {weaponRange}");
+                break;
+        }
     }
     
-    public void ChangeAttackSpeed(float attackSpeed)
-    {
-        weaponAttackSpeed = attackSpeed;
-    }
-    
-    public void ChangeProjectileCount(int count)
-    {
-        projectileCount = count;
-    }
-
-    public void ChangeAttackRange(float range)
-    {
-        weaponRange = range;
-    }
 }
