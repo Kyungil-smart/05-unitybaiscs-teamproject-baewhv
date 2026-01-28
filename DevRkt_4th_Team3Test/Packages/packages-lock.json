@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.sja.ui": {
+      "version": "file:C:/Users/ddong/Downloads/UIResourcesPackage",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
