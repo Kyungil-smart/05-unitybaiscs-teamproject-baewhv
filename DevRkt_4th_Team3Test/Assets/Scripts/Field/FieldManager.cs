@@ -12,6 +12,9 @@ public class FieldManager : MonoBehaviour
 
     private static FieldManager _instance;
     
+    /// <summary>
+    /// FieldManager 싱글턴 인스턴스 호출
+    /// </summary>
     public static FieldManager Instance
     {
         get
@@ -30,6 +33,7 @@ public class FieldManager : MonoBehaviour
         CreateMap();
     }
 
+    //맵 생성
     private void CreateMap()
     {
         //-32 -16 0 16 32
