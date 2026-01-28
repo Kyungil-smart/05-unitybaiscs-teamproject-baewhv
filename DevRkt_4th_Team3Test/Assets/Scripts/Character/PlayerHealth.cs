@@ -22,8 +22,8 @@ public class PlayerHealth : MonoBehaviour
     public void Start()
     {
         _playerStats = GetComponent<PlayerStats>();
-        _currentHP = _playerStats.MaxHP;
-
+        _playerStats.OnHPChanged += UpdateHPGuage;
+        
         // Slider 초기화
         _hpSlider.maxValue = _playerStats.MaxHP;
         _hpSlider.value = _currentHP;
@@ -34,11 +34,6 @@ public class PlayerHealth : MonoBehaviour
     // TakeDamage, Heal 테스트용
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(100); 
-        }
-
         if (Input.GetKeyDown(KeyCode.H))
         {
             Heal(100); 
@@ -62,9 +57,9 @@ public class PlayerHealth : MonoBehaviour
     private void UpdateHPGuage()
     {
         // 슬라이더 값을 현재 hp로 설정
-        _hpSlider.value = _currentHP;
+        _hpSlider.value = _playerStats.CurrentHP;
 
-        float ratio = (float)_currentHP / _playerStats.MaxHP;
+        float ratio = (float)_playerStats.CurrentHP / _playerStats.MaxHP;
 
         // 게이지에 따른 색상 변경
         if (ratio > 0.7f)
