@@ -1,26 +1,48 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MonsterState: MonoBehaviour
+public class MonsterState : MonoBehaviour
 {
-        [SerializeField] private int _hp = 10;
-        public bool IsDead { get; private set; } = false;
-        
-        public void TakeDamage(int damage)
+    [SerializeField] private float _maxHp = 10f;
+    [SerializeField] private float _currentHp;
+    [SerializeField] private Slider _hpSlider;
+
+    protected virtual void Awake()
+    {
+        _currentHp = _maxHp;
+        if (_hpSlider != null)
         {
-                if (IsDead) return;
-                _hp -= damage;
-                if (_hp <= 0) Die();
+            _hpSlider.maxValue = _maxHp;
+            _hpSlider.value = _currentHp;
         }
-        
-        private void Die()
+
+        MonsterManager.Register();
+    }
+
+    /// <summary>
+    /// 몬스터에게 데미지 주는 로직
+    /// </summary>
+    public void TakeDamage(float damage)
+    {
+        _currentHp -= damage;
+
+        if (_hpSlider != null)
         {
-                IsDead = true;
-                MonsterManager.Unregister();
-                Destroy(gameObject);
+            _hpSlider.value = _currentHp;
         }
-        
-        private void OnDestroy()
-        {
-                if (!IsDead) MonsterManager.Unregister();
-        }
+
+        if (_currentHp <= 0) Die();
+    }
+
+    private void Die()
+    {
+        MonsterManager.Unregister();
+        Destroy(gameObject);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        //static 데이터 때문에 한번 더 정확하게 제거
+        if (gameObject.scene.isLoaded) MonsterManager.Unregister();
+    }
 }
