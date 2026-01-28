@@ -46,7 +46,6 @@ public class PlayerStats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(50);
-            Debug.Log($"HP: {_currentHP}/{_maxHP}");
         }
         // 테스트용: 레벨업
         if (Input.GetKeyDown(KeyCode.L))
