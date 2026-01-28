@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class OrbitalWeaponManager : MonoBehaviour
 {
+    //무기 프리펩 저장
+    [SerializeField] private List<GameObject> prefabs =  new List<GameObject>();
     //궤도무기들 종류마다 저장
-    [SerializeField] private List<OrbitalWeapon> _orbitalWeapons = new List<OrbitalWeapon>();
+    public List<OrbitalWeapon> _orbitalWeapons = new List<OrbitalWeapon>();
     [SerializeField] private WeaponPlayer _player;
     
     //무기마다 궤도에 있는 무기들의 위치를 담는 딕셔너리
     private Dictionary<OrbitalWeapon, List<Transform>> _weaponLocations = new Dictionary<OrbitalWeapon, List<Transform>>();
 
     private Vector3 _lastTargetPosition;
+
+    private void Awake()
+    {
+        CreatePrefabsObject();
+    }
+
     private void Start()
     {
         //플레이어 위치 저장
@@ -105,6 +113,26 @@ public class OrbitalWeaponManager : MonoBehaviour
     {
         
     }
-    
-    //무기의 능력치를 변경.
+
+    //프리펩으로부터 객체를 만들어서 리스트 _orbitalWeapons에 등록
+    private void CreatePrefabsObject()
+    {
+        int k = 0;
+        for (int i = 0; i < prefabs.Count; i++)
+        {
+            
+            //무기 프리펩으로 복제본을 instantiate 해서 그 값을 변경해야 꺼저도 프리펩 값 변경 안됨
+            
+            //프리펩이 OrbitalWeapon일때만 _orbitalWeapons 리스트에 추가.
+            if (prefabs[i].GetComponent<OrbitalWeapon>() != null)
+            {
+                GameObject go = Instantiate(prefabs[i]);
+                OrbitalWeapon ow = go.GetComponent<OrbitalWeapon>();
+                _orbitalWeapons.Add(ow);
+                //Debug.Log(_orbitalWeapons[k]._weaponName);
+                k++;
+            }
+        }
+
+    }
 }
