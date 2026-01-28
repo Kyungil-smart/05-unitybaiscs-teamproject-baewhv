@@ -15,6 +15,9 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
     
+    // 사망 시 캐릭터 색상 변경용
+    private Renderer _renderer;   // 캐릭터 색상 변경용
+
     // 죽음 이벤트를 선언
     public event Action OnPlayerDeath;
     // HP 변경 이벤트
@@ -47,6 +50,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
     public void Start()
     {
         _currentHP = _maxHP;
+        _renderer = GetComponentInChildren<SpriteRenderer>();
+
     }
 
     // 작동 확인용 (추후 삭제)
@@ -111,8 +116,13 @@ public class PlayerStats : MonoBehaviour, IDamagable
     private void Death()
     {
         _currentHP = 0;
-        // 테스트용 테스트 후 삭제
-        Debug.Log("플레이어 사망");
+
+        // 캐릭터 색상 회색으로 변경
+        if (_renderer != null)
+        {
+            _renderer.material.color = Color.black;
+        }
+
         // 죽음 이벤트 알림 -> 구독 필요
         OnPlayerDeath?.Invoke();
     }
