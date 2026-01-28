@@ -22,7 +22,6 @@ namespace Game
 
         [Header("Movement")]
         [SerializeField] protected float _moveSpeed = 3.0f;
-        public float HP = 100f; //todo 이거 장지훈이 추가했습니다 테스트용으로..
         [Header("Spawn")]
         [SerializeField] protected float _spawnInterval = 2.0f;
         [SerializeField] protected int _maxPopulation = 30;
