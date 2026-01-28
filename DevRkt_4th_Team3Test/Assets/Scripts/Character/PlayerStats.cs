@@ -10,7 +10,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField][Range (1, 99)]private int _level = 1;
     [SerializeField] private int _maxHP = 1000;
     [SerializeField] private int _currentHP;
-    [SerializeField] private int _attackDamage = 1;
+    [SerializeField] private float _attackDamage = 1;
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
     

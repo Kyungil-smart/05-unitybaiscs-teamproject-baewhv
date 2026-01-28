@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class ExpSystem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _levelUpText;
     
     private PlayerStats _playerStats;
+    //레벨업 이벤트를 선언
+    public event Action OnLevelUp;
 
     void Start()
     {
@@ -50,21 +53,21 @@ public class ExpSystem : MonoBehaviour
         _expToNextLevel = Mathf.RoundToInt(_expToNextLevel * 1.2f);
         _playerStats.IncreaseStats();
         LevelUpText();
-        Debug.Log($"Level {_level} reached! Next EXP: {_expToNextLevel}");
-
+        // 테스트 후 삭제
+        Debug.Log($"Level {_level} Next EXP: {_expToNextLevel}");
+        // 레벨업 이벤트 발생 알림
+        OnLevelUp?.Invoke();
     }
 
     public void LevelUpText()
     {
         _levelUpText.text = "Level Up!";
         _levelUpText.gameObject.SetActive(true);
+        // 2초 후에 레벨업 메시지 사라짐
         Invoke("HideLevelUpText", 2f);
     }
     private void HideLevelUpText()
     {
         _levelUpText.gameObject.SetActive(false);
     }
-
-
-
 }
