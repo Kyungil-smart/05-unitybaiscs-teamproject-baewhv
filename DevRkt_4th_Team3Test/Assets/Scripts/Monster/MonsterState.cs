@@ -3,9 +3,16 @@ using UnityEngine.UI;
 
 public class MonsterState : MonoBehaviour
 {
+    [Header("HP Settings")]
     [SerializeField] private float _maxHp = 10f;
     [SerializeField] private float _currentHp;
     [SerializeField] private Slider _hpSlider;
+    
+    [Header("Attack Settings")]
+    [SerializeField] private int _damage = 1;
+    [SerializeField] private float _attackCooldown = 0.5f;
+    [SerializeField] private PlayerStats _playerStats;
+    
 
     protected virtual void Awake()
     {
@@ -32,6 +39,12 @@ public class MonsterState : MonoBehaviour
         }
 
         if (_currentHp <= 0) Die();
+    }
+
+    public void Attack()
+    {
+        //TODO: 캐릭터에게 데미지 입히기
+        _playerStats.TakeDamage(_damage);
     }
 
     private void Die()
