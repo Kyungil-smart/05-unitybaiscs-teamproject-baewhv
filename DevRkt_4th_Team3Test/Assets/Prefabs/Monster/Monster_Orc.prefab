@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 694428779105171515}
   - component: {fileID: 3682775789512683811}
   - component: {fileID: 1164139834459863005}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,9 +89,9 @@ GameObject:
   - component: {fileID: 294316870080633792}
   - component: {fileID: 2222343634487725583}
   - component: {fileID: 5948637108785994074}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Monster_Orc
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 5477854669688069240}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 8, y: 9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -210,7 +210,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.29, y: 0.21, z: 0.2}
+  m_Size: {x: 0.29, y: 0.2, z: 2.2}
   m_Center: {x: 0.03, y: 0, z: 0}
 --- !u!114 &2222343634487725583
 MonoBehaviour:
@@ -240,6 +240,9 @@ MonoBehaviour:
   _maxHp: 10
   _currentHp: 0
   _hpSlider: {fileID: 8070026785987164637}
+  _damage: 20
+  _attackCooltime: 0.5
+  _playerStats: {fileID: 0}
 --- !u!1 &6158628216410434247
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +255,7 @@ GameObject:
   - component: {fileID: 2742180317045651756}
   - component: {fileID: 8157780337489398155}
   - component: {fileID: 1482320251338461773}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Hp Guage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +356,7 @@ GameObject:
   - component: {fileID: 8235503351554835759}
   - component: {fileID: 5185973417680480897}
   - component: {fileID: 7964861097499521140}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2738678316162691855}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8676725446102673768}
   - component: {fileID: 8070026785987164637}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
