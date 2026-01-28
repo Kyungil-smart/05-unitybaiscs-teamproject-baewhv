@@ -17,7 +17,7 @@ public class OrbitalWeapon : WeaponBase, IWeapon
     private void OnTriggerEnter(Collider collider)
     {
         //충돌한 물체가 enemy이면 공격
-        if (!collider.CompareTag("WeaponEnemy"))
+        if (!collider.CompareTag("Enemy"))
         {
             return;
         } 
@@ -39,8 +39,9 @@ public class OrbitalWeapon : WeaponBase, IWeapon
     /// <param name="monster"></param>
     public void WeaponAttack(WeaponMonster monster)
     {
-        monster.HP -= weaponDamage;
-        Debug.Log($"HP : {monster.HP}");
+        // monster선언되면 이부분 변경. HP대신 HP에 대응되는 변수로
+        // monster.HP -= weaponDamage;
+        // Debug.Log($"HP : {monster.HP}");
     }
     
 }
