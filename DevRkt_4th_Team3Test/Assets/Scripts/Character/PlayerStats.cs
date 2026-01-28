@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour, IDamagable
 {
     [SerializeField][Range (1, 99)]private int _level = 1;
-    [SerializeField] private int _maxHP = 1000;
+    [SerializeField] private int _maxHP = 300;
     [SerializeField] private int _currentHP;
     [SerializeField] private float _attackDamage = 1;
     [SerializeField] private int _defense = 1;
