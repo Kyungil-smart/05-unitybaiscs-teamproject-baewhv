@@ -14,7 +14,11 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _attackDamage = 1;
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private AudioClip deathSound; 
     
+    private AudioSource _audioSource;
+    private bool _isDead = false;
+
     // 사망 시 캐릭터 색상 변경용
     private Renderer _renderer;   // 캐릭터 색상 변경용
 
@@ -51,7 +55,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     {
         _currentHP = _maxHP;
         _renderer = GetComponentInChildren<SpriteRenderer>();
-
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // 작동 확인용 (추후 삭제)
@@ -88,6 +92,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
     // 캐릭터 데미지 받기
     public void TakeDamage(int damage)
     {
+        if (_isDead) return;
+        
         int lastDamage = Mathf.Max(damage - _defense, 1);
         _currentHP -= lastDamage;
         // 범위 제한
@@ -115,12 +121,19 @@ public class PlayerStats : MonoBehaviour, IDamagable
     // 캐릭터 죽음 처리
     private void Death()
     {
+        if (_isDead) return;
+        _isDead = true;
         _currentHP = 0;
 
         // 캐릭터 색상 회색으로 변경
         if (_renderer != null)
         {
             _renderer.material.color = Color.black;
+        }
+        // 캐릭터 사망 시 사망 사운드 출력
+        if (_audioSource != null && deathSound != null)
+        {
+            _audioSource.PlayOneShot(deathSound);
         }
 
         // 죽음 이벤트 알림 -> 구독 필요
