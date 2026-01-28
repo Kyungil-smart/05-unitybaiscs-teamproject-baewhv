@@ -19,7 +19,7 @@ public class ExpSystem : MonoBehaviour
     //레벨업 이벤트를 선언
     public event Action OnLevelUp;
 
-    void Start()
+    public void Start()
     {
         _playerStats = GetComponent<PlayerStats>();
     }
