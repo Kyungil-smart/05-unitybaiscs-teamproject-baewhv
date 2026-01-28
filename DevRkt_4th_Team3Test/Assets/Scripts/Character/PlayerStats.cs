@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 플레이어의 스탯관련 클래스
 /// </summary>
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IDamagable
 {
     [SerializeField][Range (1, 99)]private int _level = 1;
     [SerializeField] private int _maxHP = 1000;
@@ -83,25 +83,29 @@ public class PlayerStats : MonoBehaviour
     // 테스트용 데미지 받기
     public void TakeDamage(int damage)
     {
-        int finalDamage = Mathf.Max(damage - _defense, 1);
-        _currentHP -= finalDamage;
+        int lastDamage = Mathf.Max(damage - _defense, 1);
+        _currentHP -= lastDamage;
+        // 범위 제한
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
 
-        OnHPChanged?.Invoke(); 
-        
+        OnHPChanged?.Invoke();
+
         if (_currentHP <= 0)
         {
             Death();
         }
     }
+
     // 캐릭터 힐 받기
     public void Heal(int amount)
     {
         _currentHP += amount;
+        // 범위제한
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
-        
+
         OnHPChanged?.Invoke();
     }
+
 
     // 캐릭터 죽음 처리
     private void Death()
