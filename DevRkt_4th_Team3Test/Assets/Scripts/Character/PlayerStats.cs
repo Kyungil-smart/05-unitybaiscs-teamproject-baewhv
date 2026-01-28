@@ -80,7 +80,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
         _maxHP += 100;
     }
     
-    // 테스트용 데미지 받기
+    // 캐릭터 데미지 받기
     public void TakeDamage(int damage)
     {
         int lastDamage = Mathf.Max(damage - _defense, 1);
