@@ -31,29 +31,6 @@ public class PlayerHealth : MonoBehaviour
         UpdateHPGuage();
     }
     
-    // TakeDamage, Heal 테스트용
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Heal(100); 
-        }
-    }
-    
-    public void TakeDamage(int damage)
-    {
-        _currentHP -= damage;
-        _currentHP = Mathf.Clamp(_currentHP, 0, _playerStats.MaxHP);
-        UpdateHPGuage();
-    }
-
-    public void Heal(int amount)
-    {
-        _currentHP += amount;
-        _currentHP = Mathf.Clamp(_currentHP, 0, _playerStats.MaxHP);
-        UpdateHPGuage();
-    }
-
     private void UpdateHPGuage()
     {
         // 슬라이더 값을 현재 hp로 설정
