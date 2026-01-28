@@ -17,6 +17,8 @@ public class PlayerStats : MonoBehaviour
     
     // 죽음 이벤트를 선언
     public event Action OnPlayerDeath;
+    // HP 변경 이벤트
+    public event Action OnHPChanged;
 
     // _moveSpeed를 프로퍼티로 외부에서 참조할 수 있게
     public float MoveSpeed
@@ -34,6 +36,14 @@ public class PlayerStats : MonoBehaviour
             return _maxHP;
         }
     }
+    // PlayerStats.cs
+    public int CurrentHP
+    {
+        get
+        {
+            return _currentHP;
+        }
+    }
     public void Start()
     {
         _currentHP = _maxHP;
@@ -43,7 +53,7 @@ public class PlayerStats : MonoBehaviour
     public void Update()
     {
         // 테스트용: 데미지 받기
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(50);
         }
@@ -68,9 +78,11 @@ public class PlayerStats : MonoBehaviour
     // 테스트용 데미지 받기
     public void TakeDamage(int damage)
     {
-        int finalDamage = Mathf.Max(damage - _defense, 1); // 최소 1 데미지
+        int finalDamage = Mathf.Max(damage - _defense, 1);
         _currentHP -= finalDamage;
+        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
 
+        OnHPChanged?.Invoke(); 
         if (_currentHP <= 0)
         {
             Death();
