@@ -11,7 +11,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField]private Transform player;
     [SerializeField]private Vector3 offset = new Vector3(0, 30, 0);
 
-    void LateUpdate()
+    public void LateUpdate()
     {
         if (player != null)
         {

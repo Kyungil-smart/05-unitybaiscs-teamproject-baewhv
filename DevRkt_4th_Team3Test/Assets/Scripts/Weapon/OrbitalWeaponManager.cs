@@ -4,14 +4,34 @@ using UnityEngine;
 
 public class OrbitalWeaponManager : MonoBehaviour
 {
+    public static OrbitalWeaponManager OrbitalInstance;
+    //무기 프리펩 저장
+    [SerializeField] private List<GameObject> prefabs =  new List<GameObject>();
     //궤도무기들 종류마다 저장
-    [SerializeField] private List<OrbitalWeapon> _orbitalWeapons = new List<OrbitalWeapon>();
-    [SerializeField] private WeaponPlayer _player;
+    public List<OrbitalWeapon> _orbitalWeapons = new List<OrbitalWeapon>();
+    [SerializeField] private GameObject _player;
     
-    //무기마다 궤도에 있는 무기들의 위치를 담는 딕셔너리
+    //무기마다 궤도에 있는 무기들의 위치를 담는 딕셔너리. List<Transform>.Count = 한 종류의 무기에 존재하는 무기 개수
     private Dictionary<OrbitalWeapon, List<Transform>> _weaponLocations = new Dictionary<OrbitalWeapon, List<Transform>>();
 
     private Vector3 _lastTargetPosition;
+
+    private void Awake()
+    {
+        if (OrbitalInstance == null)
+        {
+            OrbitalInstance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        CreatePrefabsObject();
+    }
+
     private void Start()
     {
         //플레이어 위치 저장
@@ -39,8 +59,11 @@ public class OrbitalWeaponManager : MonoBehaviour
     }
 
     // 360/각 무기 카운트 수 마다 무기 배치. 
-    private void SpawnWeapons(OrbitalWeapon weapon)
+    public void SpawnWeapons(OrbitalWeapon weapon)
     {
+        if (weapon == null) return;
+        ClearWeapons(weapon);
+        
         int count = weapon.projectileCount;
         
         //리스트 생성 후 해당 OrbitalWeapon에 등록
@@ -54,7 +77,7 @@ public class OrbitalWeaponManager : MonoBehaviour
             Vector3 position = GetOrbitPosition(weapon, i * angle); 
             //생성
             GameObject obj = Instantiate(weapon.objectPrefab, position, Quaternion.identity);
-            
+            obj.SetActive(true);
             //생성된 객체 transform 딕셔너리에 추가.
             _weaponLocations[weapon].Add(obj.transform);
         }
@@ -63,10 +86,23 @@ public class OrbitalWeaponManager : MonoBehaviour
     //무기의 숫자가 바뀌었을때 무기 지우고 다시 배치.
     private void ClearWeapons(OrbitalWeapon weapon)
     {
-        //무기에 객체가 있으면 해당 무기에서 생성된 객체를 모두 지움. 
+        // 딕셔너리에 해당 무기 키가 있는지 확인
         if (_weaponLocations.ContainsKey(weapon))
         {
-            _weaponLocations[weapon].Clear();
+            // 1. 리스트를 가져옵니다.
+            List<Transform> currentWeapons = _weaponLocations[weapon];
+
+            // 2. 리스트에 있는 모든 무기 오브젝트를 실제로 파괴합니다.
+            for (int i = 0; i < currentWeapons.Count; i++)
+            {
+                if (currentWeapons[i] != null)
+                {
+                    Destroy(currentWeapons[i].gameObject);
+                }
+            }
+
+            // 3. 모든 오브젝트가 파괴되었으니 리스트를 비웁니다.
+            currentWeapons.Clear();
         }
     }
 
@@ -97,6 +133,7 @@ public class OrbitalWeaponManager : MonoBehaviour
 
             // 이동
             _weaponLocations[weapon][i].position = Vector3.Lerp(_weaponLocations[weapon][i].position, targetPos, Time.deltaTime * weapon.weaponAttackSpeed);
+            _weaponLocations[weapon][i].LookAt(_player.transform.position);
         }
     }
 
@@ -105,6 +142,27 @@ public class OrbitalWeaponManager : MonoBehaviour
     {
         
     }
-    
-    //무기의 능력치를 변경.
+
+    //프리펩으로부터 객체를 만들어서 리스트 _orbitalWeapons에 등록
+    private void CreatePrefabsObject()
+    {
+        int k = 0;
+        for (int i = 0; i < prefabs.Count; i++)
+        {
+            
+            //무기 프리펩으로 복제본을 instantiate 해서 그 값을 변경해야 꺼저도 프리펩 값 변경 안됨
+            
+            //프리펩이 OrbitalWeapon일때만 _orbitalWeapons 리스트에 추가.
+            if (prefabs[i].GetComponent<OrbitalWeapon>() != null)
+            {
+                GameObject go = Instantiate(prefabs[i]);
+                go.SetActive(false);
+                OrbitalWeapon ow = go.GetComponent<OrbitalWeapon>();
+                _orbitalWeapons.Add(ow);
+                //Debug.Log(_orbitalWeapons[k]._weaponName);
+                k++;
+            }
+        }
+
+    }
 }
