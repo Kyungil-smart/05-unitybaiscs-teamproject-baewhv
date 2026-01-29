@@ -11,9 +11,10 @@ public class MonsterState : MonoBehaviour
     [Header("Attack Settings")]
     [SerializeField] private int _damage = 10;
     [SerializeField] private float _attackCooltime = 0.5f;
-    [SerializeField] private PlayerStats _playerStats;
     private float _lastAttackTime;
-
+    private GameObject _player;
+    private PlayerStats _playerStats;
+    
     protected virtual void Awake()
     {
         _currentHp = _maxHp;
@@ -24,6 +25,12 @@ public class MonsterState : MonoBehaviour
         }
 
         MonsterManager.Register();
+    }
+    
+    private void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
+        if (_player != null) _playerStats = _player.GetComponent<PlayerStats>();
     }
     
     private void OnTriggerStay(Collider other)
