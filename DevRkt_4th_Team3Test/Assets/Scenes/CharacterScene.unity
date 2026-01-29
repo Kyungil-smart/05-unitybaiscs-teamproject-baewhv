@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fieldTile: {fileID: 0}
-  _designedTile: {fileID: 0}
+  _designedTile: []
   _preLoadMapSize: {x: 11, y: 11}
   _mapSight: {x: 2, y: 2}
 --- !u!4 &622480988
@@ -743,7 +743,6 @@ MonoBehaviour:
     attackSpeedMultiplier: 1.8
     projectileAdd: 4
     rangeMultiplier: 1.5
-  weapons: []
   _maxWeaponDamage: 100000
   _maxWeaponAttackSpeed: 500
   _maxProjectileCount: 10
