@@ -9,5 +9,6 @@ public class Potion : ItemObject
     {
         base.Interact(pc);
         pc.Heal(_healValue);
+        Debug.Log("hp회복");
     }
 }
