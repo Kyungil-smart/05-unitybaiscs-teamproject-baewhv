@@ -8,7 +8,7 @@ public class PlayerCamera : MonoBehaviour
     /// 플레이어에게 카메라 고정
     /// 이전 카메라가 오브젝트에 부딪힐 시 회전하여 수정
     /// </summary>
-    [SerializeField]private Transform player;
+    [SerializeField]public Transform player;
     [SerializeField]private Vector3 offset = new Vector3(0, 30, 0);
 
     public void LateUpdate()

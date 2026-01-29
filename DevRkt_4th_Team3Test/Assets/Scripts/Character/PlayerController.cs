@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     // 플레이어 스탯 참조
     private PlayerStats _playerStats;
+    // 플레이어 사망 시 이동 차단
+    private bool _isDead = false;
     
     public void Start()
     {
@@ -24,9 +26,22 @@ public class PlayerController : MonoBehaviour
         // Animator가 자식요소에 있어서 Children으로 넣어줌
         _anim = GetComponentInChildren<Animator>();
         _sprite = GetComponentInChildren<SpriteRenderer>();
+        
+        // 죽음 이벤트 구독
+        _playerStats.OnPlayerDeath += HandleDeath;
+
     }
+    private void HandleDeath()
+    {
+        _isDead = true;
+        // 애니메이션 정지
+        _anim.SetBool("isRunning", false); 
+    }
+
     public void Update()
     {
+        if (_isDead) return; 
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         
@@ -46,6 +61,7 @@ public class PlayerController : MonoBehaviour
     }
     public void FixedUpdate()
     {
+        if (_isDead) return;
         _rigidbody.MovePosition(transform.position + _movement * _playerStats.MoveSpeed * Time.fixedDeltaTime);
     }
 

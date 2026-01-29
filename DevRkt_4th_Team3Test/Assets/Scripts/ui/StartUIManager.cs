@@ -6,16 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartUIManager : MonoBehaviour
 {
     private DataController _dataController;
-    
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    [SerializeField] private GameObject _settingPopup;
 
     public void StartGame()
     {
@@ -38,7 +29,10 @@ public class StartUIManager : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 }

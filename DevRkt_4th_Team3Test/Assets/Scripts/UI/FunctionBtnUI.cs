@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class FunctionBtnManager : MonoBehaviour
 {
     [SerializeField] private GameObject _settingPopup;
+    private GameObject _currentSettingPopup;
     [SerializeField] private GameObject _pauseAlert;
     private GameObject _currentAlertInstance;
     
@@ -23,14 +24,19 @@ public class FunctionBtnManager : MonoBehaviour
         if (_isPaused)
         {
             Time.timeScale = 0f;
+            //얼럿 프리팹 생성해서 할당
             if (_currentAlertInstance == null)
             {
                 _currentAlertInstance = Instantiate(_pauseAlert, GameObject.Find("Canvas").transform);
             }
-            else
+            else _currentAlertInstance.SetActive(true);
+            //팝업 프리팹 생성해서 할당
+            if (_currentSettingPopup == null)
             {
-                _currentAlertInstance.SetActive(true);
+                _currentSettingPopup = Instantiate(_settingPopup, GameObject.Find("Canvas").transform);
             }
+            else _currentSettingPopup.SetActive(true);
+
         }
         else
         {
@@ -54,7 +60,6 @@ public class FunctionBtnManager : MonoBehaviour
         {
             _settingPopup.SetActive(!_settingPopup.activeSelf);
         }
-        Debug.Log("Setting Opened/Closed");
     }
     
     /// <summary>
@@ -62,8 +67,7 @@ public class FunctionBtnManager : MonoBehaviour
     /// </summary>
     public void OnClickExit()
     {
-        _dataController.Save();
-        UnityEditor.EditorApplication.isPlaying = false;
+        //_dataController.Save();
         SceneManager.LoadScene(2);
     }
 }
