@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WeaponEnemy
   - Monster
+  - Interactable
   layers:
   - Default
   - TransparentFX
