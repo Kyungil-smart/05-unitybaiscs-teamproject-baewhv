@@ -39,7 +39,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private float _maxWeaponDamage= 100000f;
     [SerializeField] private float _maxWeaponAttackSpeed = 500f;
     [SerializeField] private float _maxProjectileCount = 10;
-    
+    [SerializeField] private float _maxRangedWeaponAttackSpeed = 100f;
     public int cardCount = 3;
     
    
@@ -188,10 +188,19 @@ public class CardManager : MonoBehaviour
         {
             list.Remove(1);
         }
+        
+        //RangedWeapon에 한해서는  RangedWeapon전용 attackSpeed 최대값을 적용 
+        if (weapon is RangedWeapon && weapon.weaponAttackSpeed >= _maxRangedWeaponAttackSpeed)
+        {
+            list.Remove(2);
+        }
+        
         if (weapon.projectileCount >= _maxProjectileCount)
         {
             list.Remove(2);
         }
+
+        
         
         //만약 무기가 원거리나 근거리 무기면 ProjectileCount제외
         if (!(weapon is OrbitalWeapon))

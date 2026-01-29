@@ -19,10 +19,10 @@ public class RangedWeapon : WeaponBase
     //적이 인스턴스가 적에게 이동하는 사이에 죽으면 죽기전 마지막 적의 위치로 가서 인스턴스를 파괴시킨다.
 
     private float timer = 0f;
-    [SerializeField] private float spawnOffset = 2f; // 플레이어 몸체보다 약간 앞에서 생성
+    [SerializeField] private float spawnOffset = 0.7f; // 플레이어 몸체보다 약간 앞에서 생성
     public GameObject _player;
     private float AttackspeedOffset = 10f;
-
+    public float startTime = 0f;
     private void Start()
     {
         _player = RangedWeaponManager.RangedInstance._player;
@@ -45,12 +45,16 @@ public class RangedWeapon : WeaponBase
         if (!isActive) return;
         timer += Time.deltaTime;
 
+        
         // 공속에 따른 쿨타임 체크
         if (timer >= AttackspeedOffset / weaponAttackSpeed)
         {
             // 가장가까운적찾기
             Transform target = GetNearestEnemy();
-
+            if (target == null)
+            {
+                Debug.Log("적이 범위내에 없습니다");
+            }
             // 적이 있을때 projectile 발사
             if (target != null)
             {
@@ -108,7 +112,7 @@ public class RangedWeapon : WeaponBase
         if (projectileScript != null)
         {
             // 인스턴스를 적의 위치로 보냄 (업데이트에서 계속 추적함)
-            projectileScript.Init(target, weaponDamage);
+            projectileScript.Init(target, weaponDamage, this);
         }
         
     }
