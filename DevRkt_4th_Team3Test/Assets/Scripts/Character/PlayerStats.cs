@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -17,9 +18,10 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _pickupRange = 5f;
     [SerializeField] private AudioClip _deathSound; 
     [SerializeField] private AudioClip[] _hitSounds;
+    [SerializeField]private TextMeshProUGUI _healText;
     
     public float PickupRange => _pickupRange;
-
+    
     // 원래 컬러가 흰색이 아닐경우도 있어서 오리지널 컬러를 따로 지정해서 저장
     private Color _originalColor;
     private AudioSource _audioSource;
@@ -87,8 +89,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
             IncreaseStats();
             Debug.Log($"Level: {_level}, Attack: {_attackDamage}, Defense: {_defense}, MoveSpeed: {_moveSpeed}");
         }
-        AbsorbNearbyItems();
-
+        
     }
 
     // 레벨업에 따른 스탯 증가
@@ -146,45 +147,39 @@ public class PlayerStats : MonoBehaviour, IDamagable
     // 캐릭터 힐 받기
     public void Heal(int amount)
     {
+        if (_currentHP >= _maxHP) return;
         _currentHP += amount;
         // 범위제한
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
 
+        HealText(amount);
+        
         OnHPChanged?.Invoke();
     }
-
-    private void AbsorbNearbyItems()
+    public void HealText(int amount)
     {
-        ItemObject[] items = FindObjectsOfType<ItemObject>();
+        if (_healText == null) return;
+        _healText.gameObject.SetActive(true);
+        _healText.text = $"+{amount} HP";   
+        _healText.color = Color.green;      
 
-        foreach (var item in items)
-        {
-            float distance = Vector2.Distance(transform.position, item.transform.position);
-
-            if (distance < _pickupRange)
-            {
-                // 아이템을 플레이어 쪽으로 이동
-                item.transform.position = Vector2.MoveTowards(
-                    item.transform.position,
-                    transform.position,
-                    10f * Time.deltaTime // 흡수 속도
-                );
-
-                // 충분히 가까워지면 흡수 완료
-                if (distance < 0.5f)
-                {
-                    ExpSystem expSystem = GetComponent<ExpSystem>();
-                    if (expSystem != null)
-                    {
-                        expSystem.GainExp(5); 
-                    }
-                    Destroy(item.gameObject);
-                }
-            }
-        }
+        Invoke("HideHealText", 2f);
+    }
+    private void HideHealText()
+    {
+        if (_healText != null)
+            _healText.gameObject.SetActive(false);
     }
 
-
+    
+    // 캐릭터 경험치 획득
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interactable"))
+        {
+            (other.GetComponent<ItemObject>() as IInteractable)?.Interact(this);
+        }
+    }
 
     // 캐릭터 죽음 처리
     private void Death()
