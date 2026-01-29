@@ -111,8 +111,7 @@ public class FieldManager : MonoBehaviour
                 }
                 else if (!_tiles[posY][posX].isSetTile) //없을 때 생성
                 {
-                    _tiles[posY][posX].TileDesign = Instantiate(_designedTile[Random.Range(0,_designedTile.Count)]); //타일 랜덤 생성
-                    _tiles[posY][posX].TileDesign.transform.SetParent(_tiles[posY][posX].transform);
+                    _tiles[posY][posX].Init(_designedTile[Random.Range(0,_designedTile.Count)]);
                     _tiles[posY][posX].transform.position = new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
                     _tiles[posY][posX].EnableFieldTile();
                 }

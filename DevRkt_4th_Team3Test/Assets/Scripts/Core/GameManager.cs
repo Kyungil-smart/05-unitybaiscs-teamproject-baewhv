@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
         
         GameObject player = Instantiate(Player,_spawnPoint, new Quaternion());
         Instantiate(Camera).player = player.transform;
-        _levelUI._expSystem = player.GetComponent<ExpSystem>();
+        if(_levelUI)
+            _levelUI._expSystem = player.GetComponent<ExpSystem>();
     }
 
     void GenerateManager<T>() where T : Component

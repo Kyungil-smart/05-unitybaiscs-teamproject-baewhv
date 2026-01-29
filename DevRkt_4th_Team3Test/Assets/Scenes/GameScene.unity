@@ -331,6 +331,7 @@ MonoBehaviour:
   <Player>k__BackingField: {fileID: 2857166452826860582, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
   _spawnPoint: {x: 0, y: 0, z: 0}
   <Camera>k__BackingField: {fileID: 1255718000294188076, guid: f24744fd33513304392682b77e3e3848, type: 3}
+  _levelUI: {fileID: 2073122949}
 --- !u!4 &1935520513
 Transform:
   m_ObjectHideFlags: 0
@@ -445,6 +446,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8465674392642158435, guid: 4afe06f7a6743e14594ccb20a405a7c8, type: 3}
   m_PrefabInstance: {fileID: 7592122683939190136}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2073122949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2708448735674833627, guid: 4afe06f7a6743e14594ccb20a405a7c8, type: 3}
+  m_PrefabInstance: {fileID: 7592122683939190136}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d25e911d6d3cd44a02c35d2eabd265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &456085465674462624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -830,6 +842,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2052829327}
-  - {fileID: 1935520513}
   - {fileID: 814566671}
   - {fileID: 1520961302}
+  - {fileID: 1935520513}
