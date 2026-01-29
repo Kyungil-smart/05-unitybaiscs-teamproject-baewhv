@@ -14,6 +14,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _attackDamage = 1;
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private float _pickupRange = 5f;
     [SerializeField] private AudioClip _deathSound; 
     [SerializeField] private AudioClip[] _hitSounds;
     
