@@ -21902,7 +21902,11 @@ PrefabInstance:
     - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
       propertyPath: _obj
       value: 
-      objectReference: {fileID: 6508388870362524971, guid: a1946800408f99d4ea663d5ac8ba70f4, type: 3}
+      objectReference: {fileID: 669104739918289640, guid: b8b568b9582b4c243a65e832bb950272, type: 3}
+    - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
+      propertyPath: _type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21979,7 +21983,11 @@ PrefabInstance:
     - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
       propertyPath: _obj
       value: 
-      objectReference: {fileID: 6508388870362524971, guid: 4ee100ecc34c6094ca988386cbfb5f1d, type: 3}
+      objectReference: {fileID: 669104739918289640, guid: b8b568b9582b4c243a65e832bb950272, type: 3}
+    - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
+      propertyPath: _type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22056,7 +22064,11 @@ PrefabInstance:
     - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
       propertyPath: _obj
       value: 
-      objectReference: {fileID: 6508388870362524971, guid: 39bbc16ba0a811e4dad4b92ca3cd3bda, type: 3}
+      objectReference: {fileID: 669104739918289640, guid: b8b568b9582b4c243a65e832bb950272, type: 3}
+    - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
+      propertyPath: _type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22133,7 +22145,11 @@ PrefabInstance:
     - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
       propertyPath: _obj
       value: 
-      objectReference: {fileID: -8788253286852753353, guid: bfd9483b2c6e7884b8a7717d93bb9b3d, type: 3}
+      objectReference: {fileID: 669104739918289640, guid: b8b568b9582b4c243a65e832bb950272, type: 3}
+    - target: {fileID: 8360481516534626688, guid: 3dac5fe4a3955464fbdf4f3a410b01bb, type: 3}
+      propertyPath: _type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
