@@ -7,7 +7,7 @@ public class EndingUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI TitleText;
     [SerializeField] private TextMeshProUGUI ResultText;
     public static bool IsClear = false;
-    public static string EndTime;
+    public static string EndTime = "00:00";
     
     private void Start()
     {
