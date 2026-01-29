@@ -12,10 +12,10 @@ public class ExpObject : ItemObject
     /// <param name="pc"></param>
     public override void Interact(PlayerStats pc)
     {
-        base.Interact(pc);
         ExpSystem es = pc.GetComponent<ExpSystem>();
         if (es)
             es.GainExp(_expValue);
-        
+        Debug.Log("경험치 획득");
+        base.Interact(pc);
     }
 }

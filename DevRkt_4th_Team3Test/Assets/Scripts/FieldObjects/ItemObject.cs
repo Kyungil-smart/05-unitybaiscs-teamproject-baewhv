@@ -6,5 +6,6 @@ public class ItemObject : FieldObject, IInteractable
 {
     public virtual void Interact(PlayerStats pc)
     {
+        FieldObjectManager.Instance.RemoveObject(this);
     }
 }
