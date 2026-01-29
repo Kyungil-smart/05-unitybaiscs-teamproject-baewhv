@@ -417,7 +417,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1125892e56469ab4bad79569953e85a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settingPopup: {fileID: 0}
+  _settingPopup: {fileID: 9129150363208348309, guid: 4d72e1ba9b5e04b43aa9a46ed1cb8bc0, type: 3}
+  _infoPopup: {fileID: 0}
 --- !u!4 &54003736
 Transform:
   m_ObjectHideFlags: 0
