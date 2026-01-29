@@ -23,12 +23,11 @@ public class OrbitalWeapon : WeaponBase, IWeapon
         } 
             
         
-        WeaponMonster monster = collider.GetComponent<WeaponMonster>();
+        MonsterState monster = collider.GetComponent<MonsterState>();
         // 컴포넌트가 없으면 리턴
         if (monster == null) return;
-        
-        // 공격 실행
-        WeaponAttack(monster);
+        monster.TakeDamage(weaponDamage);
+
     }
     
     

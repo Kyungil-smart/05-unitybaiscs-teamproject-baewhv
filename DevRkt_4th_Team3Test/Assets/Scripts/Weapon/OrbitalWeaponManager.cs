@@ -77,7 +77,8 @@ public class OrbitalWeaponManager : MonoBehaviour
             Vector3 position = GetOrbitPosition(weapon, i * angle); 
             //생성
             GameObject obj = Instantiate(weapon.objectPrefab, position, Quaternion.identity);
-            obj.SetActive(true);
+            //무기가 isActive = true인경우만 활성화.
+            obj.SetActive(weapon.isActive);
             //생성된 객체 transform 딕셔너리에 추가.
             _weaponLocations[weapon].Add(obj.transform);
         }
@@ -86,13 +87,13 @@ public class OrbitalWeaponManager : MonoBehaviour
     //무기의 숫자가 바뀌었을때 무기 지우고 다시 배치.
     private void ClearWeapons(OrbitalWeapon weapon)
     {
-        // 딕셔너리에 해당 무기 키가 있는지 확인
+        
         if (_weaponLocations.ContainsKey(weapon))
         {
-            // 1. 리스트를 가져옵니다.
+            
             List<Transform> currentWeapons = _weaponLocations[weapon];
 
-            // 2. 리스트에 있는 모든 무기 오브젝트를 실제로 파괴합니다.
+            
             for (int i = 0; i < currentWeapons.Count; i++)
             {
                 if (currentWeapons[i] != null)
@@ -101,7 +102,7 @@ public class OrbitalWeaponManager : MonoBehaviour
                 }
             }
 
-            // 3. 모든 오브젝트가 파괴되었으니 리스트를 비웁니다.
+            
             currentWeapons.Clear();
         }
     }
