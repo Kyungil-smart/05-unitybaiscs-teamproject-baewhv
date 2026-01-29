@@ -9,12 +9,19 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour, IDamagable
 {
     [SerializeField][Range (1, 99)]private int _level = 1;
-    [SerializeField] private int _maxHP = 1000;
+    [SerializeField] private int _maxHP = 300;
     [SerializeField] private int _currentHP;
     [SerializeField] private float _attackDamage = 1;
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private AudioClip deathSound; 
     
+    private AudioSource _audioSource;
+    private bool _isDead = false;
+
+    // 사망 시 캐릭터 색상 변경용
+    private Renderer _renderer;   // 캐릭터 색상 변경용
+
     // 죽음 이벤트를 선언
     public event Action OnPlayerDeath;
     // HP 변경 이벤트
@@ -47,6 +54,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
     public void Start()
     {
         _currentHP = _maxHP;
+        _renderer = GetComponentInChildren<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // 작동 확인용 (추후 삭제)
@@ -80,9 +89,11 @@ public class PlayerStats : MonoBehaviour, IDamagable
         _maxHP += 100;
     }
     
-    // 테스트용 데미지 받기
+    // 캐릭터 데미지 받기
     public void TakeDamage(int damage)
     {
+        if (_isDead) return;
+        
         int lastDamage = Mathf.Max(damage - _defense, 1);
         _currentHP -= lastDamage;
         // 범위 제한
@@ -110,9 +121,21 @@ public class PlayerStats : MonoBehaviour, IDamagable
     // 캐릭터 죽음 처리
     private void Death()
     {
+        if (_isDead) return;
+        _isDead = true;
         _currentHP = 0;
-        // 테스트용 테스트 후 삭제
-        Debug.Log("플레이어 사망");
+
+        // 캐릭터 색상 회색으로 변경
+        if (_renderer != null)
+        {
+            _renderer.material.color = Color.black;
+        }
+        // 캐릭터 사망 시 사망 사운드 출력
+        if (_audioSource != null && deathSound != null)
+        {
+            _audioSource.PlayOneShot(deathSound);
+        }
+
         // 죽음 이벤트 알림 -> 구독 필요
         OnPlayerDeath?.Invoke();
     }
