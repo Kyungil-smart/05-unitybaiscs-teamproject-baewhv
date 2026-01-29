@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,12 +21,16 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
-    
-    [field:SerializeField] public GameObject Player { get; set; }
+
+    [field: SerializeField] private GameObject PlayerPrefab;
+    public GameObject Player { get; private set; }
     [SerializeField] private Vector3 _spawnPoint; 
+    
     [field:SerializeField] public PlayerCamera Camera { get; set; }
 
     [SerializeField] private LevelUI _levelUI;
+    [SerializeField] private OrbitalWeaponManager _owm;
+    [SerializeField] private RangedWeaponManager _rwm;
     
      
     void Awake()
@@ -42,12 +47,18 @@ public class GameManager : MonoBehaviour
     void Init()
     {
         GenerateManager<FieldManager>();
-        //GenerateManager<OrbitalWeaponManager>();
         
-        GameObject player = Instantiate(Player,_spawnPoint, new Quaternion());
-        Instantiate(Camera).player = player.transform;
+        Player = Instantiate(PlayerPrefab, _spawnPoint, new Quaternion());
+        Instantiate(Camera).player = Player.transform;
         if(_levelUI)
-            _levelUI._expSystem = player.GetComponent<ExpSystem>();
+            _levelUI._expSystem = Player.GetComponent<ExpSystem>();
+        if(_owm)
+            _owm._player = Player;
+        if (_rwm)
+            _rwm._player = Player;
+        PlayerStats ps = Player.GetComponent<PlayerStats>();
+        if(ps)
+            ps.OnPlayerDeath += GameOver;
     }
 
     void GenerateManager<T>() where T : Component
@@ -57,5 +68,12 @@ public class GameManager : MonoBehaviour
         var go = new GameObject(typeof(T).Name);
         go.AddComponent<T>();
         go.transform.SetParent(transform);
+    }
+
+    private void GameOver()
+    {
+        Destroy(_owm.gameObject);
+        Destroy(_rwm.gameObject);
+        SceneManager.LoadScene(2);
     }
 }
