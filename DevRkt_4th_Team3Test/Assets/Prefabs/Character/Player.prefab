@@ -377,7 +377,8 @@ MonoBehaviour:
   _attackDamage: 1
   _defense: 1
   _moveSpeed: 5
-  deathSound: {fileID: 8300000, guid: 7bad3febd1f183a458c2a7db8784c50f, type: 3}
+  _deathSound: {fileID: 8300000, guid: 7bad3febd1f183a458c2a7db8784c50f, type: 3}
+  _hitSound: {fileID: 8300000, guid: 61bd2ffcdd5b069418f4e72d5bca4463, type: 3}
 --- !u!114 &5353183636590071758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,7 +958,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1379482414, guid: 9f3f0e5ab1e79814abeee99c11457dd8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

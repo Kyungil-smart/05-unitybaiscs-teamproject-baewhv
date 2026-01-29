@@ -14,8 +14,11 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _attackDamage = 1;
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private AudioClip deathSound; 
+    [SerializeField] private AudioClip _deathSound; 
+    [SerializeField] private AudioClip _hitSound;
     
+    // 원래 컬러가 흰색이 아닐경우도 있어서 오리지널 컬러를 따로 지정해서 저장
+    private Color _originalColor;
     private AudioSource _audioSource;
     private bool _isDead = false;
 
@@ -56,6 +59,9 @@ public class PlayerStats : MonoBehaviour, IDamagable
         _currentHP = _maxHP;
         _renderer = GetComponentInChildren<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
+        
+        if (_renderer != null)
+            _originalColor = _renderer.material.color;
     }
 
     // 작동 확인용 (추후 삭제)
@@ -96,9 +102,16 @@ public class PlayerStats : MonoBehaviour, IDamagable
         
         int lastDamage = Mathf.Max(damage - _defense, 1);
         _currentHP -= lastDamage;
+        
         // 범위 제한
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
 
+        // 캐릭터 피격 이펙트 (hp가 0이면 작동하지 않게)
+        if (_currentHP > 0 && _renderer != null) 
+        {
+            StartCoroutine(HitReaction());
+        }
+        
         OnHPChanged?.Invoke();
 
         if (_currentHP <= 0)
@@ -106,6 +119,19 @@ public class PlayerStats : MonoBehaviour, IDamagable
             Death();
         }
     }
+    // 캐릭터 피격 이펙트
+    private IEnumerator HitReaction()
+    {
+        // 캐릭터 피격 시 사망 사운드 출력
+        if (_audioSource != null && _hitSound != null)
+        {
+            _audioSource.PlayOneShot(_hitSound);
+        }
+        _renderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f); 
+        _renderer.material.color = _originalColor; 
+    }
+
 
     // 캐릭터 힐 받기
     public void Heal(int amount)
@@ -131,9 +157,9 @@ public class PlayerStats : MonoBehaviour, IDamagable
             _renderer.material.color = Color.black;
         }
         // 캐릭터 사망 시 사망 사운드 출력
-        if (_audioSource != null && deathSound != null)
+        if (_audioSource != null && _deathSound != null)
         {
-            _audioSource.PlayOneShot(deathSound);
+            _audioSource.PlayOneShot(_deathSound);
         }
 
         // 죽음 이벤트 알림 -> 구독 필요
