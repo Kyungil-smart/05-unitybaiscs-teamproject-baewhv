@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2310248971554885219}
   m_Layer: 5
-  m_Name: Pause Alert
+  m_Name: PauseAlert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
