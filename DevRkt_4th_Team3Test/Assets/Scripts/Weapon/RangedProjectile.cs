@@ -7,10 +7,10 @@ public class RangedProjectile : MonoBehaviour
     private Transform target; // 추적할 적
     private Vector3 lastTargetPosition; // 적이 죽었을 때를 대비한 마지막 위치
     private float damage;
-    private float speed = 15f; // 투사체 이동 속도
+    private float speed = 8f; // 투사체 이동 속도
 
     // 초기화 함수 (RangedWeapon에서 호출)
-    public void Init(Transform targetTransform, float weaponDamage)
+    public void Init(Transform targetTransform, float weaponDamage, RangedWeapon weapon)
     {
         target = targetTransform;
         damage = weaponDamage;
@@ -32,10 +32,10 @@ public class RangedProjectile : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             transform.LookAt(target);
 
-            if (transform.position == target.position)
-            {
-                Destroy(gameObject);
-            }
+            // if (transform.position == target.position)
+            // {
+            //     Destroy(gameObject);
+            // }
         }
         // 2. 타겟이 죽거나 사라진 경우 (예외처리)
         else
