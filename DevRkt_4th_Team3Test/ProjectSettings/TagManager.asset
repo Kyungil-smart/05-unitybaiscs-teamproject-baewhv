@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WeaponEnemy
   - Monster
+  - Enemy
   - Interactable
   layers:
   - Default
@@ -14,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Monster
+  - Enemy
   - Player
   - 
   - 
