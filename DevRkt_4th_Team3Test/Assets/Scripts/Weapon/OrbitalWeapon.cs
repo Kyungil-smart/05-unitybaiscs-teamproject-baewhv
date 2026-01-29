@@ -3,17 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class OrbitalWeapon : WeaponBase, IWeapon
+public class OrbitalWeapon : WeaponBase
 {
-    private void Start()
-    {
-        
-    }
-    
-    private void Update()
-    {
-        //캐릭터의 위치를 기준으로 공전
-    }
+    //궤도무기는 OnTriggerEnter로 데미지.
     private void OnTriggerEnter(Collider collider)
     {
         //충돌한 물체가 enemy이면 공격
@@ -36,10 +28,10 @@ public class OrbitalWeapon : WeaponBase, IWeapon
     /// 무기로 몬스터 공격.
     /// </summary>
     /// <param name="monster"></param>
-    public void WeaponAttack(WeaponMonster monster)
-    {
-        monster.HP -= weaponDamage;
-        Debug.Log($"HP : {monster.HP}");
-    }
-    
+    // public void WeaponAttack(WeaponMonster monster)
+    // {
+    //     monster.HP -= weaponDamage;
+    //     Debug.Log($"HP : {monster.HP}");
+    // }
+    //
 }
