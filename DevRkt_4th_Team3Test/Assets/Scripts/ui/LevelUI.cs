@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class LevelUI : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField]private Image _gauge;
-    [SerializeField]private TextMeshProUGUI _expText;
-    [SerializeField]private TextMeshProUGUI _levelText;
-    [SerializeField] private GameObject _levelUpPopup;
-    
-    public float _lerpSpeed = 5f;
-    [Header("Player")]
-    [Tooltip("자동으로 캐릭터 데이터 찾습니다.")]
-    public ExpSystem _expSystem;
-    [SerializeField] private CardManager _cardManager;
+    [Header("UI")] [SerializeField] private Image _gauge;
+    [SerializeField] private TextMeshProUGUI _expText;
+    [SerializeField] private TextMeshProUGUI _levelText;
 
+    public float _lerpSpeed = 5f;
+
+    [Header("Player")] [Tooltip("자동으로 캐릭터 데이터 찾습니다.")]
+    public ExpSystem _expSystem;
+
+    [SerializeField] private LevelUpPopupUI _popupManager; // 새로 만든 매니저 연결
+    private int _lastLevel = 1;
+    
     void Start()
     {
         if (_expSystem == null)
@@ -26,17 +26,27 @@ public class LevelUI : MonoBehaviour
                 _expSystem = player.GetComponent<ExpSystem>();
             }
         }
+        
+        if (_expSystem != null) _lastLevel = _expSystem.Level;
     }
-    
+
     void Update()
     {
         UpdateExpGauge();
+        
+        // 레벨업 체크
+        if (_expSystem.Level > _lastLevel)
+        {
+            _lastLevel = _expSystem.Level;
+            //레벨업 팝업 표시
+            _popupManager.ShowPopup(); 
+        }
     }
-    
+
     private void UpdateExpGauge()
     {
         float targetFill = (float)_expSystem.CurrentExp / _expSystem.ExpToNextLevel;
-        
+
         _gauge.fillAmount = Mathf.Lerp(_gauge.fillAmount, targetFill, Time.deltaTime * _lerpSpeed);
 
         if (_expText != null)

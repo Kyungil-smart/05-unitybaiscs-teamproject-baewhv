@@ -829,6 +829,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2714545592076105267}
+  - component: {fileID: 7871357305178701027}
   m_Layer: 5
   m_Name: WeaponCard
   m_TagString: Untagged
@@ -862,3 +863,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 423.064, y: 590}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7871357305178701027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817488249632780782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420fd8593a0949b5900ef781e72996ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponIcon: {fileID: 1110910696515959183}
+  _rarityFrame: {fileID: 5162106489863687583}
+  _weaponNameText: {fileID: 6393249409286473733}
+  _damageText: {fileID: 3900288880690370770}
+  _speedText: {fileID: 8760577986757707378}
+  _rangeText: {fileID: 2525110911354938890}
+  _newTag: {fileID: 4126435559838954909}
