@@ -15,6 +15,8 @@ public class WeaponBase : MonoBehaviour
     public float weaponRange; // 공격범위 (근접은 변경x)
     [Header("프리팹")]
     public GameObject objectPrefab;
+    [Header("스프라이트")]
+    public Sprite weaponSprite;
 
     
     /// <summary>

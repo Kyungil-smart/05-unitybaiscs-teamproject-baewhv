@@ -1,19 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class FunctionBtnManager : MonoBehaviour
 {
+    [Header("Popup")]
     [SerializeField] private GameObject _infoPopup;
     private GameObject _currentInfoPopup;
+    private InfoPopupUI  _infoPopupUI;
     [SerializeField] private GameObject _pauseAlert;
     private GameObject _currentAlertInstance;
     
+    [Header("Button")]
+    public Sprite pauseSprite;
+    public Sprite startSprite;
+    private Image _btnImage;
     private bool _isPaused = false;
-    private DataController _dataController;
 
     public void Awake()
     {
@@ -22,8 +24,14 @@ public class FunctionBtnManager : MonoBehaviour
         {
             // Instantiate: 게임 오브젝트를 동적으로 생성
             _currentInfoPopup = Instantiate(_infoPopup, GameObject.Find("Canvas").transform);
+            // 생성 직후 화면에서 숨김
+            _currentInfoPopup.SetActive(false);
         }
-        else _currentInfoPopup.SetActive(true);
+        
+        _infoPopupUI = _currentInfoPopup.GetComponent<InfoPopupUI>();
+        
+        //버튼 이미지 컴포넌트
+        _btnImage = GetComponent<Image>();
     }
 
     /// <summary>
@@ -42,10 +50,14 @@ public class FunctionBtnManager : MonoBehaviour
                 _currentAlertInstance = Instantiate(_pauseAlert, GameObject.Find("Canvas").transform);
             }
             else _currentAlertInstance.SetActive(true);
+            
+            //버튼 이미지 변경
+            _btnImage.sprite = startSprite;
         }
         else
         {
             ResumeGame();
+            _btnImage.sprite = pauseSprite;
         }
     }
     
@@ -61,10 +73,7 @@ public class FunctionBtnManager : MonoBehaviour
     /// </summary>
     public void OnClickSetting()
     {
-        if (_infoPopup != null)
-        {
-            _infoPopup.SetActive(!_infoPopup.activeSelf);
-        }
+        _infoPopupUI.Open();
     }
     
     /// <summary>
@@ -72,7 +81,6 @@ public class FunctionBtnManager : MonoBehaviour
     /// </summary>
     public void OnClickExit()
     {
-        //_dataController.Save();
         SceneManager.LoadScene(2);
     }
 }

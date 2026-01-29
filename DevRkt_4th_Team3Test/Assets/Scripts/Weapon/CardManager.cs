@@ -62,21 +62,8 @@ public class CardManager : MonoBehaviour
             }
         
             cardData = DrawCard(cardCount);
-            
-            for (int i = 0; i < cardCount; i++)
-            {
-                //카드를 선택했을때.(함수화 시켜줘야함 나중에)
-                if (cardData[i].isNew == true)
-                {//원래는 무기가 처음 선택되는거면 무기카드가 보이게 할려고 했는데 그건 구현하기가 어렵기 때문에 그냥 처음보는것도 능력치변경되는 걸로.
-                    cardData[i].weapon.isActive = true;
-                    ApplyCardEffect(cardData[i]);
-                }
-                else
-                {
-                    ApplyCardEffect(cardData[i]);    
-                }
-                    
-            }
+
+            CardApply(cardData);
         }
         
     }
@@ -125,10 +112,33 @@ public class CardManager : MonoBehaviour
         cardData.weapon.UpgradeWeapon(cardData.abilityName, amount); //무기에 적용.
         
         //만약 궤도무기를 뽑았고. abilityName = projectileCount이면 SpawnWeapon를 통해 스폰시킴.
-        // if ((cardData.weapon is OrbitalWeapon) && cardData.abilityName == "projectileCount")
-        // {
+         if ((cardData.weapon is OrbitalWeapon))
+         {
             OrbitalWeaponManager.OrbitalInstance.SpawnWeapons((cardData.weapon as OrbitalWeapon));    
-        //}
+         }
+         
+    }
+
+    /// <summary>
+    /// 카드 효과 적용. 활성화안된무기 활성화.
+    /// </summary>
+    /// <param name="cardData"></param>
+    public void CardApply(Card[] cardData)
+    {
+        for (int i = 0; i < cardCount; i++)
+        {
+            //카드를 선택했을때.(함수화 시켜줘야함 나중에)
+            if (cardData[i].isNew == true)
+            {//원래는 무기가 처음 선택되는거면 무기카드가 보이게 할려고 했는데 그건 구현하기가 어렵기 때문에 그냥 처음보는것도 능력치변경되는 걸로.
+                cardData[i].weapon.isActive = true;
+                ApplyCardEffect(cardData[i]);
+            }
+            else
+            {
+                ApplyCardEffect(cardData[i]);    
+            }
+                    
+        }
     }
     
     /// <summary>
@@ -182,6 +192,13 @@ public class CardManager : MonoBehaviour
         {
             list.Remove(2);
         }
+        
+        //만약 무기가 원거리나 근거리 무기면 ProjectileCount제외
+        if (!(weapon is OrbitalWeapon))
+        {
+            list.Remove(2);
+        }
+        
         int randomValue = Random.Range(0, list.Count);
         
         string name = Enum.GetName(typeof(CardAbility), list[randomValue]);

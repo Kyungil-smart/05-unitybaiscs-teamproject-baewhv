@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MonsterState : MonoBehaviour
 {
@@ -11,19 +12,31 @@ public class MonsterState : MonoBehaviour
     [Header("Attack Settings")]
     [SerializeField] private int _damage = 10;
     [SerializeField] private float _attackCooltime = 0.5f;
-    [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private GameObject _damageText;
     private float _lastAttackTime;
-
+    
+    public static System.Action OnMonsterDie;
+    
     protected virtual void Awake()
     {
         _currentHp = _maxHp;
         if (_hpSlider != null)
         {
+            _hpSlider.minValue = 0f;
             _hpSlider.maxValue = _maxHp;
             _hpSlider.value = _currentHp;
         }
 
         MonsterManager.Register();
+    }
+    
+    //TODO: 테스트용, 나중에 삭제
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            TakeDamage(3);
+        }
     }
     
     private void OnTriggerStay(Collider other)
@@ -41,12 +54,15 @@ public class MonsterState : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _currentHp -= damage;
-
-        if (_hpSlider != null)
+        if (_hpSlider != null) _hpSlider.value = _currentHp;
+        
+        //데미지 텍스트 표시
+        Canvas myCanvas = GetComponentInChildren<Canvas>();
+        if (myCanvas != null)
         {
-            _hpSlider.value = _currentHp;
+            MonsterDamageText.ShowDamageText(_damageText, myCanvas.transform, Mathf.RoundToInt(damage));
         }
-
+        
         if (_currentHp <= 0) Die();
     }
 
@@ -67,6 +83,7 @@ public class MonsterState : MonoBehaviour
 
     private void Die()
     {
+        OnMonsterDie?.Invoke();
         MonsterManager.Unregister();
         Destroy(gameObject);
     }
