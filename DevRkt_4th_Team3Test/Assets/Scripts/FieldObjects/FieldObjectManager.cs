@@ -39,6 +39,6 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     {
         if(_objs.Contains(obj))
             _objs.Remove(obj);
-        Destroy(obj);
+        Destroy(obj.gameObject);
     }
 }
