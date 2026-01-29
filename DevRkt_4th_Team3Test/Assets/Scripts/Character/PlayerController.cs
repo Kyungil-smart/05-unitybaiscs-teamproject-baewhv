@@ -65,4 +65,11 @@ public class PlayerController : MonoBehaviour
         _rigidbody.MovePosition(transform.position + _movement * _playerStats.MoveSpeed * Time.fixedDeltaTime);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interactable"))
+        {
+            (other.GetComponent<ItemObject>() as IInteractable)?.Interact(_playerStats);
+        }
+    }
 }

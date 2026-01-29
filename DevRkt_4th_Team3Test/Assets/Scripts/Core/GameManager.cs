@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private LevelUI _levelUI;
     [SerializeField] private OrbitalWeaponManager _owm;
+    [SerializeField] private RangedWeaponManager _rwm;
     
      
     void Awake()
@@ -45,15 +46,15 @@ public class GameManager : MonoBehaviour
     void Init()
     {
         GenerateManager<FieldManager>();
-        //GenerateManager<MonsterSpawner>();
-        //GenerateManager<OrbitalWeaponManager>();
         
-        GameObject player = Instantiate(Player,_spawnPoint, new Quaternion());
-        Instantiate(Camera).player = player.transform;
+        Player = Instantiate(PlayerPrefab, _spawnPoint, new Quaternion());
+        Instantiate(Camera).player = Player.transform;
         if(_levelUI)
-            _levelUI._expSystem = player.GetComponent<ExpSystem>();
-        if(_own)
+            _levelUI._expSystem = Player.GetComponent<ExpSystem>();
+        if(_owm)
             _owm._player = Player;
+        if (_rwm)
+            _rwm._player = Player;
     }
 
     void GenerateManager<T>() where T : Component
