@@ -27,10 +27,7 @@ public class ExpSystem : MonoBehaviour
     // 경험치 들어오는지 확인(테스트용 테스트 후 삭제)
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            GainExp(200);
-        }
+
     }
 
     
@@ -38,6 +35,7 @@ public class ExpSystem : MonoBehaviour
     public void GainExp(int exp)
     {
         CurrentExp += exp;
+        Debug.Log($"GainExp 호출: {exp}, 현재 경험치: {CurrentExp}, 필요 경험치: {ExpToNextLevel}");
 
         if (CurrentExp >= ExpToNextLevel)
         {

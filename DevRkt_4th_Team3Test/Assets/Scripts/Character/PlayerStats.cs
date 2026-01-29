@@ -18,6 +18,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private AudioClip _deathSound; 
     [SerializeField] private AudioClip[] _hitSounds;
     
+    public float PickupRange => _pickupRange;
+
     // 원래 컬러가 흰색이 아닐경우도 있어서 오리지널 컬러를 따로 지정해서 저장
     private Color _originalColor;
     private AudioSource _audioSource;
@@ -85,6 +87,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
             IncreaseStats();
             Debug.Log($"Level: {_level}, Attack: {_attackDamage}, Defense: {_defense}, MoveSpeed: {_moveSpeed}");
         }
+        AbsorbNearbyItems();
+
     }
 
     // 레벨업에 따른 스탯 증가
@@ -148,6 +152,38 @@ public class PlayerStats : MonoBehaviour, IDamagable
 
         OnHPChanged?.Invoke();
     }
+
+    private void AbsorbNearbyItems()
+    {
+        ItemObject[] items = FindObjectsOfType<ItemObject>();
+
+        foreach (var item in items)
+        {
+            float distance = Vector2.Distance(transform.position, item.transform.position);
+
+            if (distance < _pickupRange)
+            {
+                // 아이템을 플레이어 쪽으로 이동
+                item.transform.position = Vector2.MoveTowards(
+                    item.transform.position,
+                    transform.position,
+                    10f * Time.deltaTime // 흡수 속도
+                );
+
+                // 충분히 가까워지면 흡수 완료
+                if (distance < 0.5f)
+                {
+                    ExpSystem expSystem = GetComponent<ExpSystem>();
+                    if (expSystem != null)
+                    {
+                        expSystem.GainExp(5); 
+                    }
+                    Destroy(item.gameObject);
+                }
+            }
+        }
+    }
+
 
 
     // 캐릭터 죽음 처리
