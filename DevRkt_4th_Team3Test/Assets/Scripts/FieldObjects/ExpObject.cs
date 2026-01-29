@@ -16,6 +16,6 @@ public class ExpObject : ItemObject
         ExpSystem es = pc.GetComponent<ExpSystem>();
         if (es)
             es.GainExp(_expValue);
-        
+        Debug.Log("경험치 획득");
     }
 }
