@@ -33,8 +33,7 @@ public class CardManager : MonoBehaviour
     public Dictionary<int, float> probabilityOfRarity = new Dictionary<int, float>(); //쓰기 애매
     
     // 카드는 1.무기 종류 랜덤, 2.등급 랜덤, 3.상승시킬 능력치 종류 랜덤으로 나옴.
-    //TODO 무기를 담는 변수. 나중에 InventoryData랑 연결.....
-    [SerializeField] private List<WeaponBase> weapons = new List<WeaponBase>();
+    
     
     [Header("능력치 최대값")]
     [SerializeField] private float _maxWeaponDamage= 100000f;
@@ -55,7 +54,7 @@ public class CardManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            GetWeaponList();
+            WeaponManager.WeaponInstance.GetWeaponList();
             Card[] cardData = new Card[cardCount];
             for (int i = 0; i < cardCount; i++)
             {
@@ -63,10 +62,20 @@ public class CardManager : MonoBehaviour
             }
         
             cardData = DrawCard(cardCount);
-
+            
             for (int i = 0; i < cardCount; i++)
             {
-                ApplyCardEffect(cardData[i]);    
+                //카드를 선택했을때.(함수화 시켜줘야함 나중에)
+                if (cardData[i].isNew == true)
+                {//원래는 무기가 처음 선택되는거면 무기카드가 보이게 할려고 했는데 그건 구현하기가 어렵기 때문에 그냥 처음보는것도 능력치변경되는 걸로.
+                    cardData[i].weapon.isActive = true;
+                    ApplyCardEffect(cardData[i]);
+                }
+                else
+                {
+                    ApplyCardEffect(cardData[i]);    
+                }
+                    
             }
         }
         
@@ -89,9 +98,15 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             cardData[i] = new Card();
-            cardData[i].rarity = GetWhichRaritySelected(); //등급이 뜰 확률에 따라 등급 뽑음.
-            Debug.Log(cardData[i].rarity);
             cardData[i].weapon = PickWeaponType(); //무기 종류도 랜덤하게 선택.
+
+            //활성화 안되어있으면 활성화 시킴. 
+            //cardData.isNew가 true이면 카드 클릭시 ApplyCardEffect 대신에 cardData[i].weapon.isActive = true로 바꿈. 
+            if (cardData[i].weapon.isActive == false)
+            {
+                cardData[i].isNew = true;
+            }
+            cardData[i].rarity = GetWhichRaritySelected(); //등급이 뜰 확률에 따라 등급 뽑음.
             cardData[i].abilityName = PickAbility(cardData[i].weapon); //동등한 확률에 따라 올릴 능력치를 뽑음.
             
         }
@@ -110,10 +125,10 @@ public class CardManager : MonoBehaviour
         cardData.weapon.UpgradeWeapon(cardData.abilityName, amount); //무기에 적용.
         
         //만약 궤도무기를 뽑았고. abilityName = projectileCount이면 SpawnWeapon를 통해 스폰시킴.
-        if ((cardData.weapon is OrbitalWeapon) && cardData.abilityName == "projectileCount")
-        {
+        // if ((cardData.weapon is OrbitalWeapon) && cardData.abilityName == "projectileCount")
+        // {
             OrbitalWeaponManager.OrbitalInstance.SpawnWeapons((cardData.weapon as OrbitalWeapon));    
-        }
+        //}
     }
     
     /// <summary>
@@ -179,29 +194,11 @@ public class CardManager : MonoBehaviour
     /// <returns></returns>
     public WeaponBase PickWeaponType()
     {
-        int randomValue = Random.Range(0, weapons.Count); //저장된 무기 수
-        return weapons[randomValue]; //무기자체를 리턴
+        int randomValue = Random.Range(0, WeaponManager.WeaponInstance.weapons.Count); //저장된 무기 수
+        return WeaponManager.WeaponInstance.weapons[randomValue]; //무기자체를 리턴
     }
     
-    /// <summary>
-    /// 싱글톤으로 선언된 3종류의 WeaponManager로부터 무기들 종류를 받아서 List<WeaponBase> weapon에다가 등록한다.
-    /// </summary>
-    public void GetWeaponList()
-    {
-        //싱글톤으로 선언된 무기별 WeaponManager에서 무기종류를 더한다
-        //예를 들어 OrbitalWeaponManager는 List<OrbitalWeapon>인데 OrbitalWeapon은 WeaponBase를 상속받고 있으므로 
-        //List<WeaponBase> weapons에다가 집어 넣을 수 있다.. 
-
-
-        weapons.Clear(); //리스트 초기화 시킨 후 다시 받아온다.
-        
-        //OrbitalWeapon들을 가져온다.
-        for (int i = 0; i < OrbitalWeaponManager.OrbitalInstance._orbitalWeapons.Count; i++)
-        {
-            weapons.Add(OrbitalWeaponManager.OrbitalInstance._orbitalWeapons[i]);
-        }
-        //다른무기들도 나중에 가져온다.
-    }
+    
     
     /// <summary>
     /// 등급에 따라 상승시킬 수치값을 얻음

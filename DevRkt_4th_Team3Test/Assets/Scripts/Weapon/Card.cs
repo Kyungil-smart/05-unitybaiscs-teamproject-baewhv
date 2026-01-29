@@ -6,6 +6,7 @@ public class Card
 {
     public int rarity;
     public WeaponBase weapon; 
-    public string abilityName; 
-    
+    public string abilityName;
+    public bool isNew = false; //무기를 새로 만드는 카드를 뽑을 경우.
+
 }

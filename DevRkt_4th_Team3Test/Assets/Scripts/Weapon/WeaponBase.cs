@@ -7,12 +7,12 @@ public class WeaponBase : MonoBehaviour
 {
     [Header("기본 정보")]
     public string _weaponName; // 무기 이름
-    private bool _isActive = false; // 액티브상태인지 아닌지. 무기가 처음 뽑힐때 isActive = true;
+    public bool isActive = false; // 액티브상태인지 아닌지. 무기가 처음 뽑힐때 isActive = true;
     [Header("전투 스탯")]
     public float weaponDamage; // 기본 공격력
     public float weaponAttackSpeed;  // 공격속도 (궤도무기의 경우 공전속도)
     public int projectileCount; // 투사체 개수
-    public float weaponRange; // 공격범위
+    public float weaponRange; // 공격범위 (근접은 변경x)
     [Header("프리팹")]
     public GameObject objectPrefab;
 
