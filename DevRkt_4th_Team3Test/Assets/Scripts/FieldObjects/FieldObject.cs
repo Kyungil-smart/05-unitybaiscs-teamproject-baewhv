@@ -5,8 +5,8 @@ using UnityEngine;
 
 public abstract class FieldObject : MonoBehaviour
 {
-    [SerializeField]private SpriteRenderer _body;
-    [SerializeField]private SpriteRenderer _Shadow;
+    [SerializeField]protected SpriteRenderer _body;
+    [SerializeField]protected SpriteRenderer _Shadow;
     private void Awake()
     {
         if(_body)
