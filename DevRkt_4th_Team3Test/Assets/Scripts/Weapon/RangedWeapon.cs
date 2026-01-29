@@ -19,7 +19,7 @@ public class RangedWeapon : WeaponBase
     //적이 인스턴스가 적에게 이동하는 사이에 죽으면 죽기전 마지막 적의 위치로 가서 인스턴스를 파괴시킨다.
 
     private float timer = 0f;
-    [SerializeField] private float spawnOffset = 0.5f; // 플레이어 몸체보다 약간 앞에서 생성
+    [SerializeField] private float spawnOffset = 2f; // 플레이어 몸체보다 약간 앞에서 생성
     public GameObject _player;
     private float AttackspeedOffset = 10f;
 
@@ -32,7 +32,7 @@ public class RangedWeapon : WeaponBase
         }
         else
         {
-            Debug.Log(_player.name);    
+            //.Log(_player.name);    
         }
         
     }
@@ -62,7 +62,7 @@ public class RangedWeapon : WeaponBase
     
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;  
+        Gizmos.color = new Color(1f, 0f, 0f, 0.25f);  
         Gizmos.DrawWireSphere(transform.position, weaponRange);  // 
     }
     Transform GetNearestEnemy()
