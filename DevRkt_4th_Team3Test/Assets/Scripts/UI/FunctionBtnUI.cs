@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,14 +7,25 @@ using UnityEngine.SceneManagement;
 
 public class FunctionBtnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _settingPopup;
-    private GameObject _currentSettingPopup;
+    [SerializeField] private GameObject _infoPopup;
+    private GameObject _currentInfoPopup;
     [SerializeField] private GameObject _pauseAlert;
     private GameObject _currentAlertInstance;
     
     private bool _isPaused = false;
     private DataController _dataController;
-    
+
+    public void Awake()
+    {
+        //팝업 프리팹 생성해서 할당
+        if (_currentInfoPopup == null)
+        {
+            // Instantiate: 게임 오브젝트를 동적으로 생성
+            _currentInfoPopup = Instantiate(_infoPopup, GameObject.Find("Canvas").transform);
+        }
+        else _currentInfoPopup.SetActive(true);
+    }
+
     /// <summary>
     /// 게임 정지 기능
     /// </summary>
@@ -30,13 +42,6 @@ public class FunctionBtnManager : MonoBehaviour
                 _currentAlertInstance = Instantiate(_pauseAlert, GameObject.Find("Canvas").transform);
             }
             else _currentAlertInstance.SetActive(true);
-            //팝업 프리팹 생성해서 할당
-            if (_currentSettingPopup == null)
-            {
-                _currentSettingPopup = Instantiate(_settingPopup, GameObject.Find("Canvas").transform);
-            }
-            else _currentSettingPopup.SetActive(true);
-
         }
         else
         {
@@ -56,9 +61,9 @@ public class FunctionBtnManager : MonoBehaviour
     /// </summary>
     public void OnClickSetting()
     {
-        if (_settingPopup != null)
+        if (_infoPopup != null)
         {
-            _settingPopup.SetActive(!_settingPopup.activeSelf);
+            _infoPopup.SetActive(!_infoPopup.activeSelf);
         }
     }
     

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    public class SettingsUI: MonoBehaviour, IPopup
+    public class InfoPopupUI: MonoBehaviour, IPopup
     {
-        public static SettingsUI Instance;
+        public static InfoPopupUI Instance;
 
         void Awake() => Instance = this;
         
