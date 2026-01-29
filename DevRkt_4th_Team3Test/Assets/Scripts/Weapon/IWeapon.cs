@@ -5,5 +5,4 @@ using UnityEngine;
 public interface IWeapon
 {
     public void WeaponAttack(WeaponMonster monster);
-    
 }

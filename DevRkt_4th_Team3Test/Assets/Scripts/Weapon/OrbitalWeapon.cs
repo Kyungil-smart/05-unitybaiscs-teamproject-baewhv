@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class OrbitalWeapon : WeaponBase, IWeapon
+public class OrbitalWeapon : WeaponBase
 {
     private void Start()
     {
@@ -32,15 +32,6 @@ public class OrbitalWeapon : WeaponBase, IWeapon
     
     
     
-    /// <summary>
-    /// 무기로 몬스터 공격.
-    /// </summary>
-    /// <param name="monster"></param>
-    public void WeaponAttack(WeaponMonster monster)
-    {
-        // monster선언되면 이부분 변경. HP대신 HP에 대응되는 변수로
-        // monster.HP -= weaponDamage;
-        // Debug.Log($"HP : {monster.HP}");
-    }
+    
     
 }
