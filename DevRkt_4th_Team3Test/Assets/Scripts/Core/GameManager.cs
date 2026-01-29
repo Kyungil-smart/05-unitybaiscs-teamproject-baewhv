@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //싱글턴
     private static GameManager _instance;
-
+    
     public static GameManager Instance
     {
         get
@@ -16,13 +17,16 @@ public class GameManager : MonoBehaviour
                 if (_instance == null)
                     _instance = new GameObject().AddComponent<GameManager>();
             }
-
             return _instance;
         }
     }
+    
     [field:SerializeField] public GameObject Player { get; set; }
     [SerializeField] private Vector3 _spawnPoint; 
     [field:SerializeField] public PlayerCamera Camera { get; set; }
+
+    [SerializeField] private LevelUI _levelUI;
+    
      
     void Awake()
     {
@@ -41,8 +45,8 @@ public class GameManager : MonoBehaviour
         //GenerateManager<OrbitalWeaponManager>();
         
         GameObject player = Instantiate(Player,_spawnPoint, new Quaternion());
-        Instantiate(Camera);
-        Camera.player = player.transform;
+        Instantiate(Camera).player = player.transform;
+        _levelUI._expSystem = player.GetComponent<ExpSystem>();
     }
 
     void GenerateManager<T>() where T : Component
