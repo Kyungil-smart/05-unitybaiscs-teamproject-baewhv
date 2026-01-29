@@ -8,11 +8,13 @@ public class LevelUI : MonoBehaviour
     [SerializeField]private Image _gauge;
     [SerializeField]private TextMeshProUGUI _expText;
     [SerializeField]private TextMeshProUGUI _levelText;
+    [SerializeField] private GameObject _levelUpPopup;
     
     public float _lerpSpeed = 5f;
     [Header("Player")]
     [Tooltip("자동으로 캐릭터 데이터 찾습니다.")]
     public ExpSystem _expSystem;
+    [SerializeField] private CardManager _cardManager;
 
     void Start()
     {
