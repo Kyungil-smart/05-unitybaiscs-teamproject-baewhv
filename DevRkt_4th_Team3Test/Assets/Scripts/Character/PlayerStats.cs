@@ -87,8 +87,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
             IncreaseStats();
             Debug.Log($"Level: {_level}, Attack: {_attackDamage}, Defense: {_defense}, MoveSpeed: {_moveSpeed}");
         }
-        AbsorbNearbyItems();
-
+        
     }
 
     // 레벨업에 따른 스탯 증가
@@ -152,39 +151,15 @@ public class PlayerStats : MonoBehaviour, IDamagable
 
         OnHPChanged?.Invoke();
     }
-
-    private void AbsorbNearbyItems()
+    
+    // 캐릭터 경험치 획득
+    private void OnTriggerEnter(Collider other)
     {
-        ItemObject[] items = FindObjectsOfType<ItemObject>();
-
-        foreach (var item in items)
+        if (other.CompareTag("Interactable"))
         {
-            float distance = Vector2.Distance(transform.position, item.transform.position);
-
-            if (distance < _pickupRange)
-            {
-                // 아이템을 플레이어 쪽으로 이동
-                item.transform.position = Vector2.MoveTowards(
-                    item.transform.position,
-                    transform.position,
-                    10f * Time.deltaTime // 흡수 속도
-                );
-
-                // 충분히 가까워지면 흡수 완료
-                if (distance < 0.5f)
-                {
-                    ExpSystem expSystem = GetComponent<ExpSystem>();
-                    if (expSystem != null)
-                    {
-                        expSystem.GainExp(5); 
-                    }
-                    Destroy(item.gameObject);
-                }
-            }
+            (other.GetComponent<ItemObject>() as IInteractable)?.Interact(this);
         }
     }
-
-
 
     // 캐릭터 죽음 처리
     private void Death()

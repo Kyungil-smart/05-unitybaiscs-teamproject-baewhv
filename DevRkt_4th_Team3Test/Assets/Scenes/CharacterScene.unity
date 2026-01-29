@@ -160,11 +160,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2857166452826860582, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
   m_PrefabInstance: {fileID: 1858732068}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &219692255 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5477854669688069240, guid: d36e11fefc43b834d858c00fbc4dba1f, type: 3}
-  m_PrefabInstance: {fileID: 600797722}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &219692261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5805787695643495275, guid: d36e11fefc43b834d858c00fbc4dba1f, type: 3}
@@ -199,11 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4f956ef2394d45941e0e6cf314a5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _monsterPrefab: {fileID: 219692255}
+  _monsterPrefabs: []
   _spawnInterval: 2
   _maxPopulation: 30
   _minSpawnDistance: 15
   _maxSpawnDistance: 20
+  _monsterCountText: {fileID: 0}
 --- !u!4 &291482585
 Transform:
   m_ObjectHideFlags: 0
@@ -1036,10 +1032,6 @@ PrefabInstance:
     - target: {fileID: 4379276075570538479, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913899310442012283, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
-      propertyPath: _pickupRange
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6808369929902117646, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
       propertyPath: m_AnchorMax.x
