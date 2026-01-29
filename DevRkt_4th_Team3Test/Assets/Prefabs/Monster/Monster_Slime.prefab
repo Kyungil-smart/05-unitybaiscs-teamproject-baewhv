@@ -89,8 +89,9 @@ GameObject:
   - component: {fileID: 294316870080633792}
   - component: {fileID: 2222343634487725583}
   - component: {fileID: 5948637108785994074}
+  - component: {fileID: 8366448678351991210}
   m_Layer: 6
-  m_Name: Monster_Orc
+  m_Name: Monster_Slime
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +154,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -313509761, guid: cb876d18c61f5914c8d0e8886aea9c02, type: 3}
+  m_Sprite: {fileID: 1976543425, guid: 4e0f6c43b3124ff44a368d6bdf6a51f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -237,11 +238,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 20
+  _maxHp: 10
   _currentHp: 0
   _hpSlider: {fileID: 8070026785987164637}
-  _damage: 30
+  _damage: 20
   _attackCooltime: 0.5
+--- !u!95 &8366448678351991210
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5477854669688069240}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 19e9fbcdf7a74064f8f63f89baab2e29, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6158628216410434247
 GameObject:
   m_ObjectHideFlags: 0

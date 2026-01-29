@@ -48,6 +48,7 @@ MonoBehaviour:
   _monsterPrefabs:
   - {fileID: 5477854669688069240, guid: d36e11fefc43b834d858c00fbc4dba1f, type: 3}
   - {fileID: 5477854669688069240, guid: 91ba929f0b5213b4c92a426b718fb950, type: 3}
+  - {fileID: 5477854669688069240, guid: f4202a971a4075341bcb73790bfc2ae9, type: 3}
   _spawnInterval: 2
   _maxPopulation: 30
   _minSpawnDistance: 15
