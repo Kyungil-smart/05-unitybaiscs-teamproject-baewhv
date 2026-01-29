@@ -27,6 +27,7 @@ public class StageUI : MonoBehaviour
         if (_elapsedTime >= GAME_LIMIT_TIME)
         {
             _isGameOver = true;
+            EndingUIManager.IsClear = true;
             SceneManager.LoadScene(2);
         }
     }
@@ -35,8 +36,9 @@ public class StageUI : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(_elapsedTime / 60);
         int seconds = Mathf.FloorToInt(_elapsedTime % 60);
-        
-        _timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        string timerText = string.Format("{0:00}:{1:00}", minutes, seconds);
+        _timerText.text = timerText;
+        EndingUIManager.EndTime = timerText;
     }
     
     /// <summary>

@@ -11,7 +11,8 @@ public class LevelUI : MonoBehaviour
     public float _lerpSpeed = 5f;
     
     [Header("Data")]
-    [SerializeField]private ExpSystem _expSystem;
+    [SerializeField] public ExpSystem _expSystem;
+    
     
     void Update()
     {
