@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponName: Arrow
-  isActive: 1
-  weaponDamage: 10
-  weaponAttackSpeed: 5
+  isActive: 0
+  weaponDamage: 8
+  weaponAttackSpeed: 4
   projectileCount: 1
-  weaponRange: 7
+  weaponRange: 9
   objectPrefab: {fileID: 8328061000933342145, guid: 0281d74043e79d54184a1bc6b3427656, type: 3}
   weaponSprite: {fileID: 21300000, guid: 5211eb7811f453e4bad23307437dae36, type: 3}
-  spawnOffset: 2
+  spawnOffset: 0.5
   _player: {fileID: 0}
+  startTime: 0
