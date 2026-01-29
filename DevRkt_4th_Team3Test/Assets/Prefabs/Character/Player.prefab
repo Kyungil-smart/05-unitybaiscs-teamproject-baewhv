@@ -378,7 +378,9 @@ MonoBehaviour:
   _defense: 1
   _moveSpeed: 5
   _deathSound: {fileID: 8300000, guid: 7bad3febd1f183a458c2a7db8784c50f, type: 3}
-  _hitSound: {fileID: 8300000, guid: 61bd2ffcdd5b069418f4e72d5bca4463, type: 3}
+  _hitSounds:
+  - {fileID: 8300000, guid: 61bd2ffcdd5b069418f4e72d5bca4463, type: 3}
+  - {fileID: 8300000, guid: 66eb7380ffaa90d4a83cbe6a1546b48c, type: 3}
 --- !u!114 &5353183636590071758
 MonoBehaviour:
   m_ObjectHideFlags: 0

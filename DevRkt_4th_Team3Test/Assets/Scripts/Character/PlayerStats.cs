@@ -15,11 +15,12 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private AudioClip _deathSound; 
-    [SerializeField] private AudioClip _hitSound;
+    [SerializeField] private AudioClip[] _hitSounds;
     
     // 원래 컬러가 흰색이 아닐경우도 있어서 오리지널 컬러를 따로 지정해서 저장
     private Color _originalColor;
     private AudioSource _audioSource;
+    private int _hitsoundIndex = 0;
     private bool _isDead = false;
 
     // 사망 시 캐릭터 색상 변경용
@@ -122,16 +123,20 @@ public class PlayerStats : MonoBehaviour, IDamagable
     // 캐릭터 피격 이펙트
     private IEnumerator HitReaction()
     {
-        // 캐릭터 피격 시 사망 사운드 출력
-        if (_audioSource != null && _hitSound != null)
+        // 캐릭터 피격 시 사망 사운드 출력 (2종 순환)
+        if (_audioSource != null && _hitSounds.Length > 0)
         {
-            _audioSource.PlayOneShot(_hitSound);
+            _audioSource.PlayOneShot(_hitSounds[_hitsoundIndex]);
+            // 여러번 피격시 사운드가 겹쳐 들려서 끊고 다음 사운드 재생
+            _audioSource.Play();
+            // _hitSounds.Length를 붙여줘서 다시 순환
+            _hitsoundIndex = (_hitsoundIndex + 1) % _hitSounds.Length; 
         }
+
         _renderer.material.color = Color.red;
         yield return new WaitForSeconds(0.1f); 
         _renderer.material.color = _originalColor; 
     }
-
 
     // 캐릭터 힐 받기
     public void Heal(int amount)
