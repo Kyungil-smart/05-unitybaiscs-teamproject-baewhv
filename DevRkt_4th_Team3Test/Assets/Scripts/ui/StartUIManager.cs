@@ -28,11 +28,6 @@ public class StartUIManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void ReloadGame()
-    {
-        _dataController.Load();
-    }
-
     
     public void OpenOptions()
     {
