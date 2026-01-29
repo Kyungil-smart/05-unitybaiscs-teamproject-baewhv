@@ -41,12 +41,20 @@ public class StageUI : MonoBehaviour
         EndingUIManager.EndTime = timerText;
     }
     
-    /// <summary>
-    /// 몬스터 죽으면 해당 함수 호출
-    /// </summary>
-    public void OnMonsterKilled(int expAmount)
+    void OnEnable()
+    {
+        // 몬스터 죽음 이벤트에 내 함수를 등록
+        MonsterState.OnMonsterDie += OnCountMonsterKilled;
+    }
+    public void OnCountMonsterKilled()
     {
         _killCount++;
         _killCountText.text = $"{_killCount}";
+    }
+    
+    void OnDisable()
+    {
+        // 씬이 바뀔 때 등록 해제
+        MonsterState.OnMonsterDie -= OnCountMonsterKilled;
     }
 }
