@@ -7,13 +7,15 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
 {
     private List<FieldObject> _objs = new List<FieldObject>();
     [SerializeField] private int _initObjectCount = 40;
+    public GameObject _item_Exp_Small { get; private set; }
+    public GameObject _item_Exp_Medium { get; private set; }
+    public GameObject _item_Exp_Large { get; private set; }
 
     private void Awake()
     {
-        // for (int i = 0; i < _initObjectCount; i++)
-        // {
-        //     _objs.Add(null);
-        // }
+        _item_Exp_Small = Resources.Load<GameObject>("FieldObject/Item/Item_EXP_Small");
+        _item_Exp_Medium = Resources.Load<GameObject>("FieldObject/Item/Item_EXP_Medium");
+        _item_Exp_Large = Resources.Load<GameObject>("FieldObject/Item/Item_EXP_Large");
     }
 
     /// <summary>
@@ -37,5 +39,6 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     {
         if(_objs.Contains(obj))
             _objs.Remove(obj);
+        Destroy(obj);
     }
 }

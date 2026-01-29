@@ -1,18 +1,18 @@
 using UnityEngine;
+using TMPro;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [Header("Spawn Settings")] [SerializeField]
-    private GameObject _monsterPrefab;
-
+    [Header("Spawn Settings")]
+    [SerializeField] private GameObject[] _monsterPrefabs;
     [SerializeField] private float _spawnInterval = 1.0f;
     [SerializeField] private int _maxPopulation = 50;
 
-    [Header("Spawn Distance")] [SerializeField]
-    private float _minSpawnDistance = 15.0f;
-
+    [Header("Spawn Distance")]
+    [SerializeField] private float _minSpawnDistance = 15.0f;
     [SerializeField] private float _maxSpawnDistance = 20.0f;
-
+    [SerializeField] private TextMeshProUGUI _monsterCountText;
+    
     private float _spawnTimer;
     private Transform _playerTransform;
 
@@ -36,6 +36,7 @@ public class MonsterSpawner : MonoBehaviour
                 _spawnTimer = _spawnInterval;
             }
         }
+        ShowMonsterCount();
     }
 
     private void SpawnMonsterAroundPlayer()
@@ -51,7 +52,16 @@ public class MonsterSpawner : MonoBehaviour
         // 최종 위치 계산
         Vector3 spawnPos = _playerTransform.position +
                            new Vector3(spawnDirection.x * spawnDistance, 0.5f, spawnDirection.y * spawnDistance);
+        
+        int randomNum = Random.Range(0, _monsterPrefabs.Length);
+        Instantiate(_monsterPrefabs[randomNum], spawnPos, Quaternion.identity);
+    }
 
-        Instantiate(_monsterPrefab, spawnPos, Quaternion.identity);
+    private void ShowMonsterCount()
+    {
+        if (_monsterCountText != null)
+        {
+            _monsterCountText.text = $"필드 몬스터 수: {MonsterManager.MonsterCount}";
+        }
     }
 }

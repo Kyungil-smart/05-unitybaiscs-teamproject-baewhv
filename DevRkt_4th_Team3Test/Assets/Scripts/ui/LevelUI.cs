@@ -31,6 +31,4 @@ public class LevelUI : MonoBehaviour
         if (_levelText != null)
             _levelText.text = $"{_expSystem.Level}";
     }
-    
-    
 }

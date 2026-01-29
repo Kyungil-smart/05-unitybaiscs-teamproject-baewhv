@@ -6,6 +6,8 @@ TagManager:
   tags:
   - WeaponEnemy
   - Monster
+  - Enemy
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Monster
+  - Enemy
   - Player
   - 
   - Enemy
