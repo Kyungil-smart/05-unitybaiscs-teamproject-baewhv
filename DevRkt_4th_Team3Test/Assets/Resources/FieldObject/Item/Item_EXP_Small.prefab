@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8357201288838875023}
   m_Layer: 0
   m_Name: Item_EXP_Small
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
