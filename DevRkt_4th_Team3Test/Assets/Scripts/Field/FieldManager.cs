@@ -5,7 +5,7 @@ using UnityEngine;
 public class FieldManager : MonoBehaviour
 {
     [SerializeField] private GameObject _fieldTile;
-    [SerializeField] private GameObject _designedTile;
+    [SerializeField] private List<GameObject> _designedTile = new List<GameObject>();
     private List<List<FieldTile>> _tiles = new List<List<FieldTile>>();
     //루프시킬 맵의 최대 크기
     [SerializeField] private Vector2Int _preLoadMapSize = new Vector2Int(11,11);
@@ -43,8 +43,12 @@ public class FieldManager : MonoBehaviour
     {
         if (!_fieldTile)
             _fieldTile = Resources.Load<GameObject>("Tile/fieldTile");
-        if (!_designedTile)
-            _designedTile = Resources.Load<GameObject>("Tile/TileA");
+        if (_designedTile.Count == 0)
+        {
+            _designedTile.Add(Resources.Load<GameObject>("Tile/TileA"));
+            _designedTile.Add(Resources.Load<GameObject>("Tile/TileB"));
+        }
+
         InitMap();
     }
 
@@ -91,7 +95,6 @@ public class FieldManager : MonoBehaviour
     // _mapSight에 해당하는 타일에 디자인 타일이 등록되지 않았다면 생성 및 초기화.
     private void LoadTile(Vector2Int tilePos) //0 0 
     {
-        Debug.Log($"player pos {_playerPosition} / tile pos {tilePos}");
         for (int y = 0; y <= _mapSight.y * 2 + 2; y++)
         {
             for (int x = 0; x <= _mapSight.x * 2 + 2; x++)
@@ -108,7 +111,7 @@ public class FieldManager : MonoBehaviour
                 }
                 else if (!_tiles[posY][posX].isSetTile) //없을 때 생성
                 {
-                    _tiles[posY][posX].TileDesign = Instantiate(_designedTile); //TODO 타일 종류 추가 시 랜덤 생성
+                    _tiles[posY][posX].TileDesign = Instantiate(_designedTile[Random.Range(0,_designedTile.Count)]); //타일 랜덤 생성
                     _tiles[posY][posX].TileDesign.transform.SetParent(_tiles[posY][posX].transform);
                     _tiles[posY][posX].transform.position = new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
                     _tiles[posY][posX].EnableFieldTile();
