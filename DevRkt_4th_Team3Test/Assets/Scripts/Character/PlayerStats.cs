@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -17,9 +18,10 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _pickupRange = 5f;
     [SerializeField] private AudioClip _deathSound; 
     [SerializeField] private AudioClip[] _hitSounds;
+    [SerializeField]private TextMeshProUGUI _healText;
     
     public float PickupRange => _pickupRange;
-
+    
     // 원래 컬러가 흰색이 아닐경우도 있어서 오리지널 컬러를 따로 지정해서 저장
     private Color _originalColor;
     private AudioSource _audioSource;
@@ -145,12 +147,30 @@ public class PlayerStats : MonoBehaviour, IDamagable
     // 캐릭터 힐 받기
     public void Heal(int amount)
     {
+        if (_currentHP >= _maxHP) return;
         _currentHP += amount;
         // 범위제한
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
 
+        HealText(amount);
+        
         OnHPChanged?.Invoke();
     }
+    public void HealText(int amount)
+    {
+        if (_healText == null) return;
+        _healText.gameObject.SetActive(true);
+        _healText.text = $"+{amount} HP";   
+        _healText.color = Color.green;      
+
+        Invoke("HideHealText", 2f);
+    }
+    private void HideHealText()
+    {
+        if (_healText != null)
+            _healText.gameObject.SetActive(false);
+    }
+
     
     // 캐릭터 경험치 획득
     private void OnTriggerEnter(Collider other)
