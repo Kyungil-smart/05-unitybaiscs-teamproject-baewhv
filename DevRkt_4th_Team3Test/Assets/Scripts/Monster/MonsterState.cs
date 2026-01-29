@@ -15,6 +15,8 @@ public class MonsterState : MonoBehaviour
     [SerializeField] private GameObject _damageText;
     private float _lastAttackTime;
     
+    public static System.Action OnMonsterDie;
+    
     protected virtual void Awake()
     {
         _currentHp = _maxHp;
@@ -81,6 +83,7 @@ public class MonsterState : MonoBehaviour
 
     private void Die()
     {
+        OnMonsterDie?.Invoke();
         MonsterManager.Unregister();
         Destroy(gameObject);
     }

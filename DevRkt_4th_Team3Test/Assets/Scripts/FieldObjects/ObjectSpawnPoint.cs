@@ -36,18 +36,7 @@ public class ObjectSpawnPoint : MonoBehaviour
             return;
         }
         _placedObject = FieldObjectManager.Instance.SetObject(_obj, transform.position);
-        switch (_type)
-        {
-            case FieldObjectSpawnType.Breakable:
-                Debug.Log("파괴 오브젝트 생성");
-                break;
-            case FieldObjectSpawnType.Item:
-                Debug.Log("아이템 오브젝트 생성");
-                break;
-            case FieldObjectSpawnType.Obstacle:
-                Debug.Log("장애물 오브젝트 생성");
-                break;
-        }
+
     }
 
     public void RemoveObject()
