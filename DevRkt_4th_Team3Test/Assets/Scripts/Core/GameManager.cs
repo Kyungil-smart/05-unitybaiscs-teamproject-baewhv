@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -55,6 +56,9 @@ public class GameManager : MonoBehaviour
             _owm._player = Player;
         if (_rwm)
             _rwm._player = Player;
+        PlayerStats ps = Player.GetComponent<PlayerStats>();
+        if(ps)
+            ps.OnPlayerDeath += GameOver;
     }
 
     void GenerateManager<T>() where T : Component
@@ -64,5 +68,12 @@ public class GameManager : MonoBehaviour
         var go = new GameObject(typeof(T).Name);
         go.AddComponent<T>();
         go.transform.SetParent(transform);
+    }
+
+    private void GameOver()
+    {
+        Destroy(_owm.gameObject);
+        Destroy(_rwm.gameObject);
+        SceneManager.LoadScene(2);
     }
 }
