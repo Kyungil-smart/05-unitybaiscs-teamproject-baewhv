@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4f956ef2394d45941e0e6cf314a5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _monsterPrefabs: []
+  _monsterGroups: []
   _spawnInterval: 2
   _maxPopulation: 30
   _minSpawnDistance: 15
@@ -944,10 +944,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 897127619372298053, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 2857166452826860582, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -991,14 +987,6 @@ PrefabInstance:
     - target: {fileID: 4379276075570538479, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913899310442012283, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
-      propertyPath: _hitSounds.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5913899310442012283, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
-      propertyPath: _hitSounds.Array.data[2]
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6808369929902117646, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1250,6 +1238,7 @@ MonoBehaviour:
   _maxProjectileCount: 10
   _maxRangedWeaponAttackSpeed: 100
   cardCount: 3
+  promotionCriteria: 10
 --- !u!65 &2126949571
 BoxCollider:
   m_ObjectHideFlags: 0
