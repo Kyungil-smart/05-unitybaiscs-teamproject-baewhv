@@ -29,23 +29,23 @@ public class WeaponBase : MonoBehaviour
     /// </summary>
     /// <param name="variableName"></param>
     /// <param name="value"></param>
-    public void UpgradeWeapon(string variableName,float value)
+    public void UpgradeWeapon(CardAbility variableName,float value)
     {
         switch (variableName)
         {
-            case "weaponDamage" :
+            case CardAbility.weaponDamage :
                 weaponDamage *= value;
                 Debug.Log($"{_weaponName} 데미지 : {weaponDamage}");
                 break;
-            case "weaponAttackSpeed" :
+            case CardAbility.weaponAttackSpeed :
                 weaponAttackSpeed *= value;
                 Debug.Log($"{_weaponName} 공속 : {weaponAttackSpeed}");
                 break;
-            case "projectileCount" :
+            case CardAbility.projectileCount :
                 projectileCount += (int)value;
                 Debug.Log($"{_weaponName} 투사체 개수 : {projectileCount}");
                 break;
-            case "weaponRange" :
+            case CardAbility.weaponRange :
                 weaponRange *= value;
                 Debug.Log($"{_weaponName} 공격 범위 : {weaponRange}");
                 break;

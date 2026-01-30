@@ -549,6 +549,7 @@ MonoBehaviour:
   _levelText: {fileID: 237446004328195772}
   _lerpSpeed: 5
   _expSystem: {fileID: 0}
+  _levelUpPopupObject: {fileID: 7380299223727774651, guid: b5bb378085fe2c24bba4114e1012441e, type: 3}
 --- !u!1 &8064005623253564211
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +620,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -689,7 +690,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 70eeb1f1ecc33014b81703c88f965369, type: 2}
   m_sharedMaterial: {fileID: -7172711607659383386, guid: 70eeb1f1ecc33014b81703c88f965369, type: 2}
