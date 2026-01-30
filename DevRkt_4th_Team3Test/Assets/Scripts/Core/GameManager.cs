@@ -32,8 +32,11 @@ public class GameManager : MonoBehaviour
     private bool isPlayerDead = false;
 
     [Header("Weapon")]
+    [SerializeField] private WeaponManager _wm;
+    [SerializeField] private CardManager _cm;
     [SerializeField] private OrbitalWeaponManager _owm;
     [SerializeField] private RangedWeaponManager _rwm;
+    
     
     [Header("UI")]
     [SerializeField] private LevelUI _levelUI;
@@ -90,6 +93,8 @@ public class GameManager : MonoBehaviour
 
     public void SetGameOver()
     {
+        Destroy(_cm.gameObject);
+        Destroy(_wm.gameObject);
         Destroy(_owm.gameObject);
         Destroy(_rwm.gameObject);
         Destroy(FieldObjectManager.Instance.gameObject);

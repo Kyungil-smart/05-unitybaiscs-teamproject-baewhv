@@ -357,6 +357,7 @@ MonoBehaviour:
   _maxProjectileCount: 10
   _maxRangedWeaponAttackSpeed: 100
   cardCount: 3
+  promotionCriteria: 10
 --- !u!1 &1153522715
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,11 +506,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 2857166452826860582, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
-  _spawnPoint: {x: 0, y: 0, z: 0}
   <Camera>k__BackingField: {fileID: 1255718000294188076, guid: f24744fd33513304392682b77e3e3848, type: 3}
-  _levelUI: {fileID: 2073122949}
+  _spawnPoint: {x: 0, y: 0, z: 0}
+  _wm: {fileID: 1153522716}
+  _cm: {fileID: 890404254}
   _owm: {fileID: 402132478}
   _rwm: {fileID: 2055142044}
+  _levelUI: {fileID: 2073122949}
 --- !u!4 &1935520513
 Transform:
   m_ObjectHideFlags: 0
