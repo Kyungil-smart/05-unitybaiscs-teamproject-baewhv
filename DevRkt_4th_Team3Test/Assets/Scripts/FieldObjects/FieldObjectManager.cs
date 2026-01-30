@@ -49,7 +49,7 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     /// <param name="position">생성 위치</param>
     public void MakeExpObject(EXPType type, Vector3 position)
     {
-        if (_expObjectActiveCount >= _maxObjects) return; //Todo 빨간거에 합치기
+        if (_expObjectActiveCount >= _maxExpObject) return; //Todo 빨간거에 합치기
         if (_expObjectActiveCount >= _expObjects.Count) PoolingExpObject(10);
         foreach (ExpObject obj in _expObjects)
         {
