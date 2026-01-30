@@ -37,8 +37,16 @@ public class EndingUIManager : MonoBehaviour
         //게임 상태 리셋
         IsClear = false;
         EndTime = "00:00";
+        //몬스터 리셋
         MonsterManager.ResetCount();
         MonsterState.OnMonsterDie = null;
+        //무기 카드 리셋
+        if (CardManager.CardInstance != null)
+        {
+            //TODO: 리셋하는 코드 넣어야함.
+            //CardManager.CardInstance
+        }
+        //씬 초기화 다시 실행
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }

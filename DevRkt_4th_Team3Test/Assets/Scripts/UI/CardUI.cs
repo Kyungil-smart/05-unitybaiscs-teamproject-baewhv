@@ -26,27 +26,61 @@ public class CardUI : MonoBehaviour
     /// </summary>
     public void Setup(Card data, CardInfoPerRarity rarityInfo, System.Action<Card> callback)
     {
+        if (data == null || data.weapon == null)
+        {
+            Debug.LogError("전달된 카드 데이터나 무기 정보가 Null입니다!");
+            return;
+        }
+        
         _cardData = data;
         _onClickCallback = callback;
         
         //이름 표시
-        _weaponNameText.text = data.weapon._weaponName;
+        if (_weaponNameText != null && data.weapon._weaponName != null)
+        {
+            _weaponNameText.text = data.weapon._weaponName;
+        }
         //이미지 표시
-        _weaponIcon.sprite = data.weapon.weaponSprite; 
-        _weaponIcon.preserveAspect = true;
+        if (_weaponIcon != null && data.weapon.weaponSprite != null)
+        {
+            _weaponIcon.sprite = data.weapon.weaponSprite; 
+        }
+
+        if (_rarityText != null)
+        {
+            _weaponIcon.preserveAspect = true;
+        }
         //등급 표시
-        _rarityFrame.color = rarityInfo.RarityColor;
-        _rarityText.text = rarityInfo.RarityName;
+        if (_rarityFrame != null && rarityInfo.RarityColor != null)
+        {
+            _rarityFrame.color = rarityInfo.RarityColor;
+        }
+
+        if (_rarityText != null && rarityInfo.RarityName != null)
+        {
+            _rarityText.text = rarityInfo.RarityName;
+        }
         //새로 얻은 아이템 인지 표시
         if (data.isNew)
         {
             _newTag.SetActive(true);
             
         }
-        //if(data.abilityName == CardAbility.weaponDamage)
-        _damageText.text = $"Damage: +{data.weapon.weaponDamage}%";
-        _speedText.text = $"Speed: +{data.weapon.weaponAttackSpeed}";
-        _rangeText.text = $"Range: +{data.weapon.projectileCount}%";
+
+        if (data.weapon == null) return;
+        
+        if (_damageText != null && data.weapon.weaponDamage != null)
+        {
+            _damageText.text = $"Damage: +{data.weapon.weaponDamage}%";
+        }
+        if (_speedText != null && data.weapon.weaponAttackSpeed != null)
+        {
+            _speedText.text = $"Speed: +{data.weapon.weaponAttackSpeed}";
+        }
+        if (_rangeText != null && data.weapon.projectileCount != null)
+        {
+            _rangeText.text = $"Range: +{data.weapon.projectileCount}%";
+        }
     }
 
     public void OnClickCard()
