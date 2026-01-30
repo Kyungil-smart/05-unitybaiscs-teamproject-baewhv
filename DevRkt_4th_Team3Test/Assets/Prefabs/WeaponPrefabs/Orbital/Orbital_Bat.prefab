@@ -149,11 +149,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponName: Bat
   isActive: 1
-  weaponDamage: 5
-  weaponAttackSpeed: 100
+  level: 0
+  isPromotionWeapon: 0
+  isUpgradeFinished: 0
+  weaponDamage: 6
+  weaponAttackSpeed: 120
   projectileCount: 1
   weaponRange: 5
   objectPrefab: {fileID: 4829169189555352309}
+  promotionPrefab: {fileID: 0}
   weaponSprite: {fileID: -1939520290, guid: ed75e7b2c9b05bc4396ee06a91d4c0b5, type: 3}
 --- !u!1 &5803429221741341427
 GameObject:

@@ -15,12 +15,13 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _attackDamage = 1;
     [SerializeField] private int _defense = 1;
     [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _pickupRange = 5f;
+    [SerializeField] private float _pickupRange = 0.7f;
     [SerializeField] private AudioClip _deathSound; 
     [SerializeField] private AudioClip[] _hitSounds;
     [SerializeField]private TextMeshProUGUI _healText;
     
     public float PickupRange => _pickupRange;
+    private SphereCollider _pickupCollider;
     
     // 원래 컬러가 흰색이 아닐경우도 있어서 오리지널 컬러를 따로 지정해서 저장
     private Color _originalColor;
@@ -68,6 +69,14 @@ public class PlayerStats : MonoBehaviour, IDamagable
         
         if (_renderer != null)
             _originalColor = _renderer.material.color;
+        
+        _pickupCollider = GetComponentInChildren<SphereCollider>();
+        if (_pickupCollider != null)
+        {
+            _pickupCollider.isTrigger = true;
+            _pickupCollider.radius = _pickupRange;
+        }
+
     }
 
     // 작동 확인용 (추후 삭제)
