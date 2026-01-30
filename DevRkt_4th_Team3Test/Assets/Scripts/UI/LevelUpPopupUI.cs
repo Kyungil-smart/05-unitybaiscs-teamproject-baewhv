@@ -45,21 +45,33 @@ public class LevelUpPopupUI : MonoBehaviour
         if (_cardUI == null) return;
 
         // 카드 생성 및 카드가 나열될 부모 설정
-        GameObject cardObj = Instantiate(_cardUI, _cardList);
-        CardUI cardUIScript = cardObj.GetComponent<CardUI>();
+        Transform cardList = transform.Find("CardList");
+        GameObject newCardObj = Instantiate(_cardUI, cardList);
+        CardUI cardUI = newCardObj.GetComponent<CardUI>();
 
-        if (cardUIScript != null)
+        if (cardUI != null)
         {
             // CardManager의 등급 정보를 가져오기
             CardInfoPerRarity rarityInfo = _cardManager.infoPerRarity[card.rarity];
-            cardUIScript.Setup(card, rarityInfo);
+            cardUI.Setup(card, rarityInfo, OnCardSelected);
         }
     }
 
+    
+    private void OnCardSelected(Card card)
+    {
+        // 카드 적용
+        _cardManager.CardApply(card);
+    
+        // 팝업 닫기
+        ClosePopup();
+    }
+    
     public void ClosePopup()
     {
         gameObject.SetActive(false);
         // 게임 재개
         Time.timeScale = 1f;
     }
+    
 }

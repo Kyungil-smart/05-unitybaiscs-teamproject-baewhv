@@ -21,7 +21,7 @@ public struct CardInfoPerRarity
 
 public enum CardAbility //능력치 enum으로 저장
 {
-    weaponDamage, weaponAttackSpeed, projectileCount
+    weaponDamage, weaponAttackSpeed, projectileCount, weaponRange
 }
 
 public class CardManager : MonoBehaviour
@@ -206,7 +206,7 @@ public class CardManager : MonoBehaviour
     /// 올릴 능력치를 랜덤으로 뽑는다.
     /// </summary>
     /// <returns></returns>
-    public string PickAbility(WeaponBase weapon)
+    public CardAbility PickAbility(WeaponBase weapon)
     {
         
         // cardData[i].weapon을 받아서 cardData[i].weapon.projectileCount의 값이 10이상이면 제외. 나머지도 비슷하게.
@@ -244,7 +244,7 @@ public class CardManager : MonoBehaviour
         
         int randomValue = Random.Range(0, list.Count);
         
-        string name = Enum.GetName(typeof(CardAbility), list[randomValue]);
+        CardAbility name = (CardAbility)list[randomValue];
         return name;
     }
 
@@ -286,17 +286,17 @@ public class CardManager : MonoBehaviour
     /// <param name="variableName"></param>
     /// <param name="rarity"></param>
     /// <returns></returns>
-    public float GetUpgradeAmount(string variableName,int rarity)
+    public float GetUpgradeAmount(CardAbility variableName,int rarity)
     {
         switch (variableName)
         {
-            case "weaponDamage" :
+            case CardAbility.weaponDamage :
                 return infoPerRarity[rarity].damageMultiplier;
-            case "weaponAttackSpeed" :
+            case CardAbility.weaponAttackSpeed :
                 return infoPerRarity[rarity].attackSpeedMultiplier;
-            case "projectileCount" :
+            case CardAbility.projectileCount :
                 return infoPerRarity[rarity].projectileAdd;
-            case "weaponRange" :
+            case CardAbility.weaponRange :
                 return infoPerRarity[rarity].rangeMultiplier;
         }
         return 0;

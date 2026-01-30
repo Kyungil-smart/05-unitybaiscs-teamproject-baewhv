@@ -1017,6 +1017,7 @@ MonoBehaviour:
   _damageText: {fileID: 3900288880690370770}
   _speedText: {fileID: 8760577986757707378}
   _rangeText: {fileID: 2525110911354938890}
+  _rarityText: {fileID: 5291082124776266335}
   _newTag: {fileID: 4126435559838954909}
 --- !u!114 &188316713343658788
 MonoBehaviour:

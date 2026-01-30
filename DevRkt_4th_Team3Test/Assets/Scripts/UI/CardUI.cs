@@ -19,13 +19,15 @@ public class CardUI : MonoBehaviour
 
     private Card _cardData;
     private LevelUI _levelUI;
-
+    private System.Action<Card> _onClickCallback;
+    
     /// <summary>
     /// 데이터를 받아서 Card UI에 표시
     /// </summary>
-    public void Setup(Card data, CardInfoPerRarity rarityInfo)
+    public void Setup(Card data, CardInfoPerRarity rarityInfo, System.Action<Card> callback)
     {
         _cardData = data;
+        _onClickCallback = callback;
         
         //이름 표시
         _weaponNameText.text = data.weapon._weaponName;
@@ -50,10 +52,6 @@ public class CardUI : MonoBehaviour
     public void OnClickCard()
     {
         if (_cardData == null) return;
-
-        // CardManager의 기존 ApplyCardEffect 함수를 그대로 호출
-        FindObjectOfType<CardManager>().ApplyCardEffect(_cardData);
-       
-        // LevelUI를 통해 팝업을 닫고 게임 재개
+        _onClickCallback?.Invoke(_cardData);
     }
 }
