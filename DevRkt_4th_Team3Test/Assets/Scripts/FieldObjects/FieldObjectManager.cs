@@ -13,9 +13,13 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     private int _maxExpObject = 100;
     private int _expObjectActiveCount = 0;
     private ExpObject _compressExpObject = null;
+
+    //EXP풀링 격리용 게임오브젝트
     private GameObject _go_Exp;
-    
+
+    //경험치 텍스쳐용 이미지모음
     public EXPSprites ExpSprites { get; private set; }
+
     public GameObject _item_Exp { get; private set; }
 
     private void Awake()
@@ -30,7 +34,7 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     //오브젝트 풀링용
     private void PoolingExpObject(int count)
     {
-        if (_expObjects.Count >= _maxObjects) return;   //최대면 더 늘리지 않음.
+        if (_expObjects.Count >= _maxObjects) return; //최대면 더 늘리지 않음.
         if (_expObjects.Count + count > _maxExpObject) count = _expObjects.Count + count - _maxObjects;
         for (int i = 0; i < count; i++)
         {
@@ -41,11 +45,12 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     /// <summary>
     /// 경험치 오브젝트 생성
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="type">소형, 중형, 대형</param>
+    /// <param name="position">생성 위치</param>
     public void MakeExpObject(EXPType type, Vector3 position)
     {
         if (_expObjectActiveCount >= _maxObjects) return; //Todo 빨간거에 합치기
-        if(_expObjectActiveCount >= _expObjects.Count) PoolingExpObject(10);
+        if (_expObjectActiveCount >= _expObjects.Count) PoolingExpObject(10);
         foreach (ExpObject obj in _expObjects)
         {
             if (!obj.gameObject.activeSelf)
@@ -55,7 +60,6 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
                 break;
             }
         }
-        
         _expObjectActiveCount++;
     }
 
