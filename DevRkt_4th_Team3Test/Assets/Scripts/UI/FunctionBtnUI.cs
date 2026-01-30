@@ -81,6 +81,6 @@ public class FunctionBtnManager : MonoBehaviour
     /// </summary>
     public void OnClickExit()
     {
-        SceneManager.LoadScene(2);
+        GameManager.Instance.SetGameOver();
     }
 }

@@ -28,7 +28,7 @@ public class StageUI : MonoBehaviour
         {
             _isGameOver = true;
             EndingUIManager.IsClear = true;
-            SceneManager.LoadScene(2);
+            GameManager.Instance.SetGameOver();
         }
     }
     

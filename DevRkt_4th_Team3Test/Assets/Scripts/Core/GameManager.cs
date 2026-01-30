@@ -27,15 +27,18 @@ public class GameManager : MonoBehaviour
 
     [field: SerializeField] private GameObject PlayerPrefab;
     public GameObject Player { get; private set; }
-    [SerializeField] private Vector3 _spawnPoint; 
-    
     [field:SerializeField] public PlayerCamera Camera { get; set; }
+    [SerializeField] private Vector3 _spawnPoint;
+    private bool isPlayerDead = false;
 
-    [SerializeField] private LevelUI _levelUI;
+    [Header("Weapon")]
     [SerializeField] private OrbitalWeaponManager _owm;
     [SerializeField] private RangedWeaponManager _rwm;
     
-     
+    [Header("UI")]
+    [SerializeField] private LevelUI _levelUI;
+    private int _killCount = 0;
+    
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
     void Init()
     {
         var fieldManager = FieldManager.Instance;
+        var fieldObjectManager = FieldObjectManager.Instance;
 
         if (!Player)                                        //게임매니저에 플레이어가 등록되지 않았다면
         {
@@ -69,22 +73,29 @@ public class GameManager : MonoBehaviour
             _rwm._player = Player;
         PlayerStats ps = Player.GetComponent<PlayerStats>();
         if(ps)
-            ps.OnPlayerDeath += GameOver;
+            ps.OnPlayerDeath += OnPlayerDeath;
     }
 
-    void GenerateManager<T>() where T : Component
+    private void OnPlayerDeath()
     {
-        if (FindObjectOfType<T>() != null) return;
-
-        var go = new GameObject(typeof(T).Name);
-        go.AddComponent<T>();
-        go.transform.SetParent(transform);
+        isPlayerDead = true;
+        StartCoroutine(StartGameOver());
     }
 
-    private void GameOver()
+    private IEnumerator StartGameOver()
+    {
+        yield return YieldContainer.WaitForSeconds(2.5f);
+        SetGameOver();
+    }
+
+    public void SetGameOver()
     {
         Destroy(_owm.gameObject);
         Destroy(_rwm.gameObject);
+        Destroy(FieldObjectManager.Instance.gameObject);
+        Destroy(FieldManager.Instance.gameObject);
+        
+        Destroy(gameObject);
         SceneManager.LoadScene(2);
     }
 }
