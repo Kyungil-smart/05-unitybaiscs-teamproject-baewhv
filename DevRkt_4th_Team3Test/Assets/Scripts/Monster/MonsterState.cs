@@ -16,6 +16,7 @@ public class MonsterState : MonoBehaviour
     private float _lastAttackTime;
     
     public static System.Action OnMonsterDie;
+    private EXPType _dropExpType = EXPType.small;
     
     protected virtual void Awake()
     {
@@ -28,15 +29,6 @@ public class MonsterState : MonoBehaviour
         }
 
         MonsterManager.Register();
-    }
-    
-    //TODO: 테스트용, 나중에 삭제
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            TakeDamage(3);
-        }
     }
     
     private void OnTriggerStay(Collider other)
@@ -80,12 +72,21 @@ public class MonsterState : MonoBehaviour
             Debug.LogWarning("ERROR: 플레이어에게 PlayerStats 컴포넌트가 없습니다!");
         }
     }
+    
+    /// <summary>
+    /// 스폰 시 몬스터 그룹의 경험치 타입을 전달 받음
+    /// </summary>
+    public void SetExpType(EXPType type)
+    {
+        _dropExpType = type;
+    }
 
     private void Die()
     {
         OnMonsterDie?.Invoke();
         MonsterManager.Unregister();
-        FieldObjectManager.Instance.MakeExpObject(EXPType.small,transform.position);
+        //경험치 아이템 드랍
+        FieldObjectManager.Instance.MakeExpObject(_dropExpType, transform.position);
         Destroy(gameObject);
     }
 
