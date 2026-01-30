@@ -659,10 +659,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonsterSpawner
       objectReference: {fileID: 0}
-    - target: {fileID: 6119659444450471765, guid: b29302eedb2966447a5ca87ec34377fe, type: 3}
-      propertyPath: _monsterGroups.Array.data[1].startTime
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 8109510154190403287, guid: b29302eedb2966447a5ca87ec34377fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.041493084
@@ -702,10 +698,6 @@ PrefabInstance:
     - target: {fileID: 8109510154190403287, guid: b29302eedb2966447a5ca87ec34377fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8992176369998368163, guid: b29302eedb2966447a5ca87ec34377fe, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
