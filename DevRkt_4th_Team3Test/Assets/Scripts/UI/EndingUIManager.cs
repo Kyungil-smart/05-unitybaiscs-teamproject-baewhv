@@ -37,28 +37,10 @@ public class EndingUIManager : MonoBehaviour
         //게임 상태 리셋
         IsClear = false;
         EndTime = "00:00";
+        //몬스터 리셋
         MonsterManager.ResetCount();
         MonsterState.OnMonsterDie = null;
-
-        if (WeaponManager.WeaponInstance != null)
-        {
-            Destroy(WeaponManager.WeaponInstance.gameObject);
-        }
-
-        if (OrbitalWeaponManager.OrbitalInstance != null)
-        {
-            Destroy(OrbitalWeaponManager.OrbitalInstance.gameObject);
-        }
-
-        if (RangedWeaponManager.RangedInstance != null)
-        {
-            Destroy(RangedWeaponManager.RangedInstance.gameObject);
-        }
-
-        if (CardManager.CardInstance != null)
-        {
-            Destroy(CardManager.CardInstance.gameObject);
-        }
+        //씬 초기화 다시 실행
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
