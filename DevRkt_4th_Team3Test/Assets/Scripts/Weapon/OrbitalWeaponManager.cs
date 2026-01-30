@@ -85,7 +85,7 @@ public class OrbitalWeaponManager : MonoBehaviour
     }
 
     //무기의 숫자가 바뀌었을때 무기 지우고 다시 배치.
-    private void ClearWeapons(OrbitalWeapon weapon)
+    public void ClearWeapons(OrbitalWeapon weapon)
     {
         
         if (_weaponLocations.ContainsKey(weapon))
