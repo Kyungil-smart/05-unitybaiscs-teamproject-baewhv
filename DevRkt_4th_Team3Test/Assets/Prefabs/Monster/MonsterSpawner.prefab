@@ -45,10 +45,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4f956ef2394d45941e0e6cf314a5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _monsterPrefabs:
-  - {fileID: 5477854669688069240, guid: d36e11fefc43b834d858c00fbc4dba1f, type: 3}
-  - {fileID: 5477854669688069240, guid: 91ba929f0b5213b4c92a426b718fb950, type: 3}
-  - {fileID: 5477854669688069240, guid: f4202a971a4075341bcb73790bfc2ae9, type: 3}
+  _monsterGroups:
+  - groupName: monsters1
+    startTime: 0
+    prefabs:
+    - {fileID: 5477854669688069240, guid: d36e11fefc43b834d858c00fbc4dba1f, type: 3}
+    - {fileID: 5477854669688069240, guid: 91ba929f0b5213b4c92a426b718fb950, type: 3}
+    - {fileID: 5477854669688069240, guid: f4202a971a4075341bcb73790bfc2ae9, type: 3}
+    spawnInterval: 1.5
+    expType: 0
+  - groupName: monster2
+    startTime: 120
+    prefabs:
+    - {fileID: 5477854669688069240, guid: 0da3a18b7cd927e479406469566d6a95, type: 3}
+    - {fileID: 5477854669688069240, guid: 13c646c6fcffbf24a9ac7dda9e2ee088, type: 3}
+    - {fileID: 5477854669688069240, guid: c035f3861125e18489955b6ea1d68a9a, type: 3}
+    spawnInterval: 1
+    expType: 1
+  - groupName: monster3
+    startTime: 240
+    prefabs:
+    - {fileID: 5477854669688069240, guid: 0ec9ea735eb04fa4a9b5847cb8818d6a, type: 3}
+    - {fileID: 5477854669688069240, guid: 8d85d995fdcaa00498c9cfa94a3104a4, type: 3}
+    - {fileID: 5477854669688069240, guid: 6d6e6917d0a853e4fb0b8ae31992871a, type: 3}
+    spawnInterval: 0.5
+    expType: 2
   _spawnInterval: 2
   _maxPopulation: 30
   _minSpawnDistance: 15

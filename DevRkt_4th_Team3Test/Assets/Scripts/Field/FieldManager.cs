@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FieldManager : MonoBehaviour
+public class FieldManager : Singleton<FieldManager>
 {
     [SerializeField] private GameObject _fieldTile;
     [SerializeField] private List<GameObject> _designedTile = new List<GameObject>();
@@ -56,22 +56,6 @@ public class FieldManager : MonoBehaviour
     {
         PlayerTilePosition = Vector2Int.zero;
         LoadTile(PlayerTilePosition);
-    }
-
-    /// <summary>
-    /// FieldManager 싱글턴 인스턴스 호출
-    /// </summary>
-    public static FieldManager Instance
-    {
-        get
-        {
-            if (!_instance)
-            {
-                _instance = FindObjectOfType<FieldManager>();
-            }
-
-            return _instance;
-        }
     }
 
 
