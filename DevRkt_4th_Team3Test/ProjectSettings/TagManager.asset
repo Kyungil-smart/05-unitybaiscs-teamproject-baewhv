@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WeaponEnemy
   - Monster
   - Enemy
   - Interactable
@@ -18,7 +17,7 @@ TagManager:
   - Enemy
   - Player
   - 
-  - Enemy
+  - 
   - 
   - 
   - 

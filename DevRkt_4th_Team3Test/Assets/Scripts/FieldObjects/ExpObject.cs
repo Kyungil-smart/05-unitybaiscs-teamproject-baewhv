@@ -1,11 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ExpObject : ItemObject
 {
-    [SerializeField] private int _expValue = 1;
+    [SerializeField] private int _expValue;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+    
     /// <summary>
     /// I / 상호작용을 통한 경험치 획득
     /// </summary>
@@ -16,6 +22,33 @@ public class ExpObject : ItemObject
         if (es)
             es.GainExp(_expValue);
         Debug.Log("경험치 획득");
-        base.Interact(pc);
+        FieldObjectManager.Instance.RemoveExpObject(this);
+        gameObject.SetActive(false);
+    }
+
+    public void SetExpObject(EXPType type, Vector3 position)
+    {
+        _body.color = Color.white;
+        switch (type)
+        {
+            case EXPType.small:
+                _body.sprite = FieldObjectManager.Instance.ExpSprites.SmallEXPSprite;
+                transform.localScale = new Vector3(6, 6, 6);
+                _expValue = 5;
+                break;
+            case EXPType.medium:
+                _body.sprite = FieldObjectManager.Instance.ExpSprites.MediumEXPSprite;
+                _body.color = new Color(r: 0.9845836f, g: 1f, b: 0.3160377f);
+                transform.localScale = new Vector3(8, 8, 8);
+                _expValue = 50;
+                break;
+            case EXPType.large:
+                _body.sprite = FieldObjectManager.Instance.ExpSprites.LargeEXPSprite;
+                transform.localScale = new Vector3(10, 10, 10);
+                _expValue = 200;
+                break;
+        }
+        gameObject.transform.position = position;
+        gameObject.SetActive(true);
     }
 }

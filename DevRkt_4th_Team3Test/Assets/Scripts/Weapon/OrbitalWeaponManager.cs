@@ -9,7 +9,7 @@ public class OrbitalWeaponManager : MonoBehaviour
     [SerializeField] private List<GameObject> prefabs =  new List<GameObject>();
     //궤도무기들 종류마다 저장
     public List<OrbitalWeapon> _orbitalWeapons = new List<OrbitalWeapon>();
-    [SerializeField] private GameObject _player;
+    [SerializeField] public GameObject _player;
     
     //무기마다 궤도에 있는 무기들의 위치를 담는 딕셔너리. List<Transform>.Count = 한 종류의 무기에 존재하는 무기 개수
     private Dictionary<OrbitalWeapon, List<Transform>> _weaponLocations = new Dictionary<OrbitalWeapon, List<Transform>>();

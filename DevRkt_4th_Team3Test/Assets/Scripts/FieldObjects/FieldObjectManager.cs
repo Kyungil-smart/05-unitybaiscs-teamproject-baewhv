@@ -1,21 +1,72 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FieldObjectManager : Singleton<FieldObjectManager>
 {
     private List<FieldObject> _objs = new List<FieldObject>();
-    [SerializeField] private int _initObjectCount = 40;
-    public GameObject _item_Exp_Small { get; private set; }
-    public GameObject _item_Exp_Medium { get; private set; }
-    public GameObject _item_Exp_Large { get; private set; }
+    private int _maxObjects = 10;
+
+    private List<ExpObject> _expObjects = new List<ExpObject>();
+    private int _maxExpObject = 100;
+    private int _expObjectActiveCount = 0;
+    private ExpObject _compressExpObject = null;
+
+    //EXP풀링 격리용 게임오브젝트
+    private GameObject _go_Exp;
+
+    //경험치 텍스쳐용 이미지모음
+    public EXPSprites ExpSprites { get; private set; }
+
+    public GameObject _item_Exp { get; private set; }
 
     private void Awake()
     {
-        _item_Exp_Small = Resources.Load<GameObject>("FieldObject/Item/Item_EXP_Small");
-        _item_Exp_Medium = Resources.Load<GameObject>("FieldObject/Item/Item_EXP_Medium");
-        _item_Exp_Large = Resources.Load<GameObject>("FieldObject/Item/Item_EXP_Large");
+        _go_Exp = new GameObject("ExpObjects");
+        _go_Exp.transform.SetParent(transform);
+        _item_Exp = Resources.Load<GameObject>("FieldObject/Item/Item_EXP");
+        ExpSprites = Resources.Load("FieldObject/Item/EXPSprites").GetComponent<EXPSprites>();
+        PoolingExpObject(40);
+    }
+
+    //오브젝트 풀링용
+    private void PoolingExpObject(int count)
+    {
+        if (_expObjects.Count >= _maxObjects) return; //최대면 더 늘리지 않음.
+        if (_expObjects.Count + count > _maxExpObject) count = _expObjects.Count + count - _maxObjects;
+        for (int i = 0; i < count; i++)
+        {
+            _expObjects.Add(Instantiate(_item_Exp, _go_Exp.transform).GetComponent<ExpObject>());
+        }
+    }
+
+    /// <summary>
+    /// 경험치 오브젝트 생성
+    /// </summary>
+    /// <param name="type">소형, 중형, 대형</param>
+    /// <param name="position">생성 위치</param>
+    public void MakeExpObject(EXPType type, Vector3 position)
+    {
+        if (_expObjectActiveCount >= _maxObjects) return; //Todo 빨간거에 합치기
+        if (_expObjectActiveCount >= _expObjects.Count) PoolingExpObject(10);
+        foreach (ExpObject obj in _expObjects)
+        {
+            if (!obj.gameObject.activeSelf)
+            {
+                obj.SetExpObject(type, position);
+                //빨강일 경우, 빨강이 등록되어있는데 꺼져있는 경우,
+                break;
+            }
+        }
+        _expObjectActiveCount++;
+    }
+
+    public void RemoveExpObject(ExpObject obj)
+    {
+        if (_compressExpObject == obj) _compressExpObject = null; //모아둔거 먹으면 떼놓기.
+        _expObjectActiveCount--;
     }
 
     /// <summary>
@@ -26,19 +77,26 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     /// <returns></returns>
     public FieldObject SetObject(FieldObject obj, Vector3 position)
     {
-        FieldObject makedObject = Instantiate(obj, position, new Quaternion());
+        FieldObject makedObject = Instantiate(obj, position, new Quaternion(), transform);
         _objs.Add(makedObject);
         return makedObject;
     }
-    
+
     /// <summary>
     /// 오브젝트 삭제
     /// </summary>
     /// <param name="obj"></param>
     public void RemoveObject(FieldObject obj)
     {
-        if(_objs.Contains(obj))
+        if (_objs.Contains(obj))
             _objs.Remove(obj);
         Destroy(obj.gameObject);
     }
+}
+
+public enum EXPType
+{
+    small,
+    medium,
+    large
 }

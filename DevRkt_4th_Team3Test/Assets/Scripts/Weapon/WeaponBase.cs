@@ -11,8 +11,8 @@ public class WeaponBase : MonoBehaviour
     [Header("전투 스탯")]
     public float weaponDamage; // 기본 공격력
     public float weaponAttackSpeed;  // 공격속도 (궤도무기의 경우 공전속도)
-    public int projectileCount; // 투사체 개수
-    public float weaponRange; // 공격범위 (근접은 변경x)
+    public int projectileCount; // 투사체 개수 (궤도무기만 사용)
+    public float weaponRange; // 공격범위 (변경x 무기마다 고정값)
     [Header("프리팹")]
     public GameObject objectPrefab;
     [Header("스프라이트")]

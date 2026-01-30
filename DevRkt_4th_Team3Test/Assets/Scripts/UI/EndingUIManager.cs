@@ -7,7 +7,7 @@ public class EndingUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI TitleText;
     [SerializeField] private TextMeshProUGUI ResultText;
     public static bool IsClear = false;
-    public static string EndTime;
+    public static string EndTime = "00:00";
     
     private void Start()
     {
@@ -34,8 +34,12 @@ public class EndingUIManager : MonoBehaviour
     /// </summary>
     public void ReplayGame()
     {
-        //TODO: 게임 상태 리셋
+        //게임 상태 리셋
         IsClear = false;
+        EndTime = "00:00";
+        MonsterManager.ResetCount();
+        MonsterState.OnMonsterDie = null;
+        Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
     

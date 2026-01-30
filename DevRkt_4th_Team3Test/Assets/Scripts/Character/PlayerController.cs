@@ -64,5 +64,5 @@ public class PlayerController : MonoBehaviour
         if (_isDead) return;
         _rigidbody.MovePosition(transform.position + _movement * _playerStats.MoveSpeed * Time.fixedDeltaTime);
     }
-
+    
 }
