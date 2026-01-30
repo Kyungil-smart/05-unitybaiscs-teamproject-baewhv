@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    //싱글톤으로 선언해서 무기 전체 종류 받을떄 WeaponManager.WeaponInstance.weapons 참조
     public static WeaponManager WeaponInstance;
     
-    //TODO 무기를 담는 변수 종류에 상관없이 담음
+    //TODO 무기를 담는 변수 전체 무기 종류 담음
     public List<WeaponBase> weapons = new List<WeaponBase>();
 
     private void Awake()
