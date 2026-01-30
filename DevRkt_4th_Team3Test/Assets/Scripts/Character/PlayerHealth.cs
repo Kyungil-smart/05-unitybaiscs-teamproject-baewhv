@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
         
         // Slider 초기화
         _hpSlider.maxValue = _playerStats.MaxHP;
-        _hpSlider.value = _currentHP;
+        _hpSlider.value = _playerStats.CurrentHP;
 
         UpdateHPGuage();
     }
