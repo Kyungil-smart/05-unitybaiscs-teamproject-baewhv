@@ -26,7 +26,7 @@ public enum CardAbility //능력치 enum으로 저장
 
 public class CardManager : MonoBehaviour
 {
-    //[SerializeField] private OrbitalWeaponManager orbitalManager;
+    public static CardManager CardInstance;
     
     // 인스펙터에서 등급에 따른 카드에서 나올 수 있는 능력치 설정
     [SerializeField] private List<CardInfoPerRarity> infoPerRarity = new List<CardInfoPerRarity>();
@@ -41,8 +41,23 @@ public class CardManager : MonoBehaviour
     [SerializeField] private float _maxProjectileCount = 10;
     [SerializeField] private float _maxRangedWeaponAttackSpeed = 100f;
     public int cardCount = 3;
+
     
-   
+    private void Awake()
+    {
+        if (CardInstance == null)
+        {
+            CardInstance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+    }
+    
     
     private void Start()
     {
@@ -52,7 +67,8 @@ public class CardManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        //B눌러서 카드 뽑기 + 뽑은 카드 전부 적용 테스트 하실수 있습니다 
+        if(Input.GetKeyDown(KeyCode.B))
         {
             WeaponManager.WeaponInstance.GetWeaponList();
             Card[] cardData = new Card[cardCount];
@@ -63,7 +79,11 @@ public class CardManager : MonoBehaviour
         
             cardData = DrawCard(cardCount);
 
-            CardApply(cardData);
+            for (int i = 0; i < cardData.Length; i++)
+            {
+                CardApply(cardData[i]);    
+            }
+            
         }
         
     }
@@ -123,22 +143,18 @@ public class CardManager : MonoBehaviour
     /// 카드 효과 적용. 활성화안된무기 활성화.
     /// </summary>
     /// <param name="cardData"></param>
-    public void CardApply(Card[] cardData)
+    public void CardApply(Card cardData)
     {
-        for (int i = 0; i < cardCount; i++)
-        {
             //카드를 선택했을때.(함수화 시켜줘야함 나중에)
-            if (cardData[i].isNew == true)
+            if (cardData.isNew == true)
             {//원래는 무기가 처음 선택되는거면 무기카드가 보이게 할려고 했는데 그건 구현하기가 어렵기 때문에 그냥 처음보는것도 능력치변경되는 걸로.
-                cardData[i].weapon.isActive = true;
-                ApplyCardEffect(cardData[i]);
+                cardData.weapon.isActive = true;
+                ApplyCardEffect(cardData);
             }
             else
             {
-                ApplyCardEffect(cardData[i]);    
+                ApplyCardEffect(cardData);    
             }
-                    
-        }
     }
     
     /// <summary>

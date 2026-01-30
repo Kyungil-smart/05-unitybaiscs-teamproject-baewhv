@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -48,7 +49,14 @@ public class GameManager : MonoBehaviour
     {
         GenerateManager<FieldManager>();
         
-        Player = Instantiate(PlayerPrefab, _spawnPoint, new Quaternion());
+        if (!Player)                                        //게임매니저에 플레이어가 등록되지 않았다면
+        {
+            Player = FindObjectOfType<PlayerStats>().GameObject(); //우선 하이라키에서 플레이어 탐색
+            if (!Player)                                                    //그래도 없다면
+                Player = Instantiate(PlayerPrefab, _spawnPoint, new Quaternion()); //플레이어 생성
+        }
+
+        Player.name = "Player";
         Instantiate(Camera).player = Player.transform;
         if(_levelUI)
             _levelUI._expSystem = Player.GetComponent<ExpSystem>();
