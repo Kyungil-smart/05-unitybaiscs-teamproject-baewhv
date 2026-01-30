@@ -34,7 +34,7 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     //오브젝트 풀링용
     private void PoolingExpObject(int count)
     {
-        if (_expObjects.Count >= _maxObjects) return; //최대면 더 늘리지 않음.
+        if (_expObjects.Count >= _maxExpObject) return; //최대면 더 늘리지 않음.
         if (_expObjects.Count + count > _maxExpObject) count = _expObjects.Count + count - _maxObjects;
         for (int i = 0; i < count; i++)
         {
