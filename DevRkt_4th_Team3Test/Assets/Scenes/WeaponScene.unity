@@ -1054,7 +1054,7 @@ MonoBehaviour:
   - Rarity: 0
     RarityName: Rare
     AppearProbability: 40
-    RarityColor: {r: 0, g: 0.24871159, b: 1, a: 0}
+    RarityColor: {r: 0, g: 0.24871159, b: 1, a: 1}
     damageMultiplier: 1.1
     attackSpeedMultiplier: 1.1
     projectileAdd: 1
@@ -1062,7 +1062,7 @@ MonoBehaviour:
   - Rarity: 1
     RarityName: Epic
     AppearProbability: 30
-    RarityColor: {r: 0.85711336, g: 0, b: 1, a: 0}
+    RarityColor: {r: 0.85711336, g: 0, b: 1, a: 1}
     damageMultiplier: 1.2
     attackSpeedMultiplier: 1.2
     projectileAdd: 1
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   - Rarity: 2
     RarityName: Unique
     AppearProbability: 20
-    RarityColor: {r: 1, g: 0.46290466, b: 0, a: 0}
+    RarityColor: {r: 1, g: 0.46290466, b: 0, a: 1}
     damageMultiplier: 1.4
     attackSpeedMultiplier: 1.4
     projectileAdd: 2
@@ -1078,7 +1078,7 @@ MonoBehaviour:
   - Rarity: 3
     RarityName: Legendary
     AppearProbability: 10
-    RarityColor: {r: 0, g: 1, b: 0.801018, a: 0}
+    RarityColor: {r: 0, g: 1, b: 0.801018, a: 1}
     damageMultiplier: 1.8
     attackSpeedMultiplier: 1.8
     projectileAdd: 3
