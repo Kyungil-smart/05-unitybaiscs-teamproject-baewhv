@@ -29,7 +29,7 @@ public class CardManager : MonoBehaviour
     public static CardManager CardInstance;
     
     // 인스펙터에서 등급에 따른 카드에서 나올 수 있는 능력치 설정
-    [SerializeField] private List<CardInfoPerRarity> infoPerRarity = new List<CardInfoPerRarity>();
+    public List<CardInfoPerRarity> infoPerRarity = new List<CardInfoPerRarity>();
     public Dictionary<int, float> probabilityOfRarity = new Dictionary<int, float>(); //쓰기 애매
     
     // 카드는 1.무기 종류 랜덤, 2.등급 랜덤, 3.상승시킬 능력치 종류 랜덤으로 나옴.
@@ -41,7 +41,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private float _maxProjectileCount = 10;
     [SerializeField] private float _maxRangedWeaponAttackSpeed = 100f;
     public int cardCount = 3;
-
+    public int promotionCriteria = 10;
     
     private void Awake()
     {
@@ -67,7 +67,7 @@ public class CardManager : MonoBehaviour
 
     private void Update()
     {
-        //B눌러서 카드 뽑기 + 뽑은 카드 전부 적용 테스트 하실수 있습니다 
+        //테스트용도. B눌러서 카드 뽑기 + 뽑은 카드 전부 적용 테스트 하실수 있습니다 
         if(Input.GetKeyDown(KeyCode.B))
         {
             WeaponManager.WeaponInstance.GetWeaponList();
@@ -107,6 +107,13 @@ public class CardManager : MonoBehaviour
             cardData[i] = new Card();
             cardData[i].weapon = PickWeaponType(); //무기 종류도 랜덤하게 선택.
 
+            //무기를 뽑았을때 만약 무기레벨 + 1 이 promotionCriteria이상이면 isEvolution = true;
+            //TODO UI에서 card의 isPromotion이 true가 되면 cardData[i].weapon.upgradeWeapon._weaponName으로 cardData[i].weapon._weaponName를 바꾸는 승진카드를 보여주시면 좋을것같습니다.
+            if (cardData[i].weapon.level + 1 >= promotionCriteria)
+            {
+                cardData[i].isPromotion = true;
+            }
+            
             //활성화 안되어있으면 활성화 시킴. 
             //cardData.isNew가 true이면 카드 클릭시 ApplyCardEffect 대신에 cardData[i].weapon.isActive = true로 바꿈. 
             if (cardData[i].weapon.isActive == false)
@@ -128,14 +135,24 @@ public class CardManager : MonoBehaviour
     /// <param name="cardData"></param>
     public void ApplyCardEffect(Card cardData)
     {
-        float amount = GetUpgradeAmount(cardData.abilityName, cardData.rarity); //등급과 능력치에 따라 상승시킬 양 계산.
-        cardData.weapon.UpgradeWeapon(cardData.abilityName, amount); //무기에 적용.
-        
-        //만약 궤도무기를 뽑았고. abilityName = projectileCount이면 SpawnWeapon를 통해 스폰시킴.
-         if ((cardData.weapon is OrbitalWeapon))
-         {
-            OrbitalWeaponManager.OrbitalInstance.SpawnWeapons((cardData.weapon as OrbitalWeapon));    
-         }
+        cardData.weapon.level += 1;
+        //승급 
+        if (cardData.weapon.level >= promotionCriteria && cardData.weapon.promotionPrefab != null)
+        {
+            EvolveWeapon(cardData.weapon);
+        }
+        //승급을 하지 않는경우 능력치 적용
+        else
+        {
+            float amount = GetUpgradeAmount(cardData.abilityName, cardData.rarity); //등급과 능력치에 따라 상승시킬 양 계산.
+            cardData.weapon.UpgradeWeapon(cardData.abilityName, amount); //무기에 적용.
+            
+            //만약 궤도무기를 뽑았으면 SpawnWeapon를 통해 스폰시킴.
+             if ((cardData.weapon is OrbitalWeapon))
+             {
+                OrbitalWeaponManager.OrbitalInstance.SpawnWeapons((cardData.weapon as OrbitalWeapon));    
+             }
+        }
          
     }
 
@@ -236,8 +253,28 @@ public class CardManager : MonoBehaviour
     /// <returns></returns>
     public WeaponBase PickWeaponType()
     {
-        int randomValue = Random.Range(0, WeaponManager.WeaponInstance.weapons.Count); //저장된 무기 수
-        return WeaponManager.WeaponInstance.weapons[randomValue]; //무기자체를 리턴
+        List<WeaponBase> validWeapons = new List<WeaponBase>(); //뽑을 수 있는 무기만 뽑음(승진무기, 승진된 후 남은 기존 무기 제외)
+        List<WeaponBase> allWeapons = WeaponManager.WeaponInstance.weapons; 
+
+        for (int i = 0; i < allWeapons.Count; i++)
+        {
+            if (allWeapons[i].isActive == true)
+            {
+                validWeapons.Add(allWeapons[i]);
+            }
+            //승진 무기, 승진된 후 남은 기존 무기는 추가X
+            else if(allWeapons[i].isPromotionWeapon == true || allWeapons[i].isUpgradeFinished == true)
+            {
+                continue;
+            }
+            else
+            {
+                validWeapons.Add(allWeapons[i]);
+            }
+        }
+        
+        int randomValue = Random.Range(0, validWeapons.Count); //저장된 무기 수
+        return validWeapons[randomValue]; //무기자체를 리턴
     }
     
     
@@ -262,6 +299,33 @@ public class CardManager : MonoBehaviour
                 return infoPerRarity[rarity].rangeMultiplier;
         }
         return 0;
+    }
+
+    public void EvolveWeapon(WeaponBase weapon)
+    {
+        //
+        string nextWeaponName = weapon.promotionPrefab.name;
+        weapon.isUpgradeFinished = true; //업그레이드 된 후 남은 무기라는 표시 해줌.
+        
+        //무기 전체 중에 다음 무기와 일치하는 것 있는지 확인
+        for (int i = 0; i < WeaponManager.WeaponInstance.weapons.Count; i++)
+        {
+            //승진 무기가 있으면 기존 무기 isActive = false, 새로운 무기 isActive = true;
+            if (nextWeaponName == WeaponManager.WeaponInstance.weapons[i]._weaponName)
+            {
+                weapon.isActive = false; //기존무기 false
+                WeaponManager.WeaponInstance.weapons[i].isActive = true; //승진 무기 true
+                //rangedWeapon은 그냥 해도 되는데 orbitalWeapon은 clearweapon한뒤에 spawnweapon도 함.
+                if (weapon is OrbitalWeapon)
+                {
+                    OrbitalWeaponManager.OrbitalInstance.ClearWeapons(weapon as OrbitalWeapon);//기존 궤도 무기 제거.
+                    OrbitalWeaponManager.OrbitalInstance.SpawnWeapons(
+                        WeaponManager.WeaponInstance.weapons[i] as OrbitalWeapon); //승진 무기 생성.
+                }
+
+                break;
+            }
+        }
     }
 }
 
