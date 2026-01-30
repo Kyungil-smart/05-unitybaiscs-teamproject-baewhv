@@ -29,7 +29,7 @@ public class CardManager : MonoBehaviour
     public static CardManager CardInstance;
     
     // 인스펙터에서 등급에 따른 카드에서 나올 수 있는 능력치 설정
-    [SerializeField] private List<CardInfoPerRarity> infoPerRarity = new List<CardInfoPerRarity>();
+    [SerializeField] public List<CardInfoPerRarity> infoPerRarity = new List<CardInfoPerRarity>();
     public Dictionary<int, float> probabilityOfRarity = new Dictionary<int, float>(); //쓰기 애매
     
     // 카드는 1.무기 종류 랜덤, 2.등급 랜덤, 3.상승시킬 능력치 종류 랜덤으로 나옴.

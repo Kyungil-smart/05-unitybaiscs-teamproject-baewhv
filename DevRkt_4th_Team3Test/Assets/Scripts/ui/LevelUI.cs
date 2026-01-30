@@ -13,34 +13,43 @@ public class LevelUI : MonoBehaviour
     [Header("Player")] [Tooltip("자동으로 캐릭터 데이터 찾습니다.")]
     public ExpSystem _expSystem;
 
-    [SerializeField] private LevelUpPopupUI _popupManager; // 새로 만든 매니저 연결
+    [SerializeField] private GameObject _levelUpPopupObject;
+    private GameObject _currentLevelUpPopup;
+    private LevelUpPopupUI _levelUpPopupUI;
     private int _lastLevel = 1;
-    
+
     void Start()
     {
-        if (_expSystem == null)
+        if (_levelUpPopupObject != null)
         {
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                _expSystem = player.GetComponent<ExpSystem>();
-            }
+            _currentLevelUpPopup = Instantiate(_levelUpPopupObject, GameObject.Find("Canvas").transform);
+            _currentLevelUpPopup.SetActive(false);
+            _levelUpPopupUI = _currentLevelUpPopup.GetComponent<LevelUpPopupUI>();
         }
-        
-        if (_expSystem != null) _lastLevel = _expSystem.Level;
     }
 
     void Update()
     {
-        UpdateExpGauge();
+        //TODO: 테스트 용도 추후 삭제
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log(_levelUpPopupUI != null?"팝업있음":"팝업없음");
+            _levelUpPopupUI.ShowPopup();
+        }
         
+        if (_expSystem == null || _levelUpPopupUI == null) return;
+        
+        UpdateExpGauge();
+
         // 레벨업 체크
         if (_expSystem.Level > _lastLevel)
         {
             _lastLevel = _expSystem.Level;
             //레벨업 팝업 표시
-            _popupManager.ShowPopup(); 
+            _levelUpPopupUI.ShowPopup();
         }
+
+
     }
 
     private void UpdateExpGauge()

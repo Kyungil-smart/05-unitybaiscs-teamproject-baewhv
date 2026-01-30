@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class LevelUpPopupUI : MonoBehaviour
 {
-    [Header("UI Reference")]
-    [SerializeField] private GameObject _popupObject;
-    [SerializeField] private CardUI[] _uiCards;
-    
-    [Header("System Reference")]
-    [SerializeField] private List<CardInfoPerRarity> _uiRarityInfos;
-    [SerializeField] private CardManager _cardManager;
+    [Header("Card UI")] [SerializeField] private GameObject _cardUI;
+    [SerializeField] private Transform _cardList;
+    private Card[] _cards;
 
-    private void Start()
-    {
-        if (_popupObject != null) _popupObject.SetActive(false);
-    }
+    [Header("System Reference")] private CardManager _cardManager;
 
     /// <summary>
     /// 레벨업 시 팝업 표시
@@ -24,35 +17,49 @@ public class LevelUpPopupUI : MonoBehaviour
     {
         // 게임 정지
         Time.timeScale = 0f;
-        _popupObject.SetActive(true);
+        gameObject.SetActive(true);
 
-        if (_cardManager != null)
+        if (_cardManager == null)
+            _cardManager = FindObjectOfType<CardManager>();
+
+        if (_cardManager == null) return;
+
+        // 이전 카드 UI들 삭제
+        foreach (Transform child in _cardList)
         {
-            // CardManager의 기존 DrawCard 함수 사용
-            Card[] drawnCards = _cardManager.DrawCard(3);
+            Destroy(child.gameObject);
+        }
 
-            for (int i = 0; i < _uiCards.Length; i++)
-            {
-                if (i < drawnCards.Length)
-                {
-                    _uiCards[i].gameObject.SetActive(true);
-                    
-                    // CardManager의 리스트에서 등급 정보를 가져옴
-                    CardInfoPerRarity rarityInfo = _uiRarityInfos[drawnCards[i].rarity];
-                    _uiCards[i].Setup(drawnCards[i], rarityInfo, this);
-                }
-                else
-                {
-                    _uiCards[i].gameObject.SetActive(false);
-                }
-            }
+        //추가
+        _cards = _cardManager.DrawCard(3);
+
+        foreach (var card in _cards)
+        {
+            Debug.Log(card.abilityName);
+            SetCardUI(card);
+        }
+    }
+
+    public void SetCardUI(Card card)
+    {
+        if (_cardUI == null) return;
+
+        // 카드 생성 및 카드가 나열될 부모 설정
+        GameObject cardObj = Instantiate(_cardUI, _cardList);
+        CardUI cardUIScript = cardObj.GetComponent<CardUI>();
+
+        if (cardUIScript != null)
+        {
+            // CardManager의 등급 정보를 가져오기
+            CardInfoPerRarity rarityInfo = _cardManager.infoPerRarity[card.rarity];
+            cardUIScript.Setup(card, rarityInfo);
         }
     }
 
     public void ClosePopup()
     {
-        _popupObject.SetActive(false);
+        gameObject.SetActive(false);
         // 게임 재개
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
     }
 }
