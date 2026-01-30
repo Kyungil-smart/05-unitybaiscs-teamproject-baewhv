@@ -89,6 +89,13 @@ public class CardManager : MonoBehaviour
         
     }
     
+    private void OnDestroy()
+    {
+        if (CardInstance == this) 
+        {
+            CardInstance = null;
+        }
+    }
     /// <summary>
     /// 레어도, 능력치, 무기종류를 랜덤으로 결정해서 카드를 만듦.
     /// 카드를 cardCount개 반환함

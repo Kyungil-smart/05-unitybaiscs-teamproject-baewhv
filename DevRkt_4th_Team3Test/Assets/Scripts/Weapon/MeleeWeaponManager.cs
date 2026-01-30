@@ -26,5 +26,12 @@ public class MeleeWeaponManager : MonoBehaviour
         timer += Time.deltaTime;
     }
     
+    private void OnDestroy()
+    {
+        if (MeleeInstance == this) 
+        {
+            MeleeInstance = null;
+        }
+    }
     
 }

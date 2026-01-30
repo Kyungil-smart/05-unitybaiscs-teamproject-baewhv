@@ -39,6 +39,26 @@ public class EndingUIManager : MonoBehaviour
         EndTime = "00:00";
         MonsterManager.ResetCount();
         MonsterState.OnMonsterDie = null;
+
+        if (WeaponManager.WeaponInstance != null)
+        {
+            Destroy(WeaponManager.WeaponInstance.gameObject);
+        }
+
+        if (OrbitalWeaponManager.OrbitalInstance != null)
+        {
+            Destroy(OrbitalWeaponManager.OrbitalInstance.gameObject);
+        }
+
+        if (RangedWeaponManager.RangedInstance != null)
+        {
+            Destroy(RangedWeaponManager.RangedInstance.gameObject);
+        }
+
+        if (CardManager.CardInstance != null)
+        {
+            Destroy(CardManager.CardInstance.gameObject);
+        }
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }

@@ -23,13 +23,21 @@ public class RangedWeaponManager : MonoBehaviour
             RangedInstance = this; // ....
             DontDestroyOnLoad(gameObject);
         }
+        CreatePrefabsObject();
     }
 
     private void Start()
     {
-        CreatePrefabsObject();
+        
     }
     
+    private void OnDestroy()
+    {
+        if (RangedInstance == this) 
+        {
+            RangedInstance = null;
+        }
+    }
     // 프리팹으로부터 객체를 만들어서 _rangedWeapons에 등록하는 함수
     private void CreatePrefabsObject()
     {
