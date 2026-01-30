@@ -18,6 +18,8 @@ public class MonsterMove : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null) _target = player.transform;
+        //프레임 고정
+        Application.targetFrameRate = 60;
     }
 
     private void FixedUpdate()

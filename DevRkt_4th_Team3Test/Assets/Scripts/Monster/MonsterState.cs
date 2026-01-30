@@ -85,6 +85,7 @@ public class MonsterState : MonoBehaviour
     {
         OnMonsterDie?.Invoke();
         MonsterManager.Unregister();
+        FieldObjectManager.Instance.MakeExpObject(EXPType.small,transform.position);
         Destroy(gameObject);
     }
 
