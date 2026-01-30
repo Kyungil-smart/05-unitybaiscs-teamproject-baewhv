@@ -40,9 +40,9 @@ public class CardManager : MonoBehaviour
     [SerializeField] private float _maxWeaponDamage= 100000f;
     [SerializeField] private float _maxWeaponAttackSpeed = 500f;
     [SerializeField] private float _maxProjectileCount = 10;
-    [SerializeField] private float _maxRangedWeaponAttackSpeed = 100f;
-    public int cardCount = 3;
-    public int promotionCriteria = 10;
+    [SerializeField] private float _maxRangedWeaponAttackSpeed = 100f; //RangedWeapon은 별도의 공속최대값을 가집니다.
+    public int cardCount = 3; //테스트용 카드 뽑을 개수.
+    public int promotionCriteria = 10; // 승급할때의 레벨 기준
     
     private void Awake()
     {
@@ -89,6 +89,13 @@ public class CardManager : MonoBehaviour
         
     }
     
+    private void OnDestroy()
+    {
+        if (CardInstance == this) 
+        {
+            CardInstance = null;
+        }
+    }
     /// <summary>
     /// 레어도, 능력치, 무기종류를 랜덤으로 결정해서 카드를 만듦.
     /// 카드를 cardCount개 반환함
@@ -121,9 +128,9 @@ public class CardManager : MonoBehaviour
             {
                 cardData[i].isNew = true;
             }
-            cardData[i].rarity = GetWhichRaritySelected(); //등급이 뜰 확률에 따라 등급 뽑음.
+            cardData[i].rarity = PickRarity(); //등급이 뜰 확률에 따라 등급 뽑음.
             cardData[i].abilityName = PickAbility(cardData[i].weapon); //동등한 확률에 따라 올릴 능력치를 뽑음.
-            
+            cardData[i].amountToApply = GetUpgradeAmount(cardData[i].abilityName, cardData[i].rarity); //등급과 능력치에 따라 상승시킬 양 계산.
         }
 
         return cardData;
@@ -137,16 +144,16 @@ public class CardManager : MonoBehaviour
     public void ApplyCardEffect(Card cardData)
     {
         cardData.weapon.level += 1;
-        //승급 
+        //카드를 선택했을때 무기 레벨이 10이 넘으면 승급합니다.  
         if (cardData.weapon.level >= promotionCriteria && cardData.weapon.promotionPrefab != null)
         {
+            Debug.Log($"{cardData.weapon._weaponName}이 승급!");
             EvolveWeapon(cardData.weapon);
         }
         //승급을 하지 않는경우 능력치 적용
         else
         {
-            float amount = GetUpgradeAmount(cardData.abilityName, cardData.rarity); //등급과 능력치에 따라 상승시킬 양 계산.
-            cardData.weapon.UpgradeWeapon(cardData.abilityName, amount); //무기에 적용.
+            cardData.weapon.UpgradeWeapon(cardData.abilityName, cardData.amountToApply); //무기에 적용.
             
             //만약 궤도무기를 뽑았으면 SpawnWeapon를 통해 스폰시킴.
              if ((cardData.weapon is OrbitalWeapon))
@@ -179,7 +186,7 @@ public class CardManager : MonoBehaviour
     /// 등급이 뜰 확률에 따라 등급 뽑음.
     /// </summary>
     /// <returns></returns>
-    public int GetWhichRaritySelected()
+    public int PickRarity()
     {
         float total=0;
         for (int i = 0; i < infoPerRarity.Count; i++)
@@ -305,7 +312,8 @@ public class CardManager : MonoBehaviour
     public void EvolveWeapon(WeaponBase weapon)
     {
         //
-        string nextWeaponName = weapon.promotionPrefab.name;
+        WeaponBase promotionPrefabWeaponBase = weapon.promotionPrefab.GetComponent<WeaponBase>();
+        string nextWeaponName = promotionPrefabWeaponBase._weaponName;
         weapon.isUpgradeFinished = true; //업그레이드 된 후 남은 무기라는 표시 해줌.
         
         //무기 전체 중에 다음 무기와 일치하는 것 있는지 확인

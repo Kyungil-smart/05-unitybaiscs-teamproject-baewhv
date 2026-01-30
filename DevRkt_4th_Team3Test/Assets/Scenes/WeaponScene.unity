@@ -343,6 +343,8 @@ MonoBehaviour:
   prefabs:
   - {fileID: 4829169189555352309, guid: 0230fd51ecfc8f3479322d291453d853, type: 3}
   - {fileID: 4829169189555352309, guid: d247ed9678c768b4c8ac47a9b332ff87, type: 3}
+  - {fileID: 4829169189555352309, guid: e3485a9b9fb5927498df8bfb0f978f72, type: 3}
+  - {fileID: 4829169189555352309, guid: 727a44f81658d47438a1492bbf7d3c16, type: 3}
   _orbitalWeapons: []
   _player: {fileID: 607153668}
 --- !u!1 &432778671
@@ -1052,7 +1054,7 @@ MonoBehaviour:
   - Rarity: 0
     RarityName: Rare
     AppearProbability: 40
-    RarityColor: {r: 0, g: 0.24871159, b: 1, a: 0}
+    RarityColor: {r: 0, g: 0.24871159, b: 1, a: 1}
     damageMultiplier: 1.1
     attackSpeedMultiplier: 1.1
     projectileAdd: 1
@@ -1060,7 +1062,7 @@ MonoBehaviour:
   - Rarity: 1
     RarityName: Epic
     AppearProbability: 30
-    RarityColor: {r: 0.85711336, g: 0, b: 1, a: 0}
+    RarityColor: {r: 0.85711336, g: 0, b: 1, a: 1}
     damageMultiplier: 1.2
     attackSpeedMultiplier: 1.2
     projectileAdd: 1
@@ -1068,7 +1070,7 @@ MonoBehaviour:
   - Rarity: 2
     RarityName: Unique
     AppearProbability: 20
-    RarityColor: {r: 1, g: 0.46290466, b: 0, a: 0}
+    RarityColor: {r: 1, g: 0.46290466, b: 0, a: 1}
     damageMultiplier: 1.4
     attackSpeedMultiplier: 1.4
     projectileAdd: 2
@@ -1076,7 +1078,7 @@ MonoBehaviour:
   - Rarity: 3
     RarityName: Legendary
     AppearProbability: 10
-    RarityColor: {r: 0, g: 1, b: 0.801018, a: 0}
+    RarityColor: {r: 0, g: 1, b: 0.801018, a: 1}
     damageMultiplier: 1.8
     attackSpeedMultiplier: 1.8
     projectileAdd: 3
@@ -1086,6 +1088,7 @@ MonoBehaviour:
   _maxProjectileCount: 10
   _maxRangedWeaponAttackSpeed: 100
   cardCount: 3
+  promotionCriteria: 10
 --- !u!1 &1040827093
 GameObject:
   m_ObjectHideFlags: 0

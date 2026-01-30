@@ -58,6 +58,14 @@ public class OrbitalWeaponManager : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        if (OrbitalInstance == this) 
+        {
+            OrbitalInstance = null;
+        }
+    }
+    
     // 360/각 무기 카운트 수 마다 무기 배치. 
     public void SpawnWeapons(OrbitalWeapon weapon)
     {

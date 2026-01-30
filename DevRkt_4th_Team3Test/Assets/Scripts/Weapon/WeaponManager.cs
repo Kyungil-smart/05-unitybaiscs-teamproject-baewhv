@@ -26,9 +26,16 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        //리스트를 0.1초 있다가 읽어옵니다.
-        StartCoroutine(FirstGetWeaponList(0.1f));
-        
+        GetWeaponList();
+
+    }
+    
+    private void OnDestroy()
+    {
+        if (WeaponInstance == this) 
+        {
+            WeaponInstance = null;
+        }
     }
     /// <summary>
     /// 싱글톤으로 선언된 3종류의 WeaponManager로부터 무기들 종류를 받아서 List<WeaponBase> weapons에다가 등록한다.
