@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class MonsterState : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class MonsterState : MonoBehaviour
     [SerializeField] private int _damage = 10;
     [SerializeField] private float _attackCooltime = 0.5f;
     [SerializeField] private GameObject _damageText;
-    private float _lastAttackTime;
     
+    [Header("Effect Settings")]
+    [SerializeField] private GameObject _hitEffectPrefab;
+    
+    private float _lastAttackTime;
     public static System.Action OnMonsterDie;
     private EXPType _dropExpType = EXPType.small;
     
@@ -55,7 +59,32 @@ public class MonsterState : MonoBehaviour
             MonsterDamageText.ShowDamageText(_damageText, myCanvas.transform, Mathf.RoundToInt(damage));
         }
         
+        //데미지 이펙트 표시
+        if (_hitEffectPrefab != null)
+        {
+            StartCoroutine(PlayHitEffect());
+        }
+        
+        //hp 0일때 죽음
         if (_currentHp <= 0) Die();
+    }
+    
+    private IEnumerator PlayHitEffect()
+    {
+        _hitEffectPrefab.SetActive(true);
+    
+        // 애니메이터를 가져와서
+        // 애니메이션을 0초부터 강제 재생
+        Animator anim = _hitEffectPrefab.GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.Play("AttackEffectAnimation", -1, 0f);
+        }
+    
+        // 애니메이션 지속
+        yield return new WaitForSeconds(0.3f); 
+    
+        _hitEffectPrefab.SetActive(false);
     }
 
     public void Attack(GameObject target)
