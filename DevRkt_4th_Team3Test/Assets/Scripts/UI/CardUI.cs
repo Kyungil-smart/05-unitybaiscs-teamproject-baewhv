@@ -53,7 +53,9 @@ public class CardUI : MonoBehaviour
         //등급 표시
         if (_rarityFrame != null && rarityInfo.RarityColor != null)
         {
-            _rarityFrame.color = rarityInfo.RarityColor;
+            Color _color = rarityInfo.RarityColor;
+            _color.a = 250f;
+            _rarityFrame.color = _color;
         }
 
         if (_rarityText != null && rarityInfo.RarityName != null)
