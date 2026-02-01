@@ -108,7 +108,9 @@ public class PlayerStats : MonoBehaviour, IDamagable
         _attackDamage += 1;
         _defense += 1;
         _moveSpeed += 0.3f;
-        _maxHP += 100;
+        _maxHP += 150;
+        
+        OnHPChanged?.Invoke();
     }
     
     // 캐릭터 데미지 받기
