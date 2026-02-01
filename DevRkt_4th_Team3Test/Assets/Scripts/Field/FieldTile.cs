@@ -36,7 +36,7 @@ public class FieldTile : MonoBehaviour
     {
         GetComponent<BoxCollider>().enabled = false;
         if (TileDesign) TileDesign.SetActive(false);
-        if(TileData) TileData.DisableSpawn();
+        if (TileData) TileData.DisableSpawn();
     }
 
 }
