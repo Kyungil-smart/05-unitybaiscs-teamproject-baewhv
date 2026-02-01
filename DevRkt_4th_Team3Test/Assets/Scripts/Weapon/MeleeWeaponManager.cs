@@ -7,18 +7,24 @@ public class MeleeWeaponManager : MonoBehaviour
     public static MeleeWeaponManager MeleeInstance;
     //무기 프리펩 저장
     [SerializeField] private List<GameObject> prefabs =  new List<GameObject>();
-    //궤도무기들 종류마다 저장
+    //무기들 종류마다 저장
     public List<MeleeWeapon> _meleeWeapons = new List<MeleeWeapon>();
-    [SerializeField] private GameObject _player;
+    public GameObject _player;
 
     private float timer = 0;
-    //플레이어 따라다님. transform.position = _player.transform.position
-    //기본값f/공격속도의 속도로 데미지만큼 공격, (OntriggerEnter에서 특정초가 지날때마다 공격? 코루틴?
-    //start부터 시작하는 타이머 - (공격속도 바뀌는것은 타이머 사이클 끝난직후부터 적용.)
-    
-    private void Start()
+    private void Awake()
     {
-        
+        if (MeleeInstance != null && MeleeInstance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            MeleeInstance = this; // ....
+            DontDestroyOnLoad(gameObject);
+        }
+        CreatePrefabsObject();
     }
     
     private void Update()
@@ -34,4 +40,18 @@ public class MeleeWeaponManager : MonoBehaviour
         }
     }
     
+    // 프리팹으로부터 객체를 만들어서 _meleeWeapons에 등록하는 함수
+    private void CreatePrefabsObject()
+    {
+        for (int i = 0; i < prefabs.Count; i++)
+        {
+            
+            if (prefabs[i] != null)
+            {
+                GameObject go = Instantiate(prefabs[i], transform);
+                MeleeWeapon rw = go.GetComponent<MeleeWeapon>();
+                _meleeWeapons.Add(rw);
+            }
+        }
+    }
 }

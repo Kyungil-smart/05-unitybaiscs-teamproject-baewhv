@@ -155,7 +155,7 @@ MonoBehaviour:
   weaponDamage: 5
   weaponAttackSpeed: 100
   projectileCount: 1
-  weaponRange: 5
+  weaponRange: 4.5
   objectPrefab: {fileID: 4829169189555352309}
   promotionPrefab: {fileID: 0}
   weaponSprite: {fileID: -1450418215, guid: f1388c65c177d7b4fa4dba776b8ea45e, type: 3}
