@@ -155,6 +155,59 @@ Transform:
   - {fileID: 716793638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &132594006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 132594008}
+  - component: {fileID: 132594007}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &132594007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132594006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9340c1ecd47de40b210fd966172867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerPrefab: {fileID: 0}
+  <Camera>k__BackingField: {fileID: 0}
+  _spawnPoint: {x: 0, y: 0, z: 0}
+  _wm: {fileID: 0}
+  _cm: {fileID: 0}
+  _owm: {fileID: 0}
+  _rwm: {fileID: 0}
+  _mwm: {fileID: 0}
+  _levelUI: {fileID: 0}
+--- !u!4 &132594008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132594006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &184182083 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2857166452826860582, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
@@ -195,8 +248,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _monsterGroups: []
-  _spawnInterval: 2
-  _maxPopulation: 30
+  _maxMonsterCount: 50
+  _baseSpawnTime: 2
+  _minSpawnTime: 0.2
+  _difficultyLevelTime: 30
+  _timeDecreasePer: 0.5
+  _increaseMonsterCount: 10
   _minSpawnDistance: 15
   _maxSpawnDistance: 20
   _monsterCountText: {fileID: 0}
@@ -1237,6 +1294,7 @@ MonoBehaviour:
   _maxWeaponAttackSpeed: 500
   _maxProjectileCount: 10
   _maxRangedWeaponAttackSpeed: 100
+  _maxMeleeWeaponAttackSpeed: 10
   cardCount: 3
   promotionCriteria: 10
 --- !u!65 &2126949571
@@ -1456,3 +1514,4 @@ SceneRoots:
   - {fileID: 5089130}
   - {fileID: 451858479}
   - {fileID: 2318166434257430004}
+  - {fileID: 132594008}

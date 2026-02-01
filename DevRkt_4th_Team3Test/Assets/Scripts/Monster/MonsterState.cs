@@ -66,6 +66,9 @@ public class MonsterState : MonoBehaviour
             StartCoroutine(PlayHitEffect());
         }
         
+        // 몬스터 피격 효과음
+        AudioManager.Instance.PlayHitSFX();
+        
         //hp 0일때 죽음
         if (_currentHp <= 0) Die();
     }
