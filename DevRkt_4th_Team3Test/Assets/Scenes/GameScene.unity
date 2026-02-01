@@ -122,6 +122,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &22254425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 22254427}
+  - component: {fileID: 22254426}
+  m_Layer: 0
+  m_Name: MeleeWeaponManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &22254426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22254425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d362c954ab9e0438528af1036db260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 8143630053243692231, guid: 6de6b10ca02050644a29084c4cb4a74b, type: 3}
+  - {fileID: 8143630053243692231, guid: 1a3c11581513f4e47b6609e129aeb776, type: 3}
+  _meleeWeapons: []
+  _player: {fileID: 0}
+--- !u!4 &22254427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22254425}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &402132476
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +218,8 @@ MonoBehaviour:
   prefabs:
   - {fileID: 4829169189555352309, guid: 0230fd51ecfc8f3479322d291453d853, type: 3}
   - {fileID: 4829169189555352309, guid: d247ed9678c768b4c8ac47a9b332ff87, type: 3}
+  - {fileID: 4829169189555352309, guid: e3485a9b9fb5927498df8bfb0f978f72, type: 3}
+  - {fileID: 4829169189555352309, guid: 727a44f81658d47438a1492bbf7d3c16, type: 3}
   _orbitalWeapons: []
   _player: {fileID: 0}
 --- !u!1 &814566667
@@ -349,15 +400,16 @@ MonoBehaviour:
     AppearProbability: 10
     RarityColor: {r: 0, g: 1, b: 0.801018, a: 0}
     damageMultiplier: 1.8
-    attackSpeedMultiplier: 1.8
+    attackSpeedMultiplier: 1.6
     projectileAdd: 3
     rangeMultiplier: 1.5
   _maxWeaponDamage: 100000
   _maxWeaponAttackSpeed: 500
   _maxProjectileCount: 10
   _maxRangedWeaponAttackSpeed: 100
+  _maxMeleeWeaponAttackSpeed: 10
   cardCount: 3
-  promotionCriteria: 10
+  promotionCriteria: 5
 --- !u!1 &1153522715
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +564,7 @@ MonoBehaviour:
   _cm: {fileID: 890404254}
   _owm: {fileID: 402132478}
   _rwm: {fileID: 2055142044}
+  _mwm: {fileID: 22254426}
   _levelUI: {fileID: 2073122949}
 --- !u!4 &1935520513
 Transform:
@@ -648,7 +701,7 @@ Transform:
   m_GameObject: {fileID: 2055142042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0869951, y: -15.285978, z: -8.851398}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -668,7 +721,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rangedWeaponPrefabs:
   - {fileID: 6913793974456465598, guid: 6c954703ae1b0974e9ef5c8b4da7a101, type: 3}
+  - {fileID: 6913793974456465598, guid: c27903f875a2cd64dbdca9f4a052e1a3, type: 3}
   - {fileID: 6913793974456465598, guid: 835e160ba3381b04ab5710715c9421dd, type: 3}
+  - {fileID: 6913793974456465598, guid: 57ccc12d323041e40afdec578e1f6c22, type: 3}
   _rangedWeapons: []
   _player: {fileID: 0}
 --- !u!224 &2073122948 stripped
@@ -1140,4 +1195,5 @@ SceneRoots:
   - {fileID: 1153522717}
   - {fileID: 2055142043}
   - {fileID: 402132477}
+  - {fileID: 22254427}
   - {fileID: 890404249}
