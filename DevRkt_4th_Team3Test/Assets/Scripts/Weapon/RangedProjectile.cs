@@ -24,7 +24,7 @@ public class RangedProjectile : MonoBehaviour
 
     private void Update()
     {
-        // 1. 타겟이 살아있는 경우
+        // 타겟이 살아있는 경우
         if (target != null)
         {
             lastTargetPosition = target.position; // 계속 위치 갱신
@@ -37,7 +37,7 @@ public class RangedProjectile : MonoBehaviour
             //     Destroy(gameObject);
             // }
         }
-        // 2. 타겟이 죽거나 사라진 경우 (예외처리)
+        // 타겟이 죽거나 사라진 경우
         else
         {
             // 마지막으로 기억하는 위치로 이동

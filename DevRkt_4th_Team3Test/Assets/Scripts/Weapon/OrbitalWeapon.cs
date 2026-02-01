@@ -17,16 +17,27 @@ public class OrbitalWeapon : WeaponBase
     private void OnTriggerEnter(Collider collider)
     {
         //충돌한 물체가 enemy이면 공격
-        if (!collider.CompareTag("Enemy"))
+        if (collider.CompareTag("Enemy"))
         {
-            return;
-        } 
+            MonsterState monster = collider.GetComponent<MonsterState>();
+            // 컴포넌트가 없으면 리턴
+            if (monster == null) return;
+            monster.TakeDamage(weaponDamage);
             
+            return;
+        }
+
+        //Breakable물체이면 공격.
+        if (collider.CompareTag("Breakable"))
+        {
+            BreakableObject breakable = collider.GetComponent<BreakableObject>();
+
+            if (breakable == null) return;
+            breakable.TakeDamage((int)weaponDamage);
+
+            return;
+        }
         
-        MonsterState monster = collider.GetComponent<MonsterState>();
-        // 컴포넌트가 없으면 리턴
-        if (monster == null) return;
-        monster.TakeDamage(weaponDamage);
 
     }
     

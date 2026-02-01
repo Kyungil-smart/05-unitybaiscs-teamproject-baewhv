@@ -21,7 +21,7 @@ public class RangedWeapon : WeaponBase
     private float timer = 0f;
     [SerializeField] private float spawnOffset = 0.7f; // 플레이어 몸체보다 약간 앞에서 생성
     public GameObject _player;
-    private float AttackspeedOffset = 10f;
+    private float AttackspeedOffset = 13f;
     public float startTime = 0f;
     private void Start()
     {
@@ -71,7 +71,7 @@ public class RangedWeapon : WeaponBase
     }
     Transform GetNearestEnemy()
     {
-        // 범위 내의 모든 콜라이더 검출 (LayerMask를 쓰면 더 최적화 가능)
+        // 범위 내의 모든 콜라이더 검출
         Collider[] hits = Physics.OverlapSphere(transform.position, weaponRange, LayerMask.GetMask("Enemy"));
         
         Transform nearestEnemy = null; 
