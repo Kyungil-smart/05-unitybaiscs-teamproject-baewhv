@@ -7,6 +7,8 @@ public abstract class FieldObject : MonoBehaviour
 {
     [SerializeField]protected SpriteRenderer _body;
     [SerializeField]protected SpriteRenderer _Shadow;
+
+    public ObjectSpawnPoint ParentPoint { get; set; }
     private void Awake()
     {
         if(_body)
@@ -18,6 +20,7 @@ public abstract class FieldObject : MonoBehaviour
             _body.sortingOrder = 1;
         }
     }
+
 }
 
 

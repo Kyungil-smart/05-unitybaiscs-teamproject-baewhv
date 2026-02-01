@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FieldObjectManager : Singleton<FieldObjectManager>
 {
-    private List<FieldObject> _objs = new List<FieldObject>();
-    private int _maxObjects = 10;
+    private LinkedList<FieldObject> _objs = new LinkedList<FieldObject>();
+    [SerializeField]private List<FieldObject> _dropItemList = new List<FieldObject>();
+    private int _maxObjectCount = 10;
+
 
     private List<ExpObject> _expObjects = new List<ExpObject>();
     private int _maxExpObject = 100;
@@ -26,16 +29,18 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     {
         _go_Exp = new GameObject("ExpObjects");
         _go_Exp.transform.SetParent(transform);
-        _item_Exp = Resources.Load<GameObject>("FieldObject/Item/Item_EXP");
-        ExpSprites = Resources.Load("FieldObject/Item/EXPSprites").GetComponent<EXPSprites>();
+        _item_Exp = Resources.Load<GameObject>("FieldObject/Exp/Item_EXP");
+        ExpSprites = Resources.Load("FieldObject/Exp/EXPSprites").GetComponent<EXPSprites>();
         PoolingExpObject(40);
+
+        _dropItemList.AddRange(Resources.LoadAll("FieldObject/Item", typeof(ItemObject)));
     }
 
     //오브젝트 풀링용
     private void PoolingExpObject(int count)
     {
         if (_expObjects.Count >= _maxExpObject) return; //최대면 더 늘리지 않음.
-        if (_expObjects.Count + count > _maxExpObject) count = _expObjects.Count + count - _maxObjects;
+        if (_expObjects.Count + count > _maxExpObject) count = _expObjects.Count + count - _maxObjectCount;
         for (int i = 0; i < count; i++)
         {
             _expObjects.Add(Instantiate(_item_Exp, _go_Exp.transform).GetComponent<ExpObject>());
@@ -60,6 +65,7 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
                 break;
             }
         }
+
         _expObjectActiveCount++;
     }
 
@@ -71,14 +77,18 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
 
     /// <summary>
     /// 필드 오브젝트 추가
+    /// 지정된 값(_maxObjectCount)을 넘기면 먼저 생성된 오브젝트 제거.
     /// </summary>
     /// <param name="obj">복제할 오브젝트 원본</param>
     /// <param name="position">생성할 위치</param>
     /// <returns></returns>
-    public FieldObject SetObject(FieldObject obj, Vector3 position)
+    public FieldObject SetDropObject(Vector3 position)
     {
-        FieldObject makedObject = Instantiate(obj, position, new Quaternion(), transform);
-        _objs.Add(makedObject);
+        if (_objs.Count >= _maxObjectCount)
+            RemoveDrobObject(_objs.First.Value);
+        int RandomObject = Random.Range(0, _dropItemList.Count - 1);
+        FieldObject makedObject = Instantiate(_dropItemList[RandomObject], position, new Quaternion(), transform);
+        _objs.AddLast(makedObject);
         return makedObject;
     }
 
@@ -86,10 +96,9 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     /// 오브젝트 삭제
     /// </summary>
     /// <param name="obj"></param>
-    public void RemoveObject(FieldObject obj)
+    public void RemoveDrobObject(FieldObject obj)
     {
-        if (_objs.Contains(obj))
-            _objs.Remove(obj);
+        _objs.Remove(obj);
         Destroy(obj.gameObject);
     }
 }
