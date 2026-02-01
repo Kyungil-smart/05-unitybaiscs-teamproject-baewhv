@@ -41,7 +41,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private float _maxWeaponAttackSpeed = 500f;
     [SerializeField] private float _maxProjectileCount = 10;
     [SerializeField] private float _maxRangedWeaponAttackSpeed = 100f; //RangedWeapon은 별도의 공속최대값을 가집니다.
-    [SerializeField] private float _maxMeleeWeaponAttackSpeed = 10f;
+    [SerializeField] private float _maxMeleeWeaponAttackSpeed = 20f;
     public int cardCount = 3; //테스트용 카드 뽑을 개수.
     public int promotionCriteria = 10; // 승급할때의 레벨 기준
     
@@ -324,6 +324,12 @@ public class CardManager : MonoBehaviour
         WeaponBase promotionPrefabWeaponBase = weapon.promotionPrefab.GetComponent<WeaponBase>();
         string nextWeaponName = promotionPrefabWeaponBase._weaponName;
         weapon.isUpgradeFinished = true; //업그레이드 된 후 남은 무기라는 표시 해줌.
+
+        if (weapon is MeleeWeapon)
+        {
+            //스프라이트 비활성화, 콜라이더 비활성화.
+            (weapon as MeleeWeapon).DeactivateMeleeWeapon();
+        }
         
         //무기 전체 중에 다음 무기와 일치하는 것 있는지 확인
         for (int i = 0; i < WeaponManager.WeaponInstance.weapons.Count; i++)

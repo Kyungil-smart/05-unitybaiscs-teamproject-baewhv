@@ -21,6 +21,7 @@ public class MeleeWeapon : WeaponBase
     {
         
         _meleeCollider =  GetComponent<Collider>();
+        if(_meleeCollider != null) _meleeCollider.enabled = false;
         //하위에 있는 스프라이트로부터 애니메이터,스프라이트렌더러 가져옴.
         animator = GetComponentInChildren<Animator>();
         _spriteRenderer =  GetComponentInChildren<SpriteRenderer>();
@@ -104,6 +105,17 @@ public class MeleeWeapon : WeaponBase
 
     }
     
-    
+    public void DeactivateMeleeWeapon()
+    {
+        isAttacking = false;
+        cooltimeTimer = 0f;
+        activationTimer = 0f;
+
+        
+        if (_spriteRenderer != null) _spriteRenderer.enabled = false;
+        if (_meleeCollider != null) _meleeCollider.enabled = false;
+        
+        isActive = false;
+    }
     
 }
