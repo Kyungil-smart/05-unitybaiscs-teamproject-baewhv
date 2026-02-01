@@ -203,12 +203,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &313142473
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -380,12 +381,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &432778673
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -506,12 +508,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &471834008
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1123,12 +1126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &1040827095
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1249,12 +1253,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &1139344029
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1508,12 +1513,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!1 &1889942688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,12 +1552,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &1889942690
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1829,12 +1836,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &2106289291
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1955,12 +1963,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &2138355422
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2081,12 +2090,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6241554a8124da391e66b8f858424e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 1000
   _currentHp: 0
   _hpSlider: {fileID: 0}
   _damage: 1
   _attackCooltime: 0.5
   _damageText: {fileID: 0}
+  _hitEffectPrefab: {fileID: 0}
 --- !u!136 &2139857594
 CapsuleCollider:
   m_ObjectHideFlags: 0
