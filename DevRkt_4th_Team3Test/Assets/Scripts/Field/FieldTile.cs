@@ -39,12 +39,4 @@ public class FieldTile : MonoBehaviour
         if(TileData) TileData.DisableSpawn();
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            FieldManager.Instance.PlayerTilePosition = TilePosition;
-        }
-    }
 }
