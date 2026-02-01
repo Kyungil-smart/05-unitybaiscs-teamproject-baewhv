@@ -38,8 +38,6 @@ public class RangedWeapon : WeaponBase
     }
     private void Update()
     {
-        
-        //무기가 안보이는 이유 : RangedWeapon 프리펩을 생성해야하는데 생성을 못하고 있다.
         transform.position = _player.transform.position;
         // 무기가 활성화 되어있을때만 공격
         if (!isActive) return;

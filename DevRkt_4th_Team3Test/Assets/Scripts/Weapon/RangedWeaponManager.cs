@@ -17,6 +17,7 @@ public class RangedWeaponManager : MonoBehaviour
         if (RangedInstance != null && RangedInstance != this)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {

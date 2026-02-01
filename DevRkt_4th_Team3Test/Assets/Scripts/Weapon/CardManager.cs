@@ -41,6 +41,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private float _maxWeaponAttackSpeed = 500f;
     [SerializeField] private float _maxProjectileCount = 10;
     [SerializeField] private float _maxRangedWeaponAttackSpeed = 100f; //RangedWeapon은 별도의 공속최대값을 가집니다.
+    [SerializeField] private float _maxMeleeWeaponAttackSpeed = 10f;
     public int cardCount = 3; //테스트용 카드 뽑을 개수.
     public int promotionCriteria = 10; // 승급할때의 레벨 기준
     
@@ -79,9 +80,11 @@ public class CardManager : MonoBehaviour
             }
         
             cardData = DrawCard(cardCount);
+            
 
             for (int i = 0; i < cardData.Length; i++)
             {
+                Debug.Log($"{cardData[i].amountToApply}");
                 CardApply(cardData[i]);    
             }
             
@@ -236,6 +239,12 @@ public class CardManager : MonoBehaviour
             list.Remove(2);
         }
         
+        //MeleeWeapon에 한해서는 MeleeWeapon전용 attackSpeed 최댓값을 적용.
+        if (weapon is MeleeWeapon && weapon.weaponAttackSpeed >= _maxMeleeWeaponAttackSpeed)
+        {
+            list.Remove(2);
+        }
+        
         if (weapon.projectileCount >= _maxProjectileCount)
         {
             list.Remove(2);
@@ -324,6 +333,11 @@ public class CardManager : MonoBehaviour
             {
                 weapon.isActive = false; //기존무기 false
                 WeaponManager.WeaponInstance.weapons[i].isActive = true; //승진 무기 true
+                
+                //기존무기의 공격력 * 1.5, 공격속도 * 1.2, 투사체수 로 세팅함.
+                WeaponManager.WeaponInstance.weapons[i].weaponDamage = weapon.weaponDamage * 1.5f;
+                WeaponManager.WeaponInstance.weapons[i].weaponAttackSpeed = weapon.weaponAttackSpeed * 1.2f;
+                WeaponManager.WeaponInstance.weapons[i].projectileCount = weapon.projectileCount;
                 //rangedWeapon은 그냥 해도 되는데 orbitalWeapon은 clearweapon한뒤에 spawnweapon도 함.
                 if (weapon is OrbitalWeapon)
                 {
@@ -331,7 +345,8 @@ public class CardManager : MonoBehaviour
                     OrbitalWeaponManager.OrbitalInstance.SpawnWeapons(
                         WeaponManager.WeaponInstance.weapons[i] as OrbitalWeapon); //승진 무기 생성.
                 }
-
+                
+                //rangedWeapon도 기존의 무기를 제거하고, 승진할 무기를 생성하는 과정이 필요.
                 break;
             }
         }

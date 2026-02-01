@@ -54,11 +54,12 @@ public class WeaponManager : MonoBehaviour
         {
             weapons.Add(RangedWeaponManager.RangedInstance._rangedWeapons[i]);
         }
-
-        // for (int i = 0; i < weapons.Count; i++)
-        // {
-        //     Debug.Log(weapons[i]._weaponName);
-        // }
+        
+        for (int i = 0; i < MeleeWeaponManager.MeleeInstance._meleeWeapons.Count; i++)
+        {
+            weapons.Add(MeleeWeaponManager.MeleeInstance._meleeWeapons[i]);
+        }
+        
     }
 
     private IEnumerator FirstGetWeaponList(float delay)

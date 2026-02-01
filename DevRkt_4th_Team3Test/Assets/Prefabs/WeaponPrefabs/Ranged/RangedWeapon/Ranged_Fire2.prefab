@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1469041754436221323}
   - component: {fileID: 8614341037518974095}
   m_Layer: 0
-  m_Name: Ranged_Arrow
+  m_Name: Ranged_Fire2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,18 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429b7047132e97d40852b9088338e912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponName: Arrow
+  _weaponName: Fire2
   isActive: 0
   level: 0
-  isPromotionWeapon: 0
+  isPromotionWeapon: 1
   isUpgradeFinished: 0
-  weaponDamage: 8
-  weaponAttackSpeed: 4
+  weaponDamage: 7
+  weaponAttackSpeed: 6
   projectileCount: 1
-  weaponRange: 9
-  objectPrefab: {fileID: 8328061000933342145, guid: 0281d74043e79d54184a1bc6b3427656, type: 3}
-  promotionPrefab: {fileID: 6913793974456465598, guid: c27903f875a2cd64dbdca9f4a052e1a3, type: 3}
-  weaponSprite: {fileID: 21300000, guid: 5211eb7811f453e4bad23307437dae36, type: 3}
+  weaponRange: 8
+  objectPrefab: {fileID: 8328061000933342145, guid: 897fb41430137634b838381895119070, type: 3}
+  promotionPrefab: {fileID: 0}
+  weaponSprite: {fileID: 139857709, guid: 93882337e1d078541960569c2ff2d2d9, type: 3}
   spawnOffset: 0.5
   _player: {fileID: 0}
-  startTime: 0
+  startTime: 0.2

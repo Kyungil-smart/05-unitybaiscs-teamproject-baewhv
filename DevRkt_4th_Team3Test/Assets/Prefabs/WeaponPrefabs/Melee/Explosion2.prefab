@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2629211835038213813
+--- !u!1 &4077312163925434791
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 780042809618297914}
-  - component: {fileID: 3632919541984800997}
+  - component: {fileID: 1447721028176383016}
+  - component: {fileID: 5079585738457672609}
+  - component: {fileID: 7078301364756251773}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Blue Effect Bullet Impact Explosion 32x32_138
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &780042809618297914
+--- !u!4 &1447721028176383016
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2629211835038213813}
+  m_GameObject: {fileID: 4077312163925434791}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0.51, z: 0}
-  m_LocalScale: {x: 5.3333335, y: 15.384615, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7000761898878937186}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
---- !u!212 &3632919541984800997
+  m_Father: {fileID: 7413882382962527911}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!212 &5079585738457672609
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2629211835038213813}
+  m_GameObject: {fileID: 4077312163925434791}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5211eb7811f453e4bad23307437dae36, type: 3}
+  m_Sprite: {fileID: -1018803229, guid: 93882337e1d078541960569c2ff2d2d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,7 +85,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &8328061000933342145
+--- !u!95 &7078301364756251773
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077312163925434791}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bbf09ac24f2547b47a1e204cf437dd41, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &8143630053243692231
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,50 +114,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7000761898878937186}
-  - component: {fileID: 1227074417748390972}
-  - component: {fileID: 2502138126430915283}
-  - component: {fileID: 6215194950689549632}
-  - component: {fileID: 2542948005499970115}
-  - component: {fileID: -5654586623166534341}
+  - component: {fileID: 7413882382962527911}
+  - component: {fileID: 6704738658661166131}
+  - component: {fileID: 1186885112557271590}
+  - component: {fileID: 1062724472617814486}
+  - component: {fileID: 2963239398653995079}
+  - component: {fileID: 2075802345282082875}
   m_Layer: 0
-  m_Name: Projectile_Arrow
+  m_Name: Explosion2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7000761898878937186
+--- !u!4 &7413882382962527911
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8328061000933342145}
+  m_GameObject: {fileID: 8143630053243692231}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.98, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.35, y: 1, z: 1.1}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 8, y: 0.5, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 780042809618297914}
+  - {fileID: 1447721028176383016}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1227074417748390972
+--- !u!33 &6704738658661166131
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8328061000933342145}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2502138126430915283
+  m_GameObject: {fileID: 8143630053243692231}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1186885112557271590
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8328061000933342145}
+  m_GameObject: {fileID: 8143630053243692231}
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -171,13 +193,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6215194950689549632
-BoxCollider:
+--- !u!114 &1062724472617814486
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8328061000933342145}
+  m_GameObject: {fileID: 8143630053243692231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcedcb47cb812ca4db202aac8488cbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponName: Explosion2
+  isActive: 0
+  level: 0
+  isPromotionWeapon: 1
+  isUpgradeFinished: 0
+  weaponDamage: 15
+  weaponAttackSpeed: 7
+  projectileCount: 0
+  weaponRange: 0
+  objectPrefab: {fileID: 0}
+  promotionPrefab: {fileID: 0}
+  weaponSprite: {fileID: -1018803229, guid: 93882337e1d078541960569c2ff2d2d9, type: 3}
+  _player: {fileID: 0}
+  startTime: 0
+--- !u!136 &2963239398653995079
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8143630053243692231}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -189,28 +237,18 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.85, y: 1, z: 1}
-  m_Center: {x: 0.1, y: 0, z: 0.04}
---- !u!114 &2542948005499970115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8328061000933342145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df3dd244fe427849b9b4983700e69cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!54 &-5654586623166534341
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2075802345282082875
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8328061000933342145}
+  m_GameObject: {fileID: 8143630053243692231}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0

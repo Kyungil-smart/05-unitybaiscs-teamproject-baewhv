@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 8143630053243692231, guid: 6de6b10ca02050644a29084c4cb4a74b, type: 3}
+  - {fileID: 8143630053243692231, guid: 1a3c11581513f4e47b6609e129aeb776, type: 3}
   _meleeWeapons: []
   _player: {fileID: 607153668}
 --- !u!4 &22254427
@@ -1087,8 +1088,9 @@ MonoBehaviour:
   _maxWeaponAttackSpeed: 500
   _maxProjectileCount: 10
   _maxRangedWeaponAttackSpeed: 100
+  _maxMeleeWeaponAttackSpeed: 10
   cardCount: 3
-  promotionCriteria: 10
+  promotionCriteria: 5
 --- !u!1 &1040827093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,7 +1666,7 @@ Transform:
   m_GameObject: {fileID: 2055142042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0869951, y: -15.285978, z: -8.851398}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1684,7 +1686,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rangedWeaponPrefabs:
   - {fileID: 6913793974456465598, guid: 6c954703ae1b0974e9ef5c8b4da7a101, type: 3}
+  - {fileID: 6913793974456465598, guid: c27903f875a2cd64dbdca9f4a052e1a3, type: 3}
   - {fileID: 6913793974456465598, guid: 835e160ba3381b04ab5710715c9421dd, type: 3}
+  - {fileID: 6913793974456465598, guid: 57ccc12d323041e40afdec578e1f6c22, type: 3}
   _rangedWeapons: []
   _player: {fileID: 607153668}
 --- !u!1 &2075969852
