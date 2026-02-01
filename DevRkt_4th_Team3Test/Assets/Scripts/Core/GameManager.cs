@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CardManager _cm;
     [SerializeField] private OrbitalWeaponManager _owm;
     [SerializeField] private RangedWeaponManager _rwm;
+    [SerializeField] private MeleeWeaponManager _mwm;
     
     
     [Header("UI")]
@@ -74,6 +75,8 @@ public class GameManager : MonoBehaviour
             _owm._player = Player;
         if (_rwm)
             _rwm._player = Player;
+        if (_mwm)
+            _mwm._player = Player;
         PlayerStats ps = Player.GetComponent<PlayerStats>();
         if(ps)
             ps.OnPlayerDeath += OnPlayerDeath;
@@ -97,6 +100,7 @@ public class GameManager : MonoBehaviour
         Destroy(_wm.gameObject);
         Destroy(_owm.gameObject);
         Destroy(_rwm.gameObject);
+        Destroy(_mwm.gameObject);
         Destroy(FieldObjectManager.Instance.gameObject);
         Destroy(FieldManager.Instance.gameObject);
         
