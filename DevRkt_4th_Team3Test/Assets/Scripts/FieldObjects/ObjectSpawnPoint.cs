@@ -30,18 +30,36 @@ public class ObjectSpawnPoint : MonoBehaviour
     public void SpawnObject()
     {
         //if (_placedObject && !_obj) return;
-        if (_placedObject || !_obj)
+        if (_placedObject || !_obj) return;
+
+        switch (_type)
         {
-            Debug.Log("스폰 오브젝트가 없습니다.");
-            return;
+            case FieldObjectSpawnType.Item:
+                _placedObject = FieldObjectManager.Instance.SetDropObject(transform.position);
+                break;
+            case FieldObjectSpawnType.Breakable:
+            case FieldObjectSpawnType.Obstacle:
+                _placedObject = Instantiate(_obj, transform);
+                break;
         }
-        _placedObject = FieldObjectManager.Instance.SetObject(_obj, transform.position);
+        _placedObject.ParentPoint = this;
 
     }
 
     public void RemoveObject()
     {
         if (!_placedObject) return;
-        FieldObjectManager.Instance.SetObject(_obj, transform.position);
+        switch (_type)
+        {
+            case FieldObjectSpawnType.Item:
+                FieldObjectManager.Instance.RemoveDrobObject(_obj);
+                break;
+            case FieldObjectSpawnType.Breakable:
+                Destroy(_placedObject.gameObject);
+                _placedObject = null;
+                break;
+            case FieldObjectSpawnType.Obstacle:
+                break;
+        }
     }
 }

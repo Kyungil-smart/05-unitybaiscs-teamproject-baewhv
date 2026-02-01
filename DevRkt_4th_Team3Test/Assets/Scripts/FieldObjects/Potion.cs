@@ -9,7 +9,7 @@ public class Potion : ItemObject
     {
         pc.Heal(_healValue);
         Debug.Log("hp회복");
-        FieldObjectManager.Instance.RemoveObject(this);
+        FieldObjectManager.Instance.RemoveDrobObject(this);
         base.Interact(pc);
     }
 }

@@ -1,20 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FieldManager : Singleton<FieldManager>
 {
     [SerializeField] private GameObject _fieldTile;
     [SerializeField] private List<GameObject> _designedTile = new List<GameObject>();
+
     private List<List<FieldTile>> _tiles = new List<List<FieldTile>>();
+
     //루프시킬 맵의 최대 크기
-    [SerializeField] private Vector2Int _preLoadMapSize = new Vector2Int(11,11);
+    [SerializeField] private Vector2Int _preLoadMapSize = new Vector2Int(11, 11);
+
     //활성화시킬 맵의 크기
-    [SerializeField] private Vector2Int _mapSight = new Vector2Int(2,2);
+    [SerializeField] private Vector2Int _mapSight = new Vector2Int(2, 2);
 
     private readonly (int x, int z) tileSize = (16, 16);
     private static FieldManager _instance;
 
+    private Collider _currentCollider;
     private Vector2Int _playerPosition;
     private Vector2Int _playerTilePosition;
 
@@ -58,6 +64,26 @@ public class FieldManager : Singleton<FieldManager>
         LoadTile(PlayerTilePosition);
     }
 
+    private void FixedUpdate()
+    {
+        Ray r = new Ray(GameManager.Instance.Player.transform.position, Vector3.down * 100);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, 100.0f, LayerMask.GetMask("Tile")))
+        {
+            if(_currentCollider != hit.collider)
+            {
+                _currentCollider = hit.collider;
+                PlayerTilePosition = hit.collider.GetComponent<FieldTile>().TilePosition;
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(GameManager.Instance.Player.transform.position, Vector3.down * 100);
+    }
+
 
     //맵 생성
     private void InitMap()
@@ -68,6 +94,7 @@ public class FieldManager : Singleton<FieldManager>
             for (int x = 0; x < _preLoadMapSize.x; x++)
             {
                 FieldTile tile = Instantiate(_fieldTile).GetComponent<FieldTile>();
+                tile.gameObject.name = $"tile{x}_{y}";
                 tile.transform.SetParent(gameObject.transform);
                 tile.TilePosition = new Vector2Int(x, y);
                 _tiles[y].Add(tile);
@@ -95,13 +122,15 @@ public class FieldManager : Singleton<FieldManager>
                 }
                 else if (!_tiles[posY][posX].isSetTile) //없을 때 생성
                 {
-                    _tiles[posY][posX].Init(_designedTile[Random.Range(0,_designedTile.Count)]);
-                    _tiles[posY][posX].transform.position = new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
+                    _tiles[posY][posX].Init(_designedTile[Random.Range(0, _designedTile.Count)]);
+                    _tiles[posY][posX].transform.position =
+                        new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
                     _tiles[posY][posX].EnableFieldTile();
                 }
                 else if (_tiles[posY][posX].TileDesign.activeSelf == false) //꺼져 있을 때 다시 켜기
                 {
-                    _tiles[posY][posX].transform.position = new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
+                    _tiles[posY][posX].transform.position =
+                        new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
                     _tiles[posY][posX].EnableFieldTile();
                 }
             }

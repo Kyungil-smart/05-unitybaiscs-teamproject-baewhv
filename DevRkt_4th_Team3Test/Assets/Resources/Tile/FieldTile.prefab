@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5330173946346960004}
   - component: {fileID: 8552882124866091078}
   - component: {fileID: 4016090299570450430}
-  m_Layer: 0
+  - component: {fileID: 945392320892950941}
+  m_Layer: 8
   m_Name: FieldTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a864553bc4420604fb7839a2b56591c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <TilePosition>k__BackingField: {x: 0, y: 0}
 --- !u!65 &4016090299570450430
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65,4 +67,31 @@ BoxCollider:
   m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 16, y: 2, z: 16}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -1.5, z: 0}
+--- !u!54 &945392320892950941
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6233808649043377647}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
