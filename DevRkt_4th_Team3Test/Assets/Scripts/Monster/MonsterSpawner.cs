@@ -3,17 +3,25 @@ using TMPro;
 
 public class MonsterSpawner : MonoBehaviour
 {
+
     [Header("Spawn Settings")]
     [SerializeField] private MonsterGroup[] _monsterGroups;
     private int _currentGroupIndex = 0;
-    [SerializeField] private float _spawnInterval = 1.0f;
-    [SerializeField] private int _maxPopulation = 50;
-
+    [SerializeField] private int _maxMonsterCount = 50;
+    
+    [Header("Spawn Time")]
+    [SerializeField] private float _baseSpawnTime = 2.0f;
+    [SerializeField] private float _minSpawnTime = 0.2f;
+    [SerializeField] private float _difficultyLevelTime = 30f; //어려워지는 시간 간격
+    [SerializeField] private float _timeDecreasePer = 0.5f; //줄어드는 스폰 시간 값
+    [SerializeField] private int _increaseMonsterCount = 10;
+    
     [Header("Spawn Distance")]
     [SerializeField] private float _minSpawnDistance = 15.0f;
     [SerializeField] private float _maxSpawnDistance = 20.0f;
     [SerializeField] private TextMeshProUGUI _monsterCountText;
     
+    private int _baseMonsterCount;
     private float _spawnTimer;
     private float _elapsedTime;
     private Transform _playerTransform;
@@ -23,6 +31,9 @@ public class MonsterSpawner : MonoBehaviour
         //플레이어 위치 등록
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null) _playerTransform = player.transform;
+        
+        _baseMonsterCount = _maxMonsterCount;
+        _spawnTimer = 0f;
     }
 
     private void Update()
@@ -32,21 +43,48 @@ public class MonsterSpawner : MonoBehaviour
         _elapsedTime += Time.deltaTime;
 
         // 시간에 맞춰서 그룹 업데이트 체크
+        UpDifficultyLevel();
         UpdateCurrentGroup();
+        
+        // 난이도가 반영된 간격 계산
+        float currentInterval = GetSpawnTime();
 
         // 현재 선택된 그룹 스폰
-        if (MonsterManager.CanSpawn(_maxPopulation))
+        if (MonsterManager.CanSpawn(_maxMonsterCount))
         {
             _spawnTimer -= Time.deltaTime;
             if (_spawnTimer <= 0f)
             {
                 SpawnMonsterFromCurrentGroup();
-                // 현재 그룹의 스폰 간격 적용
-                _spawnTimer = _monsterGroups[_currentGroupIndex].spawnInterval;
+                // 현재 스폰 시간 간격 적용
+                _spawnTimer = currentInterval;
             }
         }
         ShowMonsterCount();
     }
+    
+    private void UpDifficultyLevel()
+    {
+        // 30초가 몇 번 지났는지 계산
+        // 0, 30, 60... < 이렇게
+        int step = Mathf.FloorToInt(_elapsedTime / _difficultyLevelTime);
+
+        // 30초마다 _increaseMonsterCount 만큼 최대 마릿수 증가
+        _maxMonsterCount = _baseMonsterCount + (step * _increaseMonsterCount);
+    }
+    
+    private float GetSpawnTime()
+    {
+        // 30초마다 _timeDecreasePer 만큼
+        // 스폰 간격이 빨라짐 (감소됨)
+        int step = Mathf.FloorToInt(_elapsedTime / _difficultyLevelTime);
+        float calculatedTime = _baseSpawnTime - (step * _timeDecreasePer);
+
+        // 계산된 시간이 최소 값보다
+        // 작아지지 않도록 고정
+        return Mathf.Max(calculatedTime, _minSpawnTime);
+    }
+    
 
     private void UpdateCurrentGroup()
     {
@@ -95,7 +133,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         if (_monsterCountText != null)
         {
-            _monsterCountText.text = $"필드 몬스터 수: {MonsterManager.MonsterCount}";
+            _monsterCountText.text = $"몬스터 수: {MonsterManager.MonsterCount} / {_maxMonsterCount}";
         }
     }
 }

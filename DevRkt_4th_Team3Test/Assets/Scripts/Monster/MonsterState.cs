@@ -21,6 +21,7 @@ public class MonsterState : MonoBehaviour
     private float _lastAttackTime;
     public static System.Action OnMonsterDie;
     private EXPType _dropExpType = EXPType.small;
+    private bool _isQuitting = false;
     
     protected virtual void Awake()
     {
@@ -113,7 +114,6 @@ public class MonsterState : MonoBehaviour
     private void Die()
     {
         OnMonsterDie?.Invoke();
-        MonsterManager.Unregister();
         //경험치 아이템 드랍
         FieldObjectManager.Instance.MakeExpObject(_dropExpType, transform.position);
         Destroy(gameObject);
@@ -122,6 +122,14 @@ public class MonsterState : MonoBehaviour
     protected virtual void OnDestroy()
     {
         //static 데이터 때문에 한번 더 정확하게 제거
-        if (gameObject.scene.isLoaded) MonsterManager.Unregister();
+        if (gameObject.scene.isLoaded  && !_isQuitting)
+        {
+            MonsterManager.Unregister();
+        }
+    }
+    
+    private void OnApplicationQuit()
+    {
+        _isQuitting = true;
     }
 }
