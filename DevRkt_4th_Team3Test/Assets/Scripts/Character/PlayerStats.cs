@@ -78,7 +78,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
             _pickupCollider.radius = _pickupRange;
         }
     }
-    
+
     // 레벨업에 따른 스탯 증가
     public void IncreaseStats()
     {
@@ -178,11 +178,21 @@ public class PlayerStats : MonoBehaviour, IDamagable
     {
         _isInvincible = true;
 
-        // 노란색 적용
-        _renderer.color = Color.yellow;
+        // 머티리얼 색상 직접 변경
+        if (_renderer != null && _renderer.material.HasProperty("_Color"))
+        {
+            _renderer.color = Color.cyan;
+        }
+
         yield return new WaitForSecondsRealtime(2f);
-        _renderer.color = _originalColor;
+
+        if (_renderer != null && _renderer.material.HasProperty("_Color"))
+        {
+            _renderer.material.color = _originalColor;
+        }
+
         _isInvincible = false;
+
     }
     
     // 캐릭터 죽음 처리

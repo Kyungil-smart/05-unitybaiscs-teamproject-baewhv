@@ -23,6 +23,23 @@ public class ExpSystem : MonoBehaviour
     {
         _playerStats = GetComponent<PlayerStats>();
     }
+    void Update()
+    {
+        // 테스트용 강제 레벨업 키 (예: L 키)
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("강제 레벨업 키 입력됨!");
+            LevelUp();
+        }
+
+        // 경험치 강제 획득 키 (예: E 키)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("강제 경험치 획득!");
+            GainExp(50); // 50 경험치 추가
+        }
+    }
+
 
     // 경험치 획득 _ 몬스터가 가진 경험치를 받아와야함
     public void GainExp(int exp)
