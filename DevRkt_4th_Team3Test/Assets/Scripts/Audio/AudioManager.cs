@@ -13,7 +13,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private List<AudioClip> _bgmClips;
     private int _currentIndex = 0;
     
-    [Header("Audio Clips")]
+    [Header("SFX Clips")]
     [SerializeField] private AudioClip _hitEnemy;
 
     [Header("UI Clips")]

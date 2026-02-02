@@ -50,9 +50,9 @@ MonoBehaviour:
   _bgmSource: {fileID: 8903182538751351379}
   _sfxSource: {fileID: 8903182538751351379}
   _bgmClips:
-  - {fileID: 8300000, guid: 909ecf125c3ad754e82384c02b8367b4, type: 3}
-  - {fileID: 8300000, guid: f53b2683d972d02438a8de56aaf07191, type: 3}
-  _hitEnemy: {fileID: 8300000, guid: f6ff22af9753af64b99c64551bfda5c7, type: 3}
+  - {fileID: 8300000, guid: 32c72435edc7b7048a27cd44188224e7, type: 3}
+  - {fileID: 8300000, guid: bada72c1d24781941a04548cd7f893c1, type: 3}
+  _hitEnemy: {fileID: 8300000, guid: 90abba2a84c2f114fb8c359ad08e8714, type: 3}
   _menuSelect: {fileID: 0}
   _mixer: {fileID: 24100000, guid: d23ed50de8662ef4ab9d202573a05bcb, type: 2}
 --- !u!82 &8903182538751351379
@@ -65,9 +65,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7662682985728699579, guid: d23ed50de8662ef4ab9d202573a05bcb, type: 2}
-  m_audioClip: {fileID: 8300000, guid: f53b2683d972d02438a8de56aaf07191, type: 3}
+  m_audioClip: {fileID: 8300000, guid: bada72c1d24781941a04548cd7f893c1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -161,7 +161,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7662682985728699579, guid: d23ed50de8662ef4ab9d202573a05bcb, type: 2}
-  m_audioClip: {fileID: 8300000, guid: f53b2683d972d02438a8de56aaf07191, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 32c72435edc7b7048a27cd44188224e7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -257,7 +257,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5212841198136045795, guid: d23ed50de8662ef4ab9d202573a05bcb, type: 2}
-  m_audioClip: {fileID: 8300000, guid: f6ff22af9753af64b99c64551bfda5c7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 90abba2a84c2f114fb8c359ad08e8714, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

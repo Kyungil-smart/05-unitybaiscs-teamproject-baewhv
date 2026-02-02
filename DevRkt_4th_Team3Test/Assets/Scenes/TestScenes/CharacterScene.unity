@@ -1435,6 +1435,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudoiManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8903182538751351379, guid: 2d38d5d1b5fc5d541978e4ed740c7dcd, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
