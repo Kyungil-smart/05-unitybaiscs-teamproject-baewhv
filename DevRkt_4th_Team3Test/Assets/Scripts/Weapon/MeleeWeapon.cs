@@ -87,7 +87,7 @@ public class MeleeWeapon : WeaponBase
             // 컴포넌트가 없으면 리턴
             if (monster == null) return;
             monster.TakeDamage(weaponDamage);
-            Debug.Log($"fireAttack : {weaponDamage}");
+            //Debug.Log($"fireAttack : {weaponDamage}");
             return;
         }
 
