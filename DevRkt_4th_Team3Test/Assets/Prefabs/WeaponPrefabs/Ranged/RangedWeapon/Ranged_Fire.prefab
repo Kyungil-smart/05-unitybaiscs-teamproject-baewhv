@@ -49,8 +49,8 @@ MonoBehaviour:
   level: 0
   isPromotionWeapon: 0
   isUpgradeFinished: 0
-  weaponDamage: 12
-  weaponAttackSpeed: 15
+  weaponDamage: 25
+  weaponAttackSpeed: 20
   projectileCount: 1
   weaponRange: 6
   objectPrefab: {fileID: 8328061000933342145, guid: 2980070632126a6449fa8ee87c551141, type: 3}
