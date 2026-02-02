@@ -178,20 +178,30 @@ public class PlayerStats : MonoBehaviour, IDamagable
     {
         _isInvincible = true;
 
-        // 머티리얼 색상 직접 변경
-        if (_renderer != null && _renderer.material.HasProperty("_Color"))
+        float duration = 2f;         
+        float interval = 0.2f;        
+        float timer = 0f;
+        bool toggle = false;
+
+        while (timer < duration)
         {
-            _renderer.color = Color.cyan;
+            if (_renderer != null)
+            {
+                // 토글하면서 색상 변경
+                _renderer.color = toggle ? Color.cyan : _originalColor;
+                toggle = !toggle;
+            }
+
+            yield return new WaitForSecondsRealtime(interval);
+            timer += interval;
         }
 
-        yield return new WaitForSecondsRealtime(2f);
-
-        if (_renderer != null && _renderer.material.HasProperty("_Color"))
-        {
-            _renderer.material.color = _originalColor;
-        }
+        // 끝나면 원래 색으로 복원
+        if (_renderer != null)
+            _renderer.color = _originalColor;
 
         _isInvincible = false;
+
 
     }
     
