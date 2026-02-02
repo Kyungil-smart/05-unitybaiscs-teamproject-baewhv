@@ -34,7 +34,7 @@ public class LevelUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             Debug.Log(_levelUpPopupUI != null?"팝업있음":"팝업없음");
-            _levelUpPopupUI.ShowPopup();
+            _levelUpPopupUI.Open();
         }
         
         if (_expSystem == null || _levelUpPopupUI == null) return;
@@ -46,7 +46,7 @@ public class LevelUI : MonoBehaviour
         {
             _lastLevel = _expSystem.Level;
             //레벨업 팝업 표시
-            _levelUpPopupUI.ShowPopup();
+            _levelUpPopupUI.Open();
         }
 
 
