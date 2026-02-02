@@ -759,7 +759,7 @@ MonoBehaviour:
   _maxRangedWeaponAttackSpeed: 100
   _maxMeleeWeaponAttackSpeed: 10
   cardCount: 3
-  promotionCriteria: 5
+  promotionCriteria: 3
 --- !u!224 &963142913 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3914857605958532776, guid: db63d917bcd83b349a1be38f5d7dd217, type: 3}
