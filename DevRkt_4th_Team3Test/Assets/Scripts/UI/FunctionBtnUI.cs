@@ -8,6 +8,11 @@ public class FunctionBtnManager : MonoBehaviour
     [SerializeField] private GameObject _infoPopup;
     private GameObject _currentInfoPopup;
     private InfoPopupUI  _infoPopupUI;
+    [SerializeField] private GameObject _settingPopup;
+    private GameObject _currentSettingPopup;
+    private SettingPopupUI  _settingPopupUI;
+    
+    [Header("Alert")]
     [SerializeField] private GameObject _pauseAlert;
     private GameObject _currentAlertInstance;
     
@@ -20,18 +25,33 @@ public class FunctionBtnManager : MonoBehaviour
     public void Awake()
     {
         //팝업 프리팹 생성해서 할당
-        if (_currentInfoPopup == null)
-        {
-            // Instantiate: 게임 오브젝트를 동적으로 생성
-            _currentInfoPopup = Instantiate(_infoPopup, GameObject.Find("Canvas").transform);
-            // 생성 직후 화면에서 숨김
-            _currentInfoPopup.SetActive(false);
-        }
-        
-        _infoPopupUI = _currentInfoPopup.GetComponent<InfoPopupUI>();
+        _currentInfoPopup = CreatePopup(_infoPopup);
+        if (_currentInfoPopup != null)
+            _infoPopupUI = _currentInfoPopup.GetComponent<InfoPopupUI>();
+    
+        _currentSettingPopup = CreatePopup(_settingPopup);
+        if (_currentSettingPopup != null)
+            _settingPopupUI = _currentSettingPopup.GetComponent<SettingPopupUI>();
         
         //버튼 이미지 컴포넌트
         _btnImage = GetComponent<Image>();
+    }
+
+    private GameObject CreatePopup(GameObject basePopup)
+    {
+        if (basePopup == null) return null;
+
+        // Canvas 찾기 및 생성
+        GameObject canvas = GameObject.Find("Canvas");
+        if (canvas == null)
+        {
+            Debug.LogError("씬에 Canvas 오브젝트가 없습니다!");
+            return null;
+        }
+
+        GameObject clone = Instantiate(basePopup, canvas.transform);
+        clone.SetActive(false);
+        return clone;
     }
 
     /// <summary>
@@ -69,11 +89,18 @@ public class FunctionBtnManager : MonoBehaviour
     }
     
     /// <summary>
+    /// 소개 팝업 열기
+    /// </summary>
+    public void OnClickInfo()
+    {
+        _infoPopupUI.Open();
+    }
+    /// <summary>
     /// 설정 팝업 열기
     /// </summary>
     public void OnClickSetting()
     {
-        _infoPopupUI.Open();
+        _settingPopupUI.Open();
     }
     
     /// <summary>

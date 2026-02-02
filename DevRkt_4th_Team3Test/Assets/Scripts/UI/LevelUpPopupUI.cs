@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelUpPopupUI : MonoBehaviour
+public class LevelUpPopupUI : MonoBehaviour, IPopup
 {
     [Header("Card UI")] [SerializeField] private GameObject _cardUI;
     [SerializeField] private Transform _cardList;
@@ -13,7 +13,7 @@ public class LevelUpPopupUI : MonoBehaviour
     /// <summary>
     /// 레벨업 시 팝업 표시
     /// </summary>
-    public void ShowPopup()
+    public void Open()
     {
         // 게임 정지
         Time.timeScale = 0f;
@@ -85,14 +85,14 @@ public class LevelUpPopupUI : MonoBehaviour
         }
     
         // 팝업 닫기
-        ClosePopup();
+        Close();
     }
     
-    public void ClosePopup()
+    public void Close()
     {
         gameObject.SetActive(false);
         // 게임 재개
         Time.timeScale = 1f;
     }
-    
+
 }

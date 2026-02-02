@@ -9,7 +9,7 @@ using UnityEngine;
         void Awake() => Instance = this;
         
         /// <summary>
-        /// 설정 팝업 열기
+        /// 소개 팝업 열기
         /// </summary>
         public void Open()
         {
@@ -18,7 +18,7 @@ using UnityEngine;
         }
 
         /// <summary>
-        /// 설정 팝업 닫기
+        /// 소개 팝업 닫기
         /// </summary>
         public void Close()
         {
@@ -26,8 +26,4 @@ using UnityEngine;
             gameObject.SetActive(false); 
         }
 
-        public void Apply()
-        {
-            
-        }
     }
