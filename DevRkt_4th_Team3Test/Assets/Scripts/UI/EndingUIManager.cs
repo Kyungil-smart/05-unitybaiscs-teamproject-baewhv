@@ -13,11 +13,20 @@ public class EndingUIManager : MonoBehaviour
     {
         TitleText.text = IsClear ? "Clear!" : "Fail";
         
+        if (IsClear)
+        {
+            AudioManager.Instance.PlayClearSFX();
+        }
+        else
+        {
+            AudioManager.Instance.PlayFailSFX();
+        }
+
         int _killCount = 10; //TODO: 실제 데이터 추가하기
         string killCountText = $"잡은 몬스터: {_killCount}마리";
         string endTimeText = $"종료 타임: {EndTime}";
         ResultText.text = IsClear ? killCountText : endTimeText;
-
+        
     }
     
     /// <summary>
