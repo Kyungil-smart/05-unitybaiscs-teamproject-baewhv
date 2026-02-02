@@ -32,20 +32,20 @@ public class ExpObject : ItemObject
         switch (type)
         {
             case EXPType.small:
-                _body.sprite = FieldObjectManager.Instance.ExpSprites.SmallEXPSprite;
+                _body.sprite = FieldObjectManager.Instance.ExpDatas.SmallEXPSprite;
                 _body.transform.localScale = new Vector3(6, 6, 6);
-                _expValue = 5;
+                _expValue = FieldObjectManager.Instance.ExpDatas.SmallExpValue;
                 break;
             case EXPType.medium:
-                _body.sprite = FieldObjectManager.Instance.ExpSprites.MediumEXPSprite;
+                _body.sprite = FieldObjectManager.Instance.ExpDatas.MediumEXPSprite;
                 _body.color = new Color(r: 0.9845836f, g: 1f, b: 0.3160377f);
                 _body.transform.localScale = new Vector3(8, 8, 8);
-                _expValue = 50;
+                _expValue = FieldObjectManager.Instance.ExpDatas.MediumExpValue;
                 break;
             case EXPType.large:
-                _body.sprite = FieldObjectManager.Instance.ExpSprites.LargeEXPSprite;
+                _body.sprite = FieldObjectManager.Instance.ExpDatas.LargeEXPSprite;
                 _body.transform.localScale = new Vector3(10, 10, 10);
-                _expValue = 200;
+                _expValue = FieldObjectManager.Instance.ExpDatas.LargeExpValue;
                 break;
         }
         gameObject.transform.position = position;
