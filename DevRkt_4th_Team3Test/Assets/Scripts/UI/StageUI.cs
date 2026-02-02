@@ -14,6 +14,8 @@ public class StageUI : MonoBehaviour
     [Header("Kill UI")]
     [SerializeField]private TextMeshProUGUI _killCountText;
     private int _killCount = 0;
+    public static int KillCount;
+    
     
     void Update()
     {
@@ -50,6 +52,7 @@ public class StageUI : MonoBehaviour
     {
         _killCount++;
         _killCountText.text = $"{_killCount}";
+        KillCount = _killCount;
     }
     
     void OnDisable()

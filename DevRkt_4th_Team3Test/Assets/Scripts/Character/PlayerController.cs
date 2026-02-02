@@ -62,7 +62,6 @@ public class PlayerController : MonoBehaviour
     public void FixedUpdate()
     {
         if (_isDead) return;
-        _rigidbody.MovePosition(transform.position + _movement * _playerStats.MoveSpeed * Time.fixedDeltaTime);
+        _rigidbody.velocity = _movement * _playerStats.MoveSpeed;
     }
-    
 }
