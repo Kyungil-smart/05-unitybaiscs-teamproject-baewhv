@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -9,11 +10,20 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        StartCoroutine(Init());
     }
 
-    public void Init()
+    public IEnumerator Init()
     {
+        //무기 매니저 세팅될동안 잠시 대기
+        yield return new WaitForSeconds(0.1f);
+        
+        //무기 리스트 한번 받아오기
+        if (WeaponManager.WeaponInstance != null)
+        {
+            WeaponManager.WeaponInstance.GetWeaponList(); 
+        }
+        
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
