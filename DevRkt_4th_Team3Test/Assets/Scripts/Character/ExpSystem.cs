@@ -48,7 +48,7 @@ public class ExpSystem : MonoBehaviour
     {
         Level++;
         CurrentExp -= ExpToNextLevel;
-        ExpToNextLevel = Mathf.RoundToInt(ExpToNextLevel * 1.8f);
+        ExpToNextLevel = Mathf.RoundToInt(ExpToNextLevel * 1.4f);
         _playerStats.IncreaseStats();
         LevelUpText();
         // 테스트 후 삭제

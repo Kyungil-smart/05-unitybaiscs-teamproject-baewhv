@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429b7047132e97d40852b9088338e912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponName: Fire2
+  _weaponName: Blue Flame
   isActive: 0
   level: 0
   isPromotionWeapon: 1
