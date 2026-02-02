@@ -108,7 +108,9 @@ public class PlayerStats : MonoBehaviour, IDamagable
         _attackDamage += 1;
         _defense += 1;
         _moveSpeed += 0.3f;
-        _maxHP += 100;
+        _maxHP += 150;
+        
+        OnHPChanged?.Invoke();
     }
     
     // 캐릭터 데미지 받기
@@ -201,11 +203,6 @@ public class PlayerStats : MonoBehaviour, IDamagable
         if (_renderer != null)
         {
             _renderer.material.color = Color.black;
-        }
-        // 캐릭터 사망 시 사망 사운드 출력
-        if (_audioSource != null && _deathSound != null)
-        {
-            _audioSource.PlayOneShot(_deathSound);
         }
 
         // 죽음 이벤트 알림 -> 구독 필요

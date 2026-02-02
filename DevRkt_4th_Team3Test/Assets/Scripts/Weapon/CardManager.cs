@@ -341,8 +341,8 @@ public class CardManager : MonoBehaviour
                 WeaponManager.WeaponInstance.weapons[i].isActive = true; //승진 무기 true
                 
                 //기존무기의 공격력 * 1.5, 공격속도 * 1.2, 투사체수 로 세팅함.
-                WeaponManager.WeaponInstance.weapons[i].weaponDamage = weapon.weaponDamage * 1.5f;
-                WeaponManager.WeaponInstance.weapons[i].weaponAttackSpeed = weapon.weaponAttackSpeed * 1.2f;
+                WeaponManager.WeaponInstance.weapons[i].weaponDamage = weapon.weaponDamage * 1.8f;
+                WeaponManager.WeaponInstance.weapons[i].weaponAttackSpeed = weapon.weaponAttackSpeed * 1.4f;
                 WeaponManager.WeaponInstance.weapons[i].projectileCount = weapon.projectileCount;
                 //rangedWeapon은 그냥 해도 되는데 orbitalWeapon은 clearweapon한뒤에 spawnweapon도 함.
                 if (weapon is OrbitalWeapon)

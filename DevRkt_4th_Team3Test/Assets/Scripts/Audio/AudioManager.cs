@@ -6,18 +6,24 @@ using UnityEngine.Audio;
 public class AudioManager : Singleton<AudioManager>
 {
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource bgmSource;
-    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource _bgmSource;
+    [SerializeField] private AudioSource _sfxSource;
 
     [Header("BGM Clips")]
-    [SerializeField] private AudioClip _bgmClip; // 🎵 BGM 클립 추가
+    [SerializeField] private List<AudioClip> _bgmClips;
+    private int _currentIndex = 0;
     
-    [Header("Audio Clips")]
+    [Header("SFX Clips")]
     [SerializeField] private AudioClip _hitEnemy;
-    
 
+    [Header("UI Clips")]
+    [SerializeField] private AudioClip _menuSelect;
+    [SerializeField] private AudioClip _startSfx;
+    [SerializeField] private AudioClip _clearStage;
+    [SerializeField] private AudioClip _failStage;
+    
     [Header("Mixer")]
-    [SerializeField] private AudioMixer mixer;
+    [SerializeField] private AudioMixer _mixer;
 
     void Awake()
     {
@@ -25,27 +31,65 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     void Start() {
-        // 씬 시작 시 자동으로 BGM 재생
-        if (_bgmClip != null) {
-            PlayBGM(_bgmClip);
+        if (_bgmClips.Count > 0)
+        {
+            PlayBGM(_currentIndex);
+            StartCoroutine(BGMSequence());
         }
     }
 
-    public void PlayBGM(AudioClip clip) {
-        bgmSource.clip = clip;
-        bgmSource.loop = true; // 배경음악은 반복 재생
-        bgmSource.Play();
+    public void PlayBGM(int index) {
+        if (index < 0 || index >= _bgmClips.Count) return;
+
+        _currentIndex = index;
+        _bgmSource.clip = _bgmClips[_currentIndex];
+        _bgmSource.loop = false; // ✅ 번갈아 나오게 하려면 loop 끄기
+        _bgmSource.Play();
+
+    }
+    private IEnumerator BGMSequence()
+    {
+        while (true)
+        {
+            // 현재 곡이 끝날 때까지 대기
+            yield return new WaitForSeconds(_bgmSource.clip.length);
+
+            // 다음 곡으로 이동
+            _currentIndex = (_currentIndex + 1) % _bgmClips.Count;
+            PlayBGM(_currentIndex);
+        }
     }
 
     public void PlayHitSFX() {
-        sfxSource.PlayOneShot(_hitEnemy);
+        if (_hitEnemy != null)
+            _sfxSource.PlayOneShot(_hitEnemy);
+    }
+    public void PlayMenuSelectSFX()
+    {
+        if (_menuSelect != null)
+            _sfxSource.PlayOneShot(_menuSelect);
+    }
+    public void PlayStartSFX()
+    {
+        if (_startSfx != null)
+            _sfxSource.PlayOneShot(_startSfx);
+    }
+    public void PlayClearSFX()
+    {
+        if (_clearStage !=null)
+            _sfxSource.PlayOneShot(_clearStage);
+    }
+    public void PlayFailSFX()
+    {
+        if (_failStage !=null)
+            _sfxSource.PlayOneShot(_failStage);
     }
 
     public void SetBGMVolume(float value) {
-        mixer.SetFloat("BGMVolume", Mathf.Log10(value) * 20);
+        _mixer.SetFloat("BGMVolume", Mathf.Log10(value) * 20);
     }
 
     public void SetSFXVolume(float value) {
-        mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        _mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
     }
 }

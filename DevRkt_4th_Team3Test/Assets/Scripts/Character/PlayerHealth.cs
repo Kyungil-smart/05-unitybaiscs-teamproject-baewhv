@@ -34,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     private void UpdateHPGuage()
     {
         // 슬라이더 값을 현재 hp로 설정
+        _hpSlider.maxValue = _playerStats.MaxHP;
         _hpSlider.value = _playerStats.CurrentHP;
 
         float ratio = (float)_playerStats.CurrentHP / _playerStats.MaxHP;
