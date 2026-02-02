@@ -5,22 +5,20 @@ using TMPro;
 
 public class CardUI : MonoBehaviour
 {
-    [Header("Image UI")]
-    [SerializeField] private Image _weaponIcon;
+    [Header("Image UI")] [SerializeField] private Image _weaponIcon;
     [SerializeField] private Image _rarityFrame;
-    
-    [Header("Text UI")]
-    [SerializeField] private TextMeshProUGUI _weaponNameText;
-    [SerializeField] private TextMeshProUGUI _damageText;
-    [SerializeField] private TextMeshProUGUI _speedText;
-    [SerializeField] private TextMeshProUGUI _rangeText;
-    [SerializeField] private TextMeshProUGUI _rarityText;
+
+    [Header("Text UI")] [SerializeField] private TextMeshProUGUI _weaponNameText;
     [SerializeField] private GameObject _newTag;
+    [SerializeField] private GameObject _upTag;
+    [SerializeField] private TextMeshProUGUI _rarityText;
+    [SerializeField] private TextMeshProUGUI _abilityName;
+    [SerializeField] private TextMeshProUGUI _amountToApply;
 
     private Card _cardData;
     private LevelUI _levelUI;
     private System.Action<Card> _onClickCallback;
-    
+
     /// <summary>
     /// 데이터를 받아서 Card UI에 표시
     /// </summary>
@@ -31,25 +29,36 @@ public class CardUI : MonoBehaviour
             Debug.LogError("전달된 카드 데이터나 무기 정보가 Null입니다!");
             return;
         }
-        
+
         _cardData = data;
         _onClickCallback = callback;
-        
+
         //이름 표시
         if (_weaponNameText != null && data.weapon._weaponName != null)
         {
-            _weaponNameText.text = data.weapon._weaponName;
+            if (data.isPromotion)
+            {
+                WeaponBase promotionWeapon = data.weapon.promotionPrefab.GetComponent<WeaponBase>();
+                _weaponNameText.text = $"{data.weapon._weaponName}\n↓\n{promotionWeapon._weaponName}";
+            }
+            else
+            {
+                _weaponNameText.text = data.weapon._weaponName;
+            }
         }
+        
+
         //이미지 표시
         if (_weaponIcon != null && data.weapon.weaponSprite != null)
         {
-            _weaponIcon.sprite = data.weapon.weaponSprite; 
+            _weaponIcon.sprite = data.weapon.weaponSprite;
         }
 
         if (_rarityText != null)
         {
             _weaponIcon.preserveAspect = true;
         }
+
         //등급 표시
         if (_rarityFrame != null && rarityInfo.RarityColor != null)
         {
@@ -62,26 +71,42 @@ public class CardUI : MonoBehaviour
         {
             _rarityText.text = rarityInfo.RarityName;
         }
-        //새로 얻은 아이템 인지 표시
-        if (data.isNew)
-        {
-            _newTag.SetActive(true);
-            
-        }
 
-        if (data.weapon == null) return;
-        
-        if (_damageText != null && data.weapon.weaponDamage != null)
+        //새로 얻은 아이템 인지 표시
+        _newTag.SetActive(data.isNew);
+
+        //승급 표시
+        _upTag.SetActive(data.isPromotion);
+
+        if (data.isPromotion)
         {
-            _damageText.text = $"Damage: +{data.weapon.weaponDamage}%";
+            _abilityName.enabled = false;
+            _amountToApply.enabled = false;
         }
-        if (_speedText != null && data.weapon.weaponAttackSpeed != null)
+        else
         {
-            _speedText.text = $"Speed: +{data.weapon.weaponAttackSpeed}";
+            if (_abilityName != null && data.abilityName != null)
+            {
+                _abilityName.text = GetAbilityNameKo(data.abilityName);
+            }
+
+            if (_amountToApply != null && data.amountToApply != null)
+            {
+                _amountToApply.text = $"{data.amountToApply}";
+            }
         }
-        if (_rangeText != null && data.weapon.projectileCount != null)
+   
+    }
+
+    private string GetAbilityNameKo(CardAbility text)
+    {
+        switch (text)
         {
-            _rangeText.text = $"Range: +{data.weapon.projectileCount}%";
+            case CardAbility.projectileCount: return "투사체 개수";
+            case CardAbility.weaponAttackSpeed: return "무기 공격 속도";
+            case CardAbility.weaponDamage: return "무기 공격력";
+            case CardAbility.weaponRange:  return "무기 사거리";
+            default: return $"{text}";
         }
     }
 
