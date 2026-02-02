@@ -915,11 +915,11 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 2857166452826860582, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
   <Camera>k__BackingField: {fileID: 1255718000294188076, guid: f24744fd33513304392682b77e3e3848, type: 3}
   _spawnPoint: {x: 0, y: 0, z: 0}
-  _wm: {fileID: 1153522716}
-  _cm: {fileID: 890404254}
-  _owm: {fileID: 402132478}
-  _rwm: {fileID: 2055142044}
-  _mwm: {fileID: 22254426}
+  _weaponManager: {fileID: 1153522716}
+  _cardManager: {fileID: 890404254}
+  _orbitalWeaponManager: {fileID: 402132478}
+  _rangedWeaponManager: {fileID: 2055142044}
+  _meleeWeaponManager: {fileID: 22254426}
   _levelUI: {fileID: 2073122949}
 --- !u!4 &1935520513
 Transform:
