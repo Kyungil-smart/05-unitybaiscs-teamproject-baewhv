@@ -48,5 +48,5 @@ MonoBehaviour:
   MediumEXPSprite: {fileID: 1229118914, guid: f250065a1c5db1144a18c38db2ea39c2, type: 3}
   LargeEXPSprite: {fileID: -1200809338, guid: f1388c65c177d7b4fa4dba776b8ea45e, type: 3}
   SmallExpValue: 5
-  MediumExpValue: 35
+  MediumExpValue: 50
   LargeExpValue: 225

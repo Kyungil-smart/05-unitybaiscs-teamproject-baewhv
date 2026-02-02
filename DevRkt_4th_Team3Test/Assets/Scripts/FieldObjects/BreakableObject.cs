@@ -20,7 +20,6 @@ public class BreakableObject : FieldObject, IDamagable
         }
         else
         {
-            Debug.Log("Enter Here");
             _body.material.SetFloat(Shader.PropertyToID("_FlashAmount"), 1f);
             StartCoroutine(SetDefaultColor());
         }
@@ -28,7 +27,6 @@ public class BreakableObject : FieldObject, IDamagable
 
     private IEnumerator SetDefaultColor()
     {
-        Debug.Log("Enter Coroutine");
         yield return YieldContainer.WaitForSeconds(0.1f);
         _body.material.SetFloat(Shader.PropertyToID("_FlashAmount"), 0f);
     }

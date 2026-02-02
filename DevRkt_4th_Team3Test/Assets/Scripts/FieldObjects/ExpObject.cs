@@ -7,11 +7,22 @@ public class ExpObject : ItemObject
 {
     [SerializeField] private int _expValue;
 
+    public bool isAbsolve { get; private set; } = false;
+
+
+
     private void Awake()
     {
         gameObject.SetActive(false);
     }
-    
+
+    private void FixedUpdate()
+    {
+        if (isAbsolve)
+        {
+            transform.position = Vector3.Lerp(transform.position, GameManager.Instance.Player.transform.position,1.5f * Time.fixedDeltaTime); }
+    }
+
     /// <summary>
     /// I / 상호작용을 통한 경험치 획득
     /// </summary>
@@ -26,6 +37,21 @@ public class ExpObject : ItemObject
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 흡수 시작
+    /// fixed 업데이트에서 플레이어 추적.
+    /// </summary>
+    public void StartAbsolve()
+    {
+        isAbsolve = true;
+    }
+
+    /// <summary>
+    /// 경험치 오브젝트 초기화
+    /// 오브젝트 풀에서 꺼낼 때 초기에 세팅해주는 값.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="position"></param>
     public void SetExpObject(EXPType type, Vector3 position)
     {
         _body.color = Color.white;
@@ -50,5 +76,27 @@ public class ExpObject : ItemObject
         }
         gameObject.transform.position = position;
         gameObject.SetActive(true);
+        isAbsolve = false;
+    }
+
+    public void CompressExp(EXPType type)
+    {
+        int expValue = 0;
+        _body.sprite = FieldObjectManager.Instance.ExpDatas.LargeEXPSprite;
+        _body.transform.localScale = new Vector3(12, 12, 12);
+        switch (type)
+        {
+            case EXPType.small:
+                expValue = FieldObjectManager.Instance.ExpDatas.SmallExpValue;
+                break;
+            case EXPType.medium:
+                expValue = FieldObjectManager.Instance.ExpDatas.MediumExpValue;
+                break;
+            case EXPType.large:
+                expValue = FieldObjectManager.Instance.ExpDatas.LargeExpValue;
+                break;
+        }
+        _expValue += expValue;
+        Debug.Log($"{gameObject.name} CompressExp! {_expValue}");
     }
 }
