@@ -1,52 +1,68 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
 public class InventoryUI : MonoBehaviour
 {
-    [Header("UI Containers")]
-    public Transform weaponContainer;
-    public Transform passiveContainer;
-    
     [Header("Prefabs")]
-    public GameObject slotPrefab;
-    
+    [SerializeField] private GameObject _slotPrefab; 
+    private Dictionary<WeaponBase, GameObject> _weaponsList = new Dictionary<WeaponBase, GameObject>();
+
     private void Start()
     {
-        ClearContainers();
-
-        if (DataController.Instance.currentData.inventory.Count > 0)
-        {
-            InventoryData invData = DataController.Instance.currentData.inventory[0];
-
-            foreach (var weapon in invData.weapons)
-            {
-                CreateSlot(weapon, weaponContainer);
-            }
-
-            foreach (var passive in invData.passives)
-            {
-                CreateSlot(passive, passiveContainer);
-            }
-        }
+        StartCoroutine(Init());
     }
 
-    private void CreateSlot(ItemBase item, Transform parent)
+    public IEnumerator Init()
     {
-        if (item == null) return;
-
-        GameObject obj = Instantiate(slotPrefab, parent);
+        //무기 매니저 세팅될동안 잠시 대기
+        yield return new WaitForSeconds(0.1f);
         
-        var textDisplay = obj.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        if (textDisplay != null)
+        //무기 리스트 한번 받아오기
+        if (WeaponManager.WeaponInstance != null)
         {
-            textDisplay.text = $"{item.itemName} (x{item.count})";
+            WeaponManager.WeaponInstance.GetWeaponList(); 
+        }
+        
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        _weaponsList.Clear();
+
+        if (WeaponManager.WeaponInstance != null)
+        {
+            foreach (var weapon in WeaponManager.WeaponInstance.weapons)
+            {
+                if (weapon.isActive) AddWeaponSlot(weapon);
+            }
         }
     }
     
-    private void ClearContainers()
+    public void AddWeaponSlot(WeaponBase weapon, WeaponBase oldWeapon = null)
     {
-        foreach (Transform child in weaponContainer) Destroy(child.gameObject);
-        foreach (Transform child in passiveContainer) Destroy(child.gameObject);
+        // 승급인 경우
+        // 기존 무기 슬롯 제거
+        if (oldWeapon != null && _weaponsList.ContainsKey(oldWeapon))
+        {
+            Destroy(_weaponsList[oldWeapon]);
+            _weaponsList.Remove(oldWeapon);
+        }
+        
+        //이미 인벤토리에 있는 무기라면 중복 생성 안 함
+        if (weapon == null || _weaponsList.ContainsKey(weapon)) return;
+
+        // 슬롯 생성
+        GameObject newSlot = Instantiate(_slotPrefab, transform);
+        _weaponsList.Add(weapon, newSlot);
+
+        // 슬롯 데이터 추가
+        InventorySlot slotScript = newSlot.GetComponent<InventorySlot>();
+        if (slotScript != null)
+        {
+            slotScript.SetItem(weapon);
+        }
     }
+
     
 }
