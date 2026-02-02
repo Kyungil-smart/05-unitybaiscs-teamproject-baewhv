@@ -204,11 +204,6 @@ public class PlayerStats : MonoBehaviour, IDamagable
         {
             _renderer.material.color = Color.black;
         }
-        // 캐릭터 사망 시 사망 사운드 출력
-        if (_audioSource != null && _deathSound != null)
-        {
-            _audioSource.PlayOneShot(_deathSound);
-        }
 
         // 죽음 이벤트 알림 -> 구독 필요
         OnPlayerDeath?.Invoke();

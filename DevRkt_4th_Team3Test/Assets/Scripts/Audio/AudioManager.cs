@@ -18,6 +18,9 @@ public class AudioManager : Singleton<AudioManager>
 
     [Header("UI Clips")]
     [SerializeField] private AudioClip _menuSelect;
+    [SerializeField] private AudioClip _startSfx;
+    [SerializeField] private AudioClip _clearStage;
+    [SerializeField] private AudioClip _failStage;
     
     [Header("Mixer")]
     [SerializeField] private AudioMixer _mixer;
@@ -65,6 +68,21 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (_menuSelect != null)
             _sfxSource.PlayOneShot(_menuSelect);
+    }
+    public void PlayStartSFX()
+    {
+        if (_startSfx != null)
+            _sfxSource.PlayOneShot(_startSfx);
+    }
+    public void PlayClearSFX()
+    {
+        if (_clearStage !=null)
+            _sfxSource.PlayOneShot(_clearStage);
+    }
+    public void PlayFailSFX()
+    {
+        if (_failStage !=null)
+            _sfxSource.PlayOneShot(_failStage);
     }
 
     public void SetBGMVolume(float value) {
