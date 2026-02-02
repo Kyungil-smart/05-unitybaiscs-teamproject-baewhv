@@ -21,7 +21,7 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     private GameObject _go_Exp;
 
     //경험치 텍스쳐용 이미지모음
-    public EXPSprites ExpSprites { get; private set; }
+    public EXPDatas ExpDatas { get; private set; }
 
     public GameObject _item_Exp { get; private set; }
 
@@ -30,7 +30,7 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
         _go_Exp = new GameObject("ExpObjects");
         _go_Exp.transform.SetParent(transform);
         _item_Exp = Resources.Load<GameObject>("FieldObject/Exp/Item_EXP");
-        ExpSprites = Resources.Load("FieldObject/Exp/EXPSprites").GetComponent<EXPSprites>();
+        ExpDatas = Resources.Load("FieldObject/Exp/EXPDatas").GetComponent<EXPDatas>();
         PoolingExpObject(40);
 
         _dropItemList.AddRange(Resources.LoadAll("FieldObject/Item", typeof(ItemObject)));
