@@ -23,6 +23,7 @@ public class StartUIManager : MonoBehaviour
     
     public void StartGame()
     {
+        AudioManager.Instance.PlayStartSFX();
         SceneManager.LoadScene(1);
     }
 
