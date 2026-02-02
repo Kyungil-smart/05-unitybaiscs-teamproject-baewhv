@@ -725,33 +725,33 @@ MonoBehaviour:
     RarityName: Rare
     AppearProbability: 40
     RarityColor: {r: 0, g: 0.24871159, b: 1, a: 0}
-    damageMultiplier: 1.1
-    attackSpeedMultiplier: 1.1
+    damageMultiplier: 1.15
+    attackSpeedMultiplier: 1.15
     projectileAdd: 1
     rangeMultiplier: 1.1
   - Rarity: 1
     RarityName: Epic
     AppearProbability: 30
     RarityColor: {r: 0.85711336, g: 0, b: 1, a: 0}
-    damageMultiplier: 1.2
-    attackSpeedMultiplier: 1.2
+    damageMultiplier: 1.25
+    attackSpeedMultiplier: 1.25
     projectileAdd: 1
     rangeMultiplier: 1.2
   - Rarity: 2
     RarityName: Unique
     AppearProbability: 20
     RarityColor: {r: 1, g: 0.46290466, b: 0, a: 0}
-    damageMultiplier: 1.4
-    attackSpeedMultiplier: 1.4
-    projectileAdd: 2
+    damageMultiplier: 1.35
+    attackSpeedMultiplier: 1.35
+    projectileAdd: 1
     rangeMultiplier: 1.3
   - Rarity: 3
     RarityName: Legendary
     AppearProbability: 10
     RarityColor: {r: 0, g: 1, b: 0.801018, a: 0}
-    damageMultiplier: 1.8
+    damageMultiplier: 1.6
     attackSpeedMultiplier: 1.6
-    projectileAdd: 3
+    projectileAdd: 2
     rangeMultiplier: 1.5
   _maxWeaponDamage: 100000
   _maxWeaponAttackSpeed: 500
@@ -759,7 +759,7 @@ MonoBehaviour:
   _maxRangedWeaponAttackSpeed: 100
   _maxMeleeWeaponAttackSpeed: 10
   cardCount: 3
-  promotionCriteria: 5
+  promotionCriteria: 3
 --- !u!224 &963142913 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3914857605958532776, guid: db63d917bcd83b349a1be38f5d7dd217, type: 3}
@@ -915,11 +915,11 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 2857166452826860582, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
   <Camera>k__BackingField: {fileID: 1255718000294188076, guid: f24744fd33513304392682b77e3e3848, type: 3}
   _spawnPoint: {x: 0, y: 0, z: 0}
-  _wm: {fileID: 1153522716}
-  _cm: {fileID: 890404254}
-  _owm: {fileID: 402132478}
-  _rwm: {fileID: 2055142044}
-  _mwm: {fileID: 22254426}
+  _weaponManager: {fileID: 1153522716}
+  _cardManager: {fileID: 890404254}
+  _orbitalWeaponManager: {fileID: 402132478}
+  _rangedWeaponManager: {fileID: 2055142044}
+  _meleeWeaponManager: {fileID: 22254426}
   _levelUI: {fileID: 2073122949}
 --- !u!4 &1935520513
 Transform:

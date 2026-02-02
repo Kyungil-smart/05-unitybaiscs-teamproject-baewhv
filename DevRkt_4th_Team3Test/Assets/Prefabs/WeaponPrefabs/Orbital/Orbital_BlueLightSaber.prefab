@@ -152,7 +152,7 @@ MonoBehaviour:
   level: 0
   isPromotionWeapon: 1
   isUpgradeFinished: 0
-  weaponDamage: 10
+  weaponDamage: 7
   weaponAttackSpeed: 100
   projectileCount: 1
   weaponRange: 6

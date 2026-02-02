@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,12 +32,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 _spawnPoint;
     private bool isPlayerDead = false;
 
+    
     [Header("Weapon")]
-    [SerializeField] private WeaponManager _wm;
-    [SerializeField] private CardManager _cm;
-    [SerializeField] private OrbitalWeaponManager _owm;
-    [SerializeField] private RangedWeaponManager _rwm;
-    [SerializeField] private MeleeWeaponManager _mwm;
+    [SerializeField] private WeaponManager _weaponManager;
+    [SerializeField] private CardManager _cardManager;
+    [SerializeField] private OrbitalWeaponManager _orbitalWeaponManager;
+    [SerializeField] private RangedWeaponManager _rangedWeaponManager;
+    [SerializeField] private MeleeWeaponManager _meleeWeaponManager;
     
     
     [Header("UI")]
@@ -71,12 +73,12 @@ public class GameManager : MonoBehaviour
         Instantiate(Camera).player = Player.transform;
         if(_levelUI)
             _levelUI._expSystem = Player.GetComponent<ExpSystem>();
-        if(_owm)
-            _owm._player = Player;
-        if (_rwm)
-            _rwm._player = Player;
-        if (_mwm)
-            _mwm._player = Player;
+        if(_orbitalWeaponManager)
+            _orbitalWeaponManager._player = Player;
+        if (_rangedWeaponManager)
+            _rangedWeaponManager._player = Player;
+        if (_meleeWeaponManager)
+            _meleeWeaponManager._player = Player;
         PlayerStats ps = Player.GetComponent<PlayerStats>();
         if(ps)
             ps.OnPlayerDeath += OnPlayerDeath;
@@ -96,11 +98,11 @@ public class GameManager : MonoBehaviour
 
     public void SetGameOver()
     {
-        Destroy(_cm.gameObject);
-        Destroy(_wm.gameObject);
-        Destroy(_owm.gameObject);
-        Destroy(_rwm.gameObject);
-        Destroy(_mwm.gameObject);
+        Destroy(_cardManager.gameObject);
+        Destroy(_weaponManager.gameObject);
+        Destroy(_orbitalWeaponManager.gameObject);
+        Destroy(_rangedWeaponManager.gameObject);
+        Destroy(_meleeWeaponManager.gameObject);
         Destroy(FieldObjectManager.Instance.gameObject);
         Destroy(FieldManager.Instance.gameObject);
         
