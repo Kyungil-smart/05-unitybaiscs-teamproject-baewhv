@@ -31,7 +31,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     private bool _isDead = false;
 
     // 사망 시 캐릭터 색상 변경용
-    private SpriteRenderer _renderer;   // 캐릭터 색상 변경용
+    private SpriteRenderer _renderer;
 
     // 죽음 이벤트를 선언
     public event Action OnPlayerDeath;
@@ -187,7 +187,6 @@ public class PlayerStats : MonoBehaviour, IDamagable
         {
             if (_renderer != null)
             {
-                // 토글하면서 색상 변경
                 _renderer.color = toggle ? Color.cyan : _originalColor;
                 toggle = !toggle;
             }
@@ -195,14 +194,11 @@ public class PlayerStats : MonoBehaviour, IDamagable
             yield return new WaitForSecondsRealtime(interval);
             timer += interval;
         }
-
-        // 끝나면 원래 색으로 복원
+        
         if (_renderer != null)
             _renderer.color = _originalColor;
 
         _isInvincible = false;
-
-
     }
     
     // 캐릭터 죽음 처리
