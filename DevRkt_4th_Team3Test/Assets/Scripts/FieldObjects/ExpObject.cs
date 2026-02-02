@@ -7,11 +7,22 @@ public class ExpObject : ItemObject
 {
     [SerializeField] private int _expValue;
 
+    public bool isAbsolve { get; private set; } = false;
+
+
+
     private void Awake()
     {
         gameObject.SetActive(false);
     }
-    
+
+    private void FixedUpdate()
+    {
+        if (isAbsolve)
+        {
+            transform.position = Vector3.Lerp(transform.position, GameManager.Instance.Player.transform.position,1.5f * Time.fixedDeltaTime); }
+    }
+
     /// <summary>
     /// I / 상호작용을 통한 경험치 획득
     /// </summary>
@@ -24,6 +35,11 @@ public class ExpObject : ItemObject
         Debug.Log("경험치 획득");
         FieldObjectManager.Instance.RemoveExpObject(this);
         gameObject.SetActive(false);
+    }
+
+    public void StartAbsolve()
+    {
+        isAbsolve = true;
     }
 
     public void SetExpObject(EXPType type, Vector3 position)
@@ -50,5 +66,6 @@ public class ExpObject : ItemObject
         }
         gameObject.transform.position = position;
         gameObject.SetActive(true);
+        isAbsolve = false;
     }
 }

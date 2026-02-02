@@ -74,6 +74,22 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
         if (_compressExpObject == obj) _compressExpObject = null; //모아둔거 먹으면 떼놓기.
         _expObjectActiveCount--;
     }
+    
+    
+    /// <summary>
+    /// 경험치 흡수 시작.
+    /// 경험치 오브젝트 풀을 순회하며 활성화되어있고 흡수 체크가 되어있지 않으면 모두 흡수 시작.
+    /// </summary>
+    public void AbsolvingAllExpObject()
+    {
+        foreach (ExpObject obj in _expObjects)
+        {
+            if (obj.gameObject.activeSelf && !obj.isAbsolve)
+            {
+                obj.StartAbsolve();
+            }
+        }
+    }
 
     /// <summary>
     /// 필드 오브젝트 추가
@@ -86,7 +102,9 @@ public class FieldObjectManager : Singleton<FieldObjectManager>
     {
         if (_objs.Count >= _maxObjectCount)
             RemoveDrobObject(_objs.First.Value);
-        int RandomObject = Random.Range(0, _dropItemList.Count - 1);
+        int RandomObject = Random.Range(0, _dropItemList.Count);
+        
+        Debug.Log($"dropItemList = {_dropItemList.Count} / Random {RandomObject}");
         FieldObject makedObject = Instantiate(_dropItemList[RandomObject], position, new Quaternion(), transform);
         _objs.AddLast(makedObject);
         return makedObject;
