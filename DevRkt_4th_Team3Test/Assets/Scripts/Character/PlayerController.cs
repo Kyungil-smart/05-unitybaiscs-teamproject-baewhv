@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
         _isDead = true;
         // 애니메이션 정지
         _anim.SetBool("isRunning", false); 
+        _rigidbody.velocity = Vector3.zero;
     }
 
     public void Update()
