@@ -62,6 +62,27 @@ public class LevelUpPopupUI : MonoBehaviour
     {
         // 카드 적용
         _cardManager.CardApply(card);
+        
+        // 인벤토리 업데이트
+        InventoryUI inventory = Object.FindAnyObjectByType<InventoryUI>();
+        if (inventory != null)
+        {
+            // 승급인 경우
+            // 이전 무기를 인자로 넘겨서 교체
+            if (card.isPromotion)
+            {
+                if (card.weapon != null && card.weapon.promotionPrefab != null)
+                {
+                    WeaponBase nextWeapon = card.weapon.promotionPrefab.GetComponent<WeaponBase>();
+                    inventory.AddWeaponSlot(nextWeapon, card.weapon); 
+                }
+            }
+            // 새로 얻은 무기일 경우 추가
+            else if (card.isNew)
+            {
+                inventory.AddWeaponSlot(card.weapon);
+            }
+        }
     
         // 팝업 닫기
         ClosePopup();

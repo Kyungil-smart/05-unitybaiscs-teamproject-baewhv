@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class FieldManager : Singleton<FieldManager>
 {
     [SerializeField] private GameObject _fieldTile;
-    [SerializeField] private List<GameObject> _designedTile = new List<GameObject>();
+    [SerializeField] private List<TileData> _designedTile = new List<TileData>();
 
     private List<List<FieldTile>> _tiles = new List<List<FieldTile>>();
 
@@ -49,11 +50,8 @@ public class FieldManager : Singleton<FieldManager>
     {
         if (!_fieldTile)
             _fieldTile = Resources.Load<GameObject>("Tile/fieldTile");
-        if (_designedTile.Count == 0)
-        {
-            _designedTile.Add(Resources.Load<GameObject>("Tile/TileA"));
-            _designedTile.Add(Resources.Load<GameObject>("Tile/TileB"));
-        }
+        
+        _designedTile.AddRange(Resources.LoadAll("Tile", typeof(TileData)));
 
         InitMap();
     }
@@ -122,7 +120,7 @@ public class FieldManager : Singleton<FieldManager>
                 }
                 else if (!_tiles[posY][posX].isSetTile) //없을 때 생성
                 {
-                    _tiles[posY][posX].Init(_designedTile[Random.Range(0, _designedTile.Count)]);
+                    _tiles[posY][posX].Init(_designedTile[Random.Range(0, _designedTile.Count)].gameObject);
                     _tiles[posY][posX].transform.position =
                         new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
                     _tiles[posY][posX].EnableFieldTile();

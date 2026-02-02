@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 2963239398653995079}
   - component: {fileID: 2075802345282082875}
   m_Layer: 0
-  m_Name: Explosion2
+  m_Name: UltimateExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcedcb47cb812ca4db202aac8488cbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponName: Explosion2
+  _weaponName: Ultimate Explosion
   isActive: 0
   level: 0
   isPromotionWeapon: 1
