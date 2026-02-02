@@ -34,7 +34,7 @@ public class EndingUIManager : MonoBehaviour
     /// </summary>
     public void MoveStartScene()
     {
-        IsClear = false;
+        Reset();
         SceneManager.LoadScene(0);
     }
     
@@ -43,6 +43,14 @@ public class EndingUIManager : MonoBehaviour
     /// </summary>
     public void ReplayGame()
     {
+        Reset();
+        //씬 초기화 다시 실행
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
+    }
+
+    private void Reset()
+    {
         //게임 상태 리셋
         IsClear = false;
         EndTime = "00:00";
@@ -50,9 +58,6 @@ public class EndingUIManager : MonoBehaviour
         MonsterManager.ResetCount();
         MonsterState.OnMonsterDie = null;
         StageUI.KillCount = 0;
-        //씬 초기화 다시 실행
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(1);
     }
     
     /// <summary>

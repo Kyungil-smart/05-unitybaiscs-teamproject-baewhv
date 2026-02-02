@@ -683,8 +683,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InfoPopupUI, Assembly-CSharp
+      - m_Target: {fileID: 396352077907388052}
+        m_TargetAssemblyTypeName: SettingPopupUI, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
         m_Arguments:
