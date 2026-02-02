@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3749029874602542567}
   - component: {fileID: -2309874181842203919}
   m_Layer: 0
-  m_Name: EXPSprites
+  m_Name: EXPDatas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,3 +47,6 @@ MonoBehaviour:
   SmallEXPSprite: {fileID: 501888312, guid: 93882337e1d078541960569c2ff2d2d9, type: 3}
   MediumEXPSprite: {fileID: 1229118914, guid: f250065a1c5db1144a18c38db2ea39c2, type: 3}
   LargeEXPSprite: {fileID: -1200809338, guid: f1388c65c177d7b4fa4dba776b8ea45e, type: 3}
+  SmallExpValue: 5
+  MediumExpValue: 50
+  LargeExpValue: 200
