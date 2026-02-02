@@ -31,7 +31,7 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     void Start() {
-        if (_bgmClips.Count > 0)
+        if (_bgmClips != null && _bgmClips.Count > 0 && _bgmSource != null)
         {
             PlayBGM(_currentIndex);
             StartCoroutine(BGMSequence());
@@ -43,7 +43,7 @@ public class AudioManager : Singleton<AudioManager>
 
         _currentIndex = index;
         _bgmSource.clip = _bgmClips[_currentIndex];
-        _bgmSource.loop = false; // ✅ 번갈아 나오게 하려면 loop 끄기
+        _bgmSource.loop = false; 
         _bgmSource.Play();
 
     }

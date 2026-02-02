@@ -187,11 +187,11 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 0}
   <Camera>k__BackingField: {fileID: 0}
   _spawnPoint: {x: 0, y: 0, z: 0}
-  _wm: {fileID: 0}
-  _cm: {fileID: 0}
-  _owm: {fileID: 0}
-  _rwm: {fileID: 0}
-  _mwm: {fileID: 0}
+  _weaponManager: {fileID: 0}
+  _cardManager: {fileID: 0}
+  _orbitalWeaponManager: {fileID: 0}
+  _rangedWeaponManager: {fileID: 0}
+  _meleeWeaponManager: {fileID: 0}
   _levelUI: {fileID: 0}
 --- !u!4 &132594008
 Transform:
@@ -1052,6 +1052,10 @@ PrefabInstance:
     - target: {fileID: 6808369929902117646, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280476103289850024, guid: 1edd60e1c671c8447a5831dc0571690a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -18,7 +18,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _pickupRange = 0.7f;
     [SerializeField] private AudioClip _deathSound; 
     [SerializeField] private AudioClip[] _hitSounds;
-    [SerializeField]private TextMeshProUGUI _healText;
+    [SerializeField] private TextMeshProUGUI _healText;
     
     public float PickupRange => _pickupRange;
     private SphereCollider _pickupCollider;
@@ -27,10 +27,11 @@ public class PlayerStats : MonoBehaviour, IDamagable
     private Color _originalColor;
     private AudioSource _audioSource;
     private int _hitsoundIndex = 0;
+    private bool _isInvincible = false;
     private bool _isDead = false;
 
     // 사망 시 캐릭터 색상 변경용
-    private Renderer _renderer;   // 캐릭터 색상 변경용
+    private SpriteRenderer _renderer;   // 캐릭터 색상 변경용
 
     // 죽음 이벤트를 선언
     public event Action OnPlayerDeath;
@@ -68,7 +69,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
         _audioSource = GetComponent<AudioSource>();
         
         if (_renderer != null)
-            _originalColor = _renderer.material.color;
+            _originalColor = _renderer.color;
         
         _pickupCollider = GetComponentInChildren<SphereCollider>();
         if (_pickupCollider != null)
@@ -76,29 +77,6 @@ public class PlayerStats : MonoBehaviour, IDamagable
             _pickupCollider.isTrigger = true;
             _pickupCollider.radius = _pickupRange;
         }
-
-    }
-
-    // 작동 확인용 (추후 삭제)
-    public void Update()
-    {
-        // 테스트용: 데미지 받기
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(50);
-        }
-        // 테스트용: 힐
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Heal(50);
-        }
-        // 테스트용: 레벨업
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            IncreaseStats();
-            Debug.Log($"Level: {_level}, Attack: {_attackDamage}, Defense: {_defense}, MoveSpeed: {_moveSpeed}");
-        }
-        
     }
 
     // 레벨업에 따른 스탯 증가
@@ -117,6 +95,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     public void TakeDamage(int damage)
     {
         if (_isDead) return;
+        if (_isInvincible) return;
         
         int lastDamage = Mathf.Max(damage - _defense, 1);
         _currentHP -= lastDamage;
@@ -150,9 +129,9 @@ public class PlayerStats : MonoBehaviour, IDamagable
             _hitsoundIndex = (_hitsoundIndex + 1) % _hitSounds.Length; 
         }
 
-        _renderer.material.color = Color.red;
+        _renderer.color = Color.red;
         yield return new WaitForSeconds(0.1f); 
-        _renderer.material.color = _originalColor; 
+        _renderer.color = _originalColor; 
     }
 
     // 캐릭터 힐 받기
@@ -181,7 +160,6 @@ public class PlayerStats : MonoBehaviour, IDamagable
         if (_healText != null)
             _healText.gameObject.SetActive(false);
     }
-
     
     // 캐릭터 경험치 획득
     private void OnTriggerEnter(Collider other)
@@ -191,7 +169,42 @@ public class PlayerStats : MonoBehaviour, IDamagable
             (other.GetComponent<ItemObject>() as IInteractable)?.Interact(this);
         }
     }
+    public void StartLevelUpEffect()
+    {
+        StartCoroutine(LevelUpRoutine());
+    }
 
+    private IEnumerator LevelUpRoutine()
+    {
+        _isInvincible = true;
+
+        float duration = 2f;         
+        float interval = 0.2f;        
+        float timer = 0f;
+        bool toggle = false;
+
+        while (timer < duration)
+        {
+            if (_renderer != null)
+            {
+                // 토글하면서 색상 변경
+                _renderer.color = toggle ? Color.cyan : _originalColor;
+                toggle = !toggle;
+            }
+
+            yield return new WaitForSecondsRealtime(interval);
+            timer += interval;
+        }
+
+        // 끝나면 원래 색으로 복원
+        if (_renderer != null)
+            _renderer.color = _originalColor;
+
+        _isInvincible = false;
+
+
+    }
+    
     // 캐릭터 죽음 처리
     private void Death()
     {
@@ -202,7 +215,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
         // 캐릭터 색상 회색으로 변경
         if (_renderer != null)
         {
-            _renderer.material.color = Color.black;
+            _renderer.color = Color.black;
         }
 
         // 죽음 이벤트 알림 -> 구독 필요

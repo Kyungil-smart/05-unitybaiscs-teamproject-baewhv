@@ -23,14 +23,24 @@ public class ExpSystem : MonoBehaviour
     {
         _playerStats = GetComponent<PlayerStats>();
     }
-
-    // 경험치 들어오는지 확인(테스트용 테스트 후 삭제)
-    public void Update()
+    void Update()
     {
+        // 테스트용 강제 레벨업 키 (예: L 키)
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("강제 레벨업 키 입력됨!");
+            LevelUp();
+        }
 
+        // 경험치 강제 획득 키 (예: E 키)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("강제 경험치 획득!");
+            GainExp(50); // 50 경험치 추가
+        }
     }
 
-    
+
     // 경험치 획득 _ 몬스터가 가진 경험치를 받아와야함
     public void GainExp(int exp)
     {
@@ -50,10 +60,11 @@ public class ExpSystem : MonoBehaviour
         CurrentExp -= ExpToNextLevel;
         ExpToNextLevel = Mathf.RoundToInt(ExpToNextLevel * 1.4f);
         _playerStats.IncreaseStats();
+        _playerStats.StartLevelUpEffect();
         LevelUpText();
-        // 테스트 후 삭제
+        // 테스트 용 콘솔 출력
         Debug.Log($"Level {Level} Next EXP: {ExpToNextLevel}");
-        
+
         // 레벨업 이벤트 발생 알림
         // expSystem.OnLevelUp += *****; 으로 이벤트 구독하기
         OnLevelUp?.Invoke();
