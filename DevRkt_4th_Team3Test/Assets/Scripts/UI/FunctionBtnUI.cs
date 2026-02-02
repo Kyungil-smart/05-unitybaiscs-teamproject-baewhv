@@ -11,6 +11,9 @@ public class FunctionBtnManager : MonoBehaviour
     [SerializeField] private GameObject _settingPopup;
     private GameObject _currentSettingPopup;
     private SettingPopupUI  _settingPopupUI;
+    [SerializeField] private GameObject _exitPopup;
+    private GameObject _currentExitPopup;
+    private ExitPopupUI  _exitPopupUI;
     
     [Header("Alert")]
     [SerializeField] private GameObject _pauseAlert;
@@ -32,6 +35,10 @@ public class FunctionBtnManager : MonoBehaviour
         _currentSettingPopup = CreatePopup(_settingPopup);
         if (_currentSettingPopup != null)
             _settingPopupUI = _currentSettingPopup.GetComponent<SettingPopupUI>();
+        
+        _currentExitPopup = CreatePopup(_exitPopup);
+        if (_currentExitPopup != null)
+            _exitPopupUI = _currentExitPopup.GetComponent<ExitPopupUI>();
         
         //버튼 이미지 컴포넌트
         _btnImage = GetComponent<Image>();
@@ -104,10 +111,10 @@ public class FunctionBtnManager : MonoBehaviour
     }
     
     /// <summary>
-    /// 게임 종료 기능
+    /// 게임 종료 팝업 열기
     /// </summary>
     public void OnClickExit()
     {
-        GameManager.Instance.SetGameOver();
+        _exitPopupUI.Open();
     }
 }
