@@ -120,7 +120,7 @@ public class CardManager : MonoBehaviour
 
             //무기를 뽑았을때 만약 무기레벨 + 1 이 promotionCriteria이상이면 isEvolution = true;
             //TODO UI에서 card의 isPromotion이 true가 되면 cardData[i].weapon.upgradeWeapon._weaponName으로 cardData[i].weapon._weaponName를 바꾸는 승진카드를 보여주시면 좋을것같습니다.
-            if (cardData[i].weapon.level + 1 >= promotionCriteria)
+            if (cardData[i].weapon.level + 1 >= promotionCriteria && cardData[i].weapon.promotionPrefab != null)
             {
                 cardData[i].isPromotion = true;
             }
@@ -341,8 +341,8 @@ public class CardManager : MonoBehaviour
                 WeaponManager.WeaponInstance.weapons[i].isActive = true; //승진 무기 true
                 
                 //기존무기의 공격력 * 1.5, 공격속도 * 1.2, 투사체수 로 세팅함.
-                WeaponManager.WeaponInstance.weapons[i].weaponDamage = weapon.weaponDamage * 1.8f;
-                WeaponManager.WeaponInstance.weapons[i].weaponAttackSpeed = weapon.weaponAttackSpeed * 1.4f;
+                WeaponManager.WeaponInstance.weapons[i].weaponDamage = weapon.weaponDamage * 1.6f;
+                WeaponManager.WeaponInstance.weapons[i].weaponAttackSpeed = weapon.weaponAttackSpeed * 1.2f;
                 WeaponManager.WeaponInstance.weapons[i].projectileCount = weapon.projectileCount;
                 //rangedWeapon은 그냥 해도 되는데 orbitalWeapon은 clearweapon한뒤에 spawnweapon도 함.
                 if (weapon is OrbitalWeapon)
