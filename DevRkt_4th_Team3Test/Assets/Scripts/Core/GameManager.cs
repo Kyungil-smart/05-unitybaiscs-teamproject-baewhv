@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         SetGameOver();
     }
 
-    public void SetGameOver()
+    public void SetGameOver(int SceneNum = 2)
     {
         Destroy(_cardManager.gameObject);
         Destroy(_weaponManager.gameObject);
@@ -107,6 +107,6 @@ public class GameManager : MonoBehaviour
         Destroy(FieldManager.Instance.gameObject);
         
         Destroy(gameObject);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(SceneNum);
     }
 }
