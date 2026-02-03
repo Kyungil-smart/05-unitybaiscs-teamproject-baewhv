@@ -57,7 +57,8 @@ public class MonsterState : MonoBehaviour
         Canvas myCanvas = GetComponentInChildren<Canvas>();
         if (myCanvas != null)
         {
-            MonsterDamageText.ShowDamageText(_damageText, myCanvas.transform, Mathf.RoundToInt(damage));
+            MonsterDamageText.ShowDamageText(
+                _damageText, myCanvas.transform, Mathf.RoundToInt(damage));
         }
         
         //데미지 이펙트 표시
