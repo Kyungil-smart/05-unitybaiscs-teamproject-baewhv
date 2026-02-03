@@ -23,9 +23,27 @@ public class SettingPopupUI : MonoBehaviour, IPopup
 
     void Start()
     {
+        // 슬라이더 UI에서 미리듣기
+        _bgmSlider.onValueChanged.AddListener(val => {
+            if (AudioManager.Instance != null) 
+                AudioManager.Instance.SetBGMVolume(val);
+            if (_bgmText != null) _bgmText.text = Mathf.RoundToInt(val * 100).ToString() + "%";
+            PlayerPrefs.SetFloat(BGM_SAVE_KEY, val);
+        });
+        
+        _sfxSlider.onValueChanged.AddListener(val => {
+            if (AudioManager.Instance != null) 
+                AudioManager.Instance.SetSFXVolume(val);
+            if (_sfxText != null) _sfxText.text = Mathf.RoundToInt(val * 100).ToString() + "%";
+            PlayerPrefs.SetFloat(SFX_SAVE_KEY, val);
+        });
+    }
+    
+    private void OnEnable()
+    {
         // 저장된 설정을 불러오기
-        float currentBGM = PlayerPrefs.GetFloat("BGMVolume", 0.75f);
-        float currentSFX = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+        float currentBGM = PlayerPrefs.GetFloat(BGM_SAVE_KEY, 0.75f);
+        float currentSFX = PlayerPrefs.GetFloat(SFX_SAVE_KEY, 0.75f);
 
         _bgmSlider.value = currentBGM;
         _sfxSlider.value = currentSFX;
@@ -33,25 +51,6 @@ public class SettingPopupUI : MonoBehaviour, IPopup
         //텍스트 정수로만 표시
         if (_bgmText != null) _bgmText.text = Mathf.RoundToInt(currentBGM * 100).ToString() + "%";
         if (_sfxText != null) _sfxText.text = Mathf.RoundToInt(currentSFX * 100).ToString() + "%";
-        
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.SetBGMVolume(currentBGM);
-            AudioManager.Instance.SetSFXVolume(currentSFX);
-        }
-        
-        // 슬라이더 UI에서 미리듣기
-        _bgmSlider.onValueChanged.AddListener(val => {
-            if (AudioManager.Instance != null) 
-                AudioManager.Instance.SetBGMVolume(val);
-            if (_bgmText != null) _bgmText.text = Mathf.RoundToInt(val * 100).ToString() + "%";
-        });
-        
-        _sfxSlider.onValueChanged.AddListener(val => {
-            if (AudioManager.Instance != null) 
-                AudioManager.Instance.SetSFXVolume(val);
-            if (_sfxText != null) _sfxText.text = Mathf.RoundToInt(val * 100).ToString() + "%";
-        });
     }
 
     /// <summary>
@@ -68,6 +67,7 @@ public class SettingPopupUI : MonoBehaviour, IPopup
     /// </summary>
     public void Close()
     {
+        PlayerPrefs.Save();
         Time.timeScale = 1f;
         gameObject.SetActive(false);
     }
