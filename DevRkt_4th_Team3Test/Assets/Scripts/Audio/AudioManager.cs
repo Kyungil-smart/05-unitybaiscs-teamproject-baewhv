@@ -36,6 +36,13 @@ public class AudioManager : Singleton<AudioManager>
             PlayBGM(_currentIndex);
             StartCoroutine(BGMSequence());
         }
+        if (_bgmClips != null && _bgmClips.Count > 0 && _bgmSource != null)
+        {
+            PlayBGM(_currentIndex);
+            StartCoroutine(BGMSequence());
+            SetBGMVolume(PlayerPrefs.GetFloat(SettingPopupUI.BGM_SAVE_KEY, 0.75f));
+            SetSFXVolume(PlayerPrefs.GetFloat(SettingPopupUI.SFX_SAVE_KEY, 0.75f));
+        }
     }
 
     public void PlayBGM(int index) {

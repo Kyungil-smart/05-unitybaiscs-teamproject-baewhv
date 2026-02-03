@@ -18,8 +18,8 @@ public class SettingPopupUI : MonoBehaviour, IPopup
     [SerializeField] private TextMeshProUGUI _sfxText;
     
     // PlayerPrefs에 저장될 키 이름
-    private const string BGM_SAVE_KEY = "BGMVolume";
-    private const string SFX_SAVE_KEY = "SFXVolume";
+    public const string BGM_SAVE_KEY = "BGMVolume";
+    public const string SFX_SAVE_KEY = "SFXVolume";
 
     void Start()
     {
