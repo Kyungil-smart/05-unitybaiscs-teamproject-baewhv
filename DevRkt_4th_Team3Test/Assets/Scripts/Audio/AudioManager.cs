@@ -86,10 +86,24 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     public void SetBGMVolume(float value) {
-        _mixer.SetFloat("BGMVolume", Mathf.Log10(value) * 20);
+        if (value <= 0f)
+        {
+            _mixer.SetFloat("BGMVolume", -80f); 
+        }
+        else
+        {
+            _mixer.SetFloat("BGMVolume", Mathf.Log10(value) * 20);
+        }
     }
 
     public void SetSFXVolume(float value) {
-        _mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        if (value <= 0f)
+        {
+            _mixer.SetFloat("SFXVolume", -80f); 
+        }
+        else
+        {
+            _mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        }
     }
 }
