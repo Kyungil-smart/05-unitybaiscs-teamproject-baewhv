@@ -1,49 +1,137 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class FieldManager : MonoBehaviour
+public class FieldManager : Singleton<FieldManager>
 {
-    [SerializeField]private GameObject _tile;
-    private List<GameObject> _tiles = new List<GameObject>();
-    private const int _mapWidth = 5;
-    private const int _mapHeight = 5;
+    [SerializeField] private GameObject _fieldTile;
+    [SerializeField] private List<TileData> _designedTile = new List<TileData>();
 
+    private List<List<FieldTile>> _tiles = new List<List<FieldTile>>();
+
+    //루프시킬 맵의 최대 크기
+    [SerializeField] private Vector2Int _preLoadMapSize = new Vector2Int(11, 11);
+
+    //활성화시킬 맵의 크기
+    [SerializeField] private Vector2Int _mapSight = new Vector2Int(2, 2);
+
+    private readonly (int x, int z) tileSize = (16, 16);
     private static FieldManager _instance;
-    
-    public static FieldManager Instance
+
+    private Collider _currentCollider;
+    private Vector2Int _playerPosition;
+    private Vector2Int _playerTilePosition;
+
+    public Vector2Int PlayerTilePosition
     {
-        get
+        get => _playerTilePosition;
+        set
         {
-            if (!_instance)
-            {
-                _instance = FindObjectOfType<FieldManager>();
-                //DontDestroyOnLoad(_instance.gameObject);
-            }
-            return _instance;
+            if (_playerTilePosition == value) return;
+            Vector2Int temp = value - _playerTilePosition;
+            if (temp.x == _preLoadMapSize.x - 1)
+                temp.x = -1;
+            else if (temp.x == -(_preLoadMapSize.x - 1))
+                temp.x = 1;
+            if (temp.y == _preLoadMapSize.y - 1)
+                temp.y = -1;
+            else if (temp.y == -(_preLoadMapSize.y - 1))
+                temp.y = 1;
+            _playerPosition += temp;
+            LoadTile(value);
+            _playerTilePosition = value;
         }
+    }
+
+    public void Awake()
+    {
+        if (!_fieldTile)
+            _fieldTile = Resources.Load<GameObject>("Tile/fieldTile");
+        
+        _designedTile.AddRange(Resources.LoadAll("Tile", typeof(TileData)));
+
+        InitMap();
     }
 
     private void Start()
     {
-        CreateMap();
+        PlayerTilePosition = Vector2Int.zero;
+        LoadTile(PlayerTilePosition);
     }
 
-    private void CreateMap()
+    private void FixedUpdate()
     {
-        //-32 -16 0 16 32
-        (int x, int z) leftTop = (-32,-32); 
-        for (int y = 0; y < _mapHeight; y++)
+        Ray r = new Ray(GameManager.Instance.Player.transform.position, Vector3.down * 100);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, 100.0f, LayerMask.GetMask("Tile")))
         {
-            for (int x = 0; x < _mapWidth; x++)
+            if(_currentCollider != hit.collider)
             {
-                GameObject tile = Instantiate(_tile, new Vector3(leftTop.x + 16 * x, 0, leftTop.z + 16 * y), new Quaternion());
-                tile.transform.SetParent(gameObject.transform);
-                _tiles.Add(tile);
+                _currentCollider = hit.collider;
+                PlayerTilePosition = hit.collider.GetComponent<FieldTile>().TilePosition;
             }
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(GameManager.Instance.Player.transform.position, Vector3.down * 100);
+    }
 
+
+    //맵 생성
+    private void InitMap()
+    {
+        for (int y = 0; y < _preLoadMapSize.y; y++)
+        {
+            _tiles.Add(new List<FieldTile>());
+            for (int x = 0; x < _preLoadMapSize.x; x++)
+            {
+                FieldTile tile = Instantiate(_fieldTile).GetComponent<FieldTile>();
+                tile.gameObject.name = $"tile{x}_{y}";
+                tile.transform.SetParent(gameObject.transform);
+                tile.TilePosition = new Vector2Int(x, y);
+                _tiles[y].Add(tile);
+            }
+        }
+    }
+
+    // 캐릭터가 움직인 위치를 기준으로 _mapSight만큼 활성화.
+    // _mapSight에 해당하는 타일에 디자인 타일이 등록되지 않았다면 생성 및 초기화.
+    private void LoadTile(Vector2Int tilePos) //0 0 
+    {
+        for (int y = 0; y <= _mapSight.y * 2 + 2; y++)
+        {
+            for (int x = 0; x <= _mapSight.x * 2 + 2; x++)
+            {
+                int _x = tilePos.x - _mapSight.x - 1 + x;
+                int _y = tilePos.y - _mapSight.y - 1 + y;
+                int playerPos_X = _playerPosition.x - _mapSight.x - 1 + x;
+                int playerPos_Y = _playerPosition.y - _mapSight.y - 1 + y;
+                int posX = (_x + _preLoadMapSize.x) % _preLoadMapSize.x;
+                int posY = (_y + _preLoadMapSize.y) % _preLoadMapSize.y;
+                if (x == 0 || y == 0 || x == _mapSight.x * 2 + 2 || y == _mapSight.y * 2 + 2) //테두리 제거
+                {
+                    _tiles[posY][posX].DisableFieldTile();
+                }
+                else if (!_tiles[posY][posX].isSetTile) //없을 때 생성
+                {
+                    _tiles[posY][posX].Init(_designedTile[Random.Range(0, _designedTile.Count)].gameObject);
+                    _tiles[posY][posX].transform.position =
+                        new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
+                    _tiles[posY][posX].EnableFieldTile();
+                }
+                else if (_tiles[posY][posX].TileDesign.activeSelf == false) //꺼져 있을 때 다시 켜기
+                {
+                    _tiles[posY][posX].transform.position =
+                        new Vector3(playerPos_X * tileSize.x, 0, playerPos_Y * tileSize.z);
+                    _tiles[posY][posX].EnableFieldTile();
+                }
+            }
+        }
+    }
 }

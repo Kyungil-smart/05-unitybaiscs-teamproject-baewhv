@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class OrbitalWeapon : WeaponBase, IWeaponAttack
+public class OrbitalWeapon : WeaponBase
 {
-    [SerializeField] private GameObject _player;
     private void Start()
     {
         
@@ -18,29 +17,32 @@ public class OrbitalWeapon : WeaponBase, IWeaponAttack
     private void OnTriggerEnter(Collider collider)
     {
         //충돌한 물체가 enemy이면 공격
-        if (!collider.CompareTag("WeaponEnemy"))
+        if (collider.CompareTag("Enemy"))
         {
-            return;
-        } 
+            MonsterState monster = collider.GetComponent<MonsterState>();
+            // 컴포넌트가 없으면 리턴
+            if (monster == null) return;
+            monster.TakeDamage(weaponDamage);
             
+            return;
+        }
+
+        //Breakable물체이면 공격.
+        if (collider.CompareTag("Breakable"))
+        {
+            BreakableObject breakable = collider.GetComponent<BreakableObject>();
+
+            if (breakable == null) return;
+            breakable.TakeDamage((int)weaponDamage);
+
+            return;
+        }
         
-        WeaponMonster monster = collider.GetComponent<WeaponMonster>();
-        // 컴포넌트가 없으면 리턴
-        if (monster == null) return;
-        
-        // 공격 실행
-        WeaponAttack(monster);
+
     }
     
     
     
-    /// <summary>
-    /// 무기로 몬스터 공격.
-    /// </summary>
-    /// <param name="monster"></param>
-    public void WeaponAttack(WeaponMonster monster)
-    {
-        monster.HP -= weaponDamage;
-        Debug.Log($"HP : {monster.HP}");
-    }
+    
+    
 }

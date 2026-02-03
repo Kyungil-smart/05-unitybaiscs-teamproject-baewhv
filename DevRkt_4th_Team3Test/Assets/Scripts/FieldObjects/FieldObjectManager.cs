@@ -1,0 +1,133 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class FieldObjectManager : Singleton<FieldObjectManager>
+{
+    private LinkedList<FieldObject> _objs = new LinkedList<FieldObject>();
+    [SerializeField]private List<FieldObject> _dropItemList = new List<FieldObject>();
+    private int _maxObjectCount = 10;
+
+
+    private List<ExpObject> _expObjects = new List<ExpObject>();
+    private int _maxExpObject = 100;
+    private int _expObjectActiveCount = 0;
+    private ExpObject _compressExpObject = null;
+
+    //EXP풀링 격리용 게임오브젝트
+    private GameObject _go_Exp;
+
+    //경험치 텍스쳐용 이미지모음
+    public EXPDatas ExpDatas { get; private set; }
+
+    public GameObject _item_Exp { get; private set; }
+
+    private void Awake()
+    {
+        _go_Exp = new GameObject("ExpObjects");
+        _go_Exp.transform.SetParent(transform);
+        _item_Exp = Resources.Load<GameObject>("FieldObject/Exp/Item_EXP");
+        ExpDatas = Resources.Load("FieldObject/Exp/EXPDatas").GetComponent<EXPDatas>();
+        PoolingExpObject(40);
+
+        _dropItemList.AddRange(Resources.LoadAll("FieldObject/Item", typeof(ItemObject)));
+    }
+
+    //오브젝트 풀링용
+    private void PoolingExpObject(int count)
+    {
+        if (_expObjects.Count >= _maxExpObject) return; //최대면 더 늘리지 않음.
+        if (_expObjects.Count + count > _maxExpObject) count = _expObjects.Count + count - _maxObjectCount;
+        for (int i = 0; i < count; i++)
+        {
+            _expObjects.Add(Instantiate(_item_Exp, _go_Exp.transform).GetComponent<ExpObject>());
+        }
+    }
+
+    /// <summary>
+    /// 경험치 오브젝트 생성
+    /// </summary>
+    /// <param name="type">소형, 중형, 대형</param>
+    /// <param name="position">생성 위치</param>
+    public void MakeExpObject(EXPType type, Vector3 position)
+    {
+        if (_expObjectActiveCount >= _maxExpObject)
+        {
+            _expObjects[0].CompressExp(type);
+            return; //Todo 빨간거에 합치기
+        }
+        if (_expObjectActiveCount >= _expObjects.Count) PoolingExpObject(10);
+        foreach (ExpObject obj in _expObjects)
+        {
+            if (!obj.gameObject.activeSelf)
+            {
+                obj.SetExpObject(type, position);
+                //빨강일 경우, 빨강이 등록되어있는데 꺼져있는 경우,
+                break;
+            }
+        }
+
+        _expObjectActiveCount++;
+    }
+
+    public void RemoveExpObject(ExpObject obj)
+    {
+        if (_compressExpObject == obj) _compressExpObject = null; //모아둔거 먹으면 떼놓기.
+        _expObjectActiveCount--;
+    }
+    
+    
+    /// <summary>
+    /// 경험치 흡수 시작.
+    /// 경험치 오브젝트 풀을 순회하며 활성화되어있고 흡수 체크가 되어있지 않으면 모두 흡수 시작.
+    /// </summary>
+    public void AbsolvingAllExpObject()
+    {
+        foreach (ExpObject obj in _expObjects)
+        {
+            if (obj.gameObject.activeSelf && !obj.isAbsolve)
+            {
+                obj.StartAbsolve();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 필드 오브젝트 추가
+    /// 지정된 값(_maxObjectCount)을 넘기면 먼저 생성된 오브젝트 제거.
+    /// </summary>
+    /// <param name="obj">복제할 오브젝트 원본</param>
+    /// <param name="position">생성할 위치</param>
+    /// <returns></returns>
+    public FieldObject SetDropObject(Vector3 position)
+    {
+        if (_objs.Count >= _maxObjectCount)
+            RemoveDrobObject(_objs.First.Value);
+        int RandomObject = Random.Range(0, _dropItemList.Count);
+        
+        Debug.Log($"dropItemList = {_dropItemList.Count} / Random {RandomObject}");
+        FieldObject makedObject = Instantiate(_dropItemList[RandomObject], position, new Quaternion(), transform);
+        _objs.AddLast(makedObject);
+        return makedObject;
+    }
+
+    /// <summary>
+    /// 오브젝트 삭제
+    /// </summary>
+    /// <param name="obj"></param>
+    public void RemoveDrobObject(FieldObject obj)
+    {
+        _objs.Remove(obj);
+        Destroy(obj.gameObject);
+    }
+}
+
+public enum EXPType
+{
+    small,
+    medium,
+    large
+}

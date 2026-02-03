@@ -1,0 +1,32 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class FieldObject : MonoBehaviour
+{
+    [SerializeField]protected SpriteRenderer _body;
+    [SerializeField]protected SpriteRenderer _Shadow;
+
+    public ObjectSpawnPoint ParentPoint { get; set; }
+    private void Awake()
+    {
+        if(_body)
+        {
+            _body.sortingOrder = 2;
+        }
+        if(_Shadow)
+        {
+            _body.sortingOrder = 1;
+        }
+    }
+
+}
+
+
+public enum FieldObjectSpawnType
+{
+    Item,
+    Breakable,
+    Obstacle,
+}

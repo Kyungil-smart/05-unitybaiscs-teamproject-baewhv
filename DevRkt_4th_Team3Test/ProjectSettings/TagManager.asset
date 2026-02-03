@@ -4,7 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WeaponEnemy
+  - Monster
+  - Enemy
+  - Interactable
+  - Breakable
   layers:
   - Default
   - TransparentFX
@@ -12,9 +15,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Enemy
+  - Player
+  - Tile
   - 
   - 
   - 
