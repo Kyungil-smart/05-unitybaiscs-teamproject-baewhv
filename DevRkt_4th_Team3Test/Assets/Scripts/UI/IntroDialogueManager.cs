@@ -9,6 +9,8 @@ using System.Collections;
         [Header("UI References")]
         [SerializeField] private TextMeshProUGUI _dialogueText;
         [SerializeField] private Image _dialogueImage;
+        [SerializeField] private GameObject _warningPage;
+        private bool _isOpenWaringPage = true;
     
         [Header("Dialog Data")]
         [SerializeField] private Sprite[] _introImages;
@@ -23,10 +25,12 @@ using System.Collections;
         void Start()
         {
             ShowCurrentDialogue();
+            _isOpenWaringPage = true;
         }
 
         void Update()
         {
+            if (_isOpenWaringPage) return;
             // 클릭이나 스페이스바 입력 시 다음으로
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -46,6 +50,12 @@ using System.Collections;
                 // 대사가 완성된 상태면 다음 대사로
                 NextDialogue();
             }
+        }
+
+        public void CloseWarningPage()
+        {
+            _warningPage.SetActive(false);
+            _isOpenWaringPage = false;
         }
 
         private void ShowCurrentDialogue()
