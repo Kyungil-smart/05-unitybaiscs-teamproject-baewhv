@@ -86,7 +86,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
         _attackDamage += 1;
         _defense += 1;
         _moveSpeed += 0.3f;
-        _maxHP += 150;
+        _maxHP += 120;
+        _currentHP += 50;
         
         OnHPChanged?.Invoke();
     }
